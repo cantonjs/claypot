@@ -7,8 +7,6 @@ ehthumbs.db
 Thumbs.db
 .log
 *.log
-logs
-_assets
 node_modules
 lib
 static
