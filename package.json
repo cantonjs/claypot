@@ -1,7 +1,7 @@
 {
   "name": "claypot",
   "description": "Just a static HTTP server.",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "main": "lib/index",
   "bin": {
     "claypot": "bin/claypot"
