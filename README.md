@@ -13,13 +13,13 @@ $ npm install -g claypot
 Start a claypot server
 
 ```bash
-$ clayport
+$ claypot
 ```
 
 For more usage
 
 ```bash
-$ clayport -h
+$ claypot -h
 ```
 
 ## License
