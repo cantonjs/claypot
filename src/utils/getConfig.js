@@ -1,5 +1,5 @@
 
-import { dirname } from 'path';
+import { basename } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
 import { merge, isFunction } from 'lodash';
 import { isDev, isProd } from './env';
@@ -19,7 +19,7 @@ const defaultName = (function () {
 		return require(inProj('package.json')).name;
 	}
 	catch (err) {
-		return dirname(cwd);
+		return basename(cwd);
 	}
 }());
 

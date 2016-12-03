@@ -5,11 +5,11 @@ import koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
 import { log } from 'util';
 
-const { port } = config;
+const { port, name } = config;
 const app = koa();
 
 useMiddlewares(app);
 
 app.listen(port, () => {
-	log(`${config.name} started.`);
+	log(`${name} started.`);
 });

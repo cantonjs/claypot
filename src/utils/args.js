@@ -32,4 +32,6 @@ const { argv } = yargs
 	.version(version)
 ;
 
+console.log('argv', argv);
+
 export { argv };

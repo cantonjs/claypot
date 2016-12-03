@@ -1,19 +1,19 @@
 
 import forever from 'forever-monitor';
-import pkg from '../package.json';
 import config from './utils/getConfig';
 import { relative, join } from 'path';
 
 let proc;
 
 export default () => new Promise((resolve) => {
-	const args = [];
 	const getCommand = (command, args) => [command].concat(args).join(' ');
 
 	const {
-		port, debug, env,
+		port, name, debug, env,
 		watch: { enable, directory, ignorePatterns, ignoreDotFiles },
 	} = config;
+
+	const args = [];
 
 	if (debug.enable) { args.push(`--debug=${debug.port}`); }
 
@@ -22,7 +22,7 @@ export default () => new Promise((resolve) => {
 
 	proc = forever
 		.start(serverFile, {
-			uid: pkg.name,
+			uid: name,
 			max: 1,
 			silent: false,
 			command: getCommand('babel-node', args),
