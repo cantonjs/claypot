@@ -3,6 +3,9 @@ import { dirname } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
 import { merge, isFunction } from 'lodash';
 import { isDev, isProd } from './env';
+import { argv } from './args';
+
+const { name, port, debug } = argv;
 
 let maybeConfig = resolveConfigFile();
 
@@ -10,6 +13,8 @@ if (!maybeConfig) { maybeConfig = () => ({}); }
 if (!isFunction(maybeConfig)) { maybeConfig = () => maybeConfig; }
 
 const defaultName = (function () {
+	if (name) { return name; }
+
 	try {
 		return require(inProj('package.json')).name;
 	}
@@ -32,12 +37,12 @@ const defaultMiddlewares = [
 
 const config = merge({
 	name: defaultName,
-	port: 3000,
+	port,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
 	plugins: [],
 	debug: {
-		enable: false,
+		enable: debug,
 	},
 	redis: {
 		enable: false,

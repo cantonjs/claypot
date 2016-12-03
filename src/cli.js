@@ -1,4 +1,5 @@
 
+import './utils/args';
 import { start, stop } from './';
 
 start();

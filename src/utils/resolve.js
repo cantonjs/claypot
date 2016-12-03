@@ -2,6 +2,7 @@
 import { join } from 'path';
 import { isString } from 'lodash';
 import interpret from 'interpret';
+import { argv } from './args';
 
 export const cwd = process.cwd();
 export const inProj = (...args) => join(cwd, ...args);
@@ -44,6 +45,9 @@ const resolveModules = (type) => (module) => {
 };
 
 export const resolveConfigFile = () => {
+	const { config } = argv;
+
+	if (config) { return inProj(config); }
 
 	const extensions = Object.keys(interpret.extensions).sort((a, b) =>
 		a === '.js' ? -1 : b === '.js' ? 1 : a.length - b.length
