@@ -4,16 +4,8 @@ Just a static HTTP server.
 
 ## Installing
 
-Using npm:
-
 ```bash
-$ npm install claypot
-```
-
-Using yarn:
-
-```bash
-$ yarn add claypot
+$ npm install -g claypot
 ```
 
 ## Usage
