@@ -16,6 +16,12 @@ Start a claypot server
 $ clayport
 ```
 
+For more usage
+
+```bash
+$ clayport -h
+```
+
 ## License
 
 MIT
