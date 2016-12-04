@@ -8,20 +8,13 @@ const procs = [];
 
 export const start = async () => {
 	const bootstrap = require(`./bootstrap.${isProd ? 'prod' : 'dev'}`).default;
-	const { pre, post } = config.scripts;
+	const { pre, post, port } = config.script;
 
-	for (const script of pre) {
-		const { proc } = await exec(script);
-		procs.push(proc);
-	}
+	pre && await procs.push(exec(pre));
 
-	const { proc, port } = await bootstrap();
-	procs.push(proc);
+	procs.push(await bootstrap());
 
-	for (const script of post) {
-		const { proc } = await exec(script);
-		procs.push(proc);
-	}
+	post && await procs.push(exec(post));
 
 	isDev && outputHost(port);
 };

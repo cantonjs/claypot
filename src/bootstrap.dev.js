@@ -6,16 +6,10 @@ import { relative, join } from 'path';
 let proc;
 
 export default () => new Promise((resolve) => {
-	const getCommand = (command, args) => [command].concat(args).join(' ');
-
 	const {
-		port, name, debug, env,
+		name, env, script: { command },
 		watch: { enable, directory, ignorePatterns, ignoreDotFiles },
 	} = config;
-
-	const args = [];
-
-	if (debug.enable) { args.push(`--debug=${debug.port}`); }
 
 	const cwd = process.cwd();
 	const serverFile = join(relative(cwd, __dirname), './app.js');
@@ -25,7 +19,7 @@ export default () => new Promise((resolve) => {
 			uid: name,
 			max: 1,
 			silent: false,
-			command: getCommand('babel-node', args),
+			command,
 			watch: enable,
 			watchIgnoreDotFiles: ignoreDotFiles,
 			watchDirectory: directory,
@@ -33,7 +27,7 @@ export default () => new Promise((resolve) => {
 			env,
 		})
 		.on('start', () => {
-			resolve({ port, proc });
+			resolve(proc);
 		})
 		.on('exit', () => {
 			console.log('exit');

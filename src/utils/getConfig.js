@@ -1,11 +1,11 @@
 
 import { basename } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
-import { merge, isFunction } from 'lodash';
-import { isDev, isProd } from './env';
-import { argv } from './args';
+import { merge, isFunction, isString, upperCase } from 'lodash';
+import { isDev, isProd, name, port, command } from './env';
+import pkg from '../../package.json';
 
-const { name, port, debug } = argv;
+const prefix = upperCase(pkg.name);
 
 let maybeConfig = resolveConfigFile();
 
@@ -16,12 +16,20 @@ const defaultName = (function () {
 	if (name) { return name; }
 
 	try {
-		return require(inProj('package.json')).name;
+		const { name } = require(inProj('package.json'));
+		if (!name) { throw new Error(); }
+		return name;
 	}
 	catch (err) {
 		return basename(cwd);
 	}
 }());
+
+const userConfig = maybeConfig || {};
+
+if (isString(userConfig.script)) {
+	userConfig.script = { command: userConfig.script };
+}
 
 const defaultMiddlewares = [
 	'responseTime',
@@ -37,13 +45,10 @@ const defaultMiddlewares = [
 
 const config = merge({
 	name: defaultName,
-	port,
+	port: +port,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
 	plugins: [],
-	debug: {
-		enable: debug,
-	},
 	redis: {
 		enable: false,
 		port: 6379,
@@ -51,9 +56,10 @@ const config = merge({
 		prefix: `${defaultName}:`,
 		defaultExpiresIn: 60,
 	},
-	scripts: {
-		pre: [],
-		post: [],
+	script: {
+		pre: '',
+		command,
+		post: '',
 	},
 	watch: {
 		enable: isDev,
@@ -63,10 +69,19 @@ const config = merge({
 	env: {
 		NODE_ENV: isDev ? 'development' : 'production',
 	},
-}, maybeConfig() || {});
+}, userConfig);
 
 if (isFunction(config.middlewares)) {
 	config.middlewares = config.middlewares(defaultMiddlewares);
+}
+
+{
+	const { env } = config;
+	const envNameKey = `${prefix}_NAME`;
+	const envPortKey = `${prefix}_PORT`;
+
+	env[envNameKey] || (env[envNameKey] = name);
+	env[envPortKey] || (env[envPortKey] = port);
 }
 
 export const staticDir = inProj(config.staticDir);
