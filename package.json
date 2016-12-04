@@ -7,7 +7,7 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "babel-node src/cli",
+    "start": "babel-node src/cli --script=babel-node",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
