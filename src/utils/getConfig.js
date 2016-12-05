@@ -9,8 +9,8 @@ const prefix = upperCase(pkg.name);
 
 let maybeConfig = resolveConfigFile();
 
-if (!maybeConfig) { maybeConfig = () => ({}); }
-if (!isFunction(maybeConfig)) { maybeConfig = () => maybeConfig; }
+if (!maybeConfig) { maybeConfig = {}; }
+if (isFunction(maybeConfig)) { maybeConfig = maybeConfig(); }
 
 const defaultName = (function () {
 	if (name) { return name; }
