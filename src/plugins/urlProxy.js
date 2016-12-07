@@ -13,6 +13,5 @@ export default () => proxy((ctx) => {
 	return {
 		target,
 		changeOrigin: true,
-		hostRewrite: false,
 	};
 });
