@@ -13,8 +13,7 @@ const { argv } = yargs
 			desc: 'Server name',
 			type: 'string',
 		},
-		p: {
-			alias: 'port',
+		port: {
 			desc: 'Server port',
 			default: 3000,
 			type: 'number',
@@ -24,11 +23,15 @@ const { argv } = yargs
 			desc: 'Path to the config file. Defaults to "Claypotfile.js"',
 			type: 'string',
 		},
-		s: {
-			alias: 'script',
+		script: {
 			desc: 'Bootstrap command',
 			default: 'node',
 			type: 'string',
+		},
+		p: {
+			alias: 'production',
+			desc: 'Short hand for set NODE_ENV="production" env',
+			type: 'bool',
 		},
 	})
 	.alias('h', 'help')
@@ -43,5 +46,9 @@ Object.assign(env, {
 	[`${prefix}_PORT`]: argv.port,
 	[`${prefix}_COMMAND`]: argv.script,
 });
+
+if (argv.production) {
+	env.NODE_ENV = 'production';
+}
 
 export { argv };

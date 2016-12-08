@@ -46,6 +46,7 @@ const defaultMiddlewares = [
 const config = merge({
 	name: defaultName,
 	port: +port,
+	daemon: isProd,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
 	plugins: [],
@@ -65,6 +66,7 @@ const config = merge({
 		enable: isDev,
 		directory: cwd,
 		ignoreDotFiles: true,
+		ignorePatterns: /node_modules/,
 	},
 	env: {
 		NODE_ENV: isDev ? 'development' : 'production',
