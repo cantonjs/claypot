@@ -15,7 +15,9 @@ class IPC {
 	}
 
 	send(command, payload) {
-		this._process.send(JSON.stringify({ command, payload }));
+		if (this._process.connected) {
+			this._process.send(JSON.stringify({ command, payload }));
+		}
 		return this;
 	}
 }

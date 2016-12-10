@@ -1,5 +1,5 @@
 
-import { basename } from 'path';
+import { basename, resolve } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
 import { merge, isFunction, isString, upperCase } from 'lodash';
 import { isDev, isProd, name, port, command, daemon } from './env';
@@ -47,6 +47,7 @@ const config = merge({
 	name: defaultName,
 	rootDir: cwd,
 	port: +port,
+	maxRestarts: isDev ? 0 : -1,
 	daemon,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
@@ -65,9 +66,11 @@ const config = merge({
 	},
 	watch: {
 		enable: isDev,
-		directory: cwd,
+		// dirs: [cwd],
+		dirs: [resolve(cwd, 'src')],
+		interval: 1000,
 		ignoreDotFiles: true,
-		ignorePatterns: /node_modules/,
+		// ignorePatterns: /node_modules/,
 	},
 	env: {
 		NODE_ENV: isDev ? 'development' : 'production',

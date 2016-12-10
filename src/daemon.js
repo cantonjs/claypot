@@ -1,5 +1,5 @@
 
-import { writeFile, readFile, open } from 'fs-promise';
+import { writeFile, readFile, open, unlink } from 'fs-promise';
 import { spawn } from 'child_process';
 import { resolve } from 'path';
 import IPC from './utils/IPC';
@@ -26,7 +26,11 @@ export const stop = async ({ rootDir, name }) => {
 
 	const pid = await readFile(pidFile, 'utf-8');
 
-	process.kill(pid);
+	try { await unlink(pidFile); }
+	catch (err) { /* noop */ }
+
+	try { process.kill(pid); }
+	catch (err) { /* noop */ }
 };
 
 export const start = async (script, { daemon, ...options }) => {

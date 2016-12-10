@@ -1,17 +1,17 @@
 
 import respawn from 'respawn';
-import { unlink } from 'fs-promise';
 import IPC from './utils/IPC';
+import watch from './utils/watch';
 
 const ipc = new IPC(process);
 
 const start = ({ script, options }) => {
 	const { name } = options;
-	const { command, pidFile, ...respawnOptions } = options;
+	const { watch: watchOptions, ...respawnOptions } = options;
 
-	const monitor = respawn([command, script], {
+	const monitor = respawn(script, {
 		...respawnOptions,
-		stdio: ['ignore', 'inherit', 'inherit']
+		stdio: ['ignore', 'inherit', 'inherit'],
 	});
 
 	monitor.on('start', () => {
@@ -32,7 +32,6 @@ const start = ({ script, options }) => {
 	});
 
 	monitor.on('exit', async (code, signal) => {
-		await unlink(pidFile);
 		console.log(`${name} exit with code "${code}", signal "${signal}".`);
 	});
 
@@ -58,6 +57,12 @@ const start = ({ script, options }) => {
 
 	process.on('SIGINT', exit);
 	process.on('SIGTERM', exit);
+
+	watch(watchOptions, (file, stat) => {
+		process.emit('watch:restart', { file, stat });
+		monitor.stop();
+		monitor.start();
+	});
 };
 
 ipc.on('start', (payload) => {
