@@ -17,7 +17,7 @@
   "author": "Cap32",
   "licenses": "MIT",
   "dependencies": {
-    "forever": "^0.15.1",
+    "chokidar": "^1.6.1",
     "fs-promise": "^1.0.0",
     "graceful-fs": "^4.1.5",
     "http-ask": "^0.0.0-alpha.3",
@@ -58,7 +58,6 @@
     "eslint": "^2.4.0",
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-import": "^2.2.0",
-    "forever-monitor": "^1.6.0",
     "get-my-ip": "0.0.1",
     "mkdirp": "^0.5.1",
     "qs": "^6.3.0",
