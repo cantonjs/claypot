@@ -1,11 +1,45 @@
 
-import childProcess from 'child_process';
+import { writeFile, readFile, open } from 'fs-promise';
+import { spawn } from 'child_process';
 import { resolve } from 'path';
 import IPC from './utils/IPC';
 
-const { exec, spawn } = childProcess;
+const getPidFile = (rootDir, name) => resolve(rootDir, `${name}.pid`);
 
-export const start = function start(script, { daemon, ...options }) {
+const writePidFile = async (pidFile, pid) => {
+	await writeFile(pidFile, pid);
+};
+
+const checkIsPidFileExists = async (pidFile) => {
+	try { return !!await open(pidFile, 'r'); }
+	catch (err) { return false; }
+};
+
+export const stop = async ({ rootDir, name }) => {
+	const pidFile = getPidFile(rootDir, name);
+
+	const isExists = await checkIsPidFileExists(pidFile, name);
+
+	if (!isExists) {
+		throw new Error(`"${name}" not found.`);
+	}
+
+	const pid = await readFile(pidFile, 'utf-8');
+
+	process.kill(pid);
+};
+
+export const start = async (script, { daemon, ...options }) => {
+	const { rootDir, name } = options;
+
+	const pidFile = getPidFile(rootDir, name);
+
+	const isExists = await checkIsPidFileExists(pidFile, name);
+
+	if (isExists) {
+		throw new Error(`"${name}" is running.`);
+	}
+
 	const { execPath } = process;
 	const monitor = spawn(execPath, [resolve('bin/monitor')], {
 		detached: daemon,
@@ -15,18 +49,20 @@ export const start = function start(script, { daemon, ...options }) {
 	const ipc = new IPC(monitor);
 
 	ipc
-		.on('pid', (pid) => console.log('pid', pid))
+		.on('pid', async (pid) => {
+			if (daemon) {
+				await writePidFile(pidFile, pid);
+			}
+		})
 		.on('start', () => {
 			monitor.emit('start');
 
-			console.log('typeof monitor.connect', typeof monitor.connect);
-			console.log('monitor.channel', monitor.channel);
-
 			if (daemon) {
+				monitor.disconnect();
 				monitor.unref();
 			}
 		})
-		.send('start', { script, options })
+		.send('start', { script, options: { pidFile, ...options } })
 	;
 
 	return monitor;

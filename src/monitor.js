@@ -1,12 +1,13 @@
 
 import respawn from 'respawn';
+import { unlink } from 'fs-promise';
 import IPC from './utils/IPC';
 
 const ipc = new IPC(process);
 
 const start = ({ script, options }) => {
 	const { name } = options;
-	const { command, ...respawnOptions } = options;
+	const { command, pidFile, ...respawnOptions } = options;
 
 	const monitor = respawn([command, script], {
 		...respawnOptions,
@@ -30,7 +31,8 @@ const start = ({ script, options }) => {
 		console.log(`${name} sleeped.`);
 	});
 
-	monitor.on('exit', (code, signal) => {
+	monitor.on('exit', async (code, signal) => {
+		await unlink(pidFile);
 		console.log(`${name} exit with code "${code}", signal "${signal}".`);
 	});
 
@@ -47,6 +49,15 @@ const start = ({ script, options }) => {
 	});
 
 	monitor.start();
+
+	const exit = () => {
+		monitor.stop(() => {
+			process.exit();
+		});
+	};
+
+	process.on('SIGINT', exit);
+	process.on('SIGTERM', exit);
 };
 
 ipc.on('start', (payload) => {

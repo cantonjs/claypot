@@ -7,6 +7,10 @@ const prefix = upperCase(name);
 
 const { argv } = yargs
 	.usage('$0 [args]')
+	.command({
+		command: 'stop',
+		desc: 'Stop server',
+	})
 	.env(prefix)
 	.options({
 		name: {
@@ -17,6 +21,12 @@ const { argv } = yargs
 			desc: 'Server port',
 			default: 3000,
 			type: 'number',
+		},
+		d: {
+			alias: 'daemon',
+			desc: 'Use as a daemon',
+			type: 'bool',
+			default: false,
 		},
 		c: {
 			alias: 'config',
@@ -45,6 +55,7 @@ const useBabelNode = env._.endsWith('babel-node');
 Object.assign(env, {
 	[`${prefix}_NAME`]: argv.name || '',
 	[`${prefix}_PORT`]: argv.port,
+	[`${prefix}_DAEMON`]: argv.daemon,
 	[`${prefix}_COMMAND`]: useBabelNode ? 'babel-node' : argv.script,
 });
 

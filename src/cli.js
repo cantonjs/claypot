@@ -1,7 +1,10 @@
 
-import './utils/args';
-import { start, stop } from './';
+import { argv } from './utils/args';
+import { start, stop } from '.';
 
-start().catch((err) => console.error(err));
-
-// setTimeout(stop, 5000);
+if (!argv._.length) {
+	start().catch((err) => console.error(err));
+}
+else if (argv._[0] === 'stop') {
+	stop().catch((err) => console.error(err));
+}

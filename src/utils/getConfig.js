@@ -2,7 +2,7 @@
 import { basename } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
 import { merge, isFunction, isString, upperCase } from 'lodash';
-import { isDev, isProd, name, port, command } from './env';
+import { isDev, isProd, name, port, command, daemon } from './env';
 import pkg from '../../package.json';
 
 const prefix = upperCase(pkg.name);
@@ -45,8 +45,9 @@ const defaultMiddlewares = [
 
 const config = merge({
 	name: defaultName,
+	rootDir: cwd,
 	port: +port,
-	daemon: isProd,
+	daemon,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
 	plugins: [],

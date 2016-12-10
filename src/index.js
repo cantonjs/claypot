@@ -4,6 +4,7 @@ import config from './utils/getConfig';
 import exec from './utils/exec';
 import outputHost from 'output-host';
 import bootstrap from './bootstrap';
+import * as Daemon from './daemon';
 
 const procs = [];
 
@@ -19,4 +20,4 @@ export const start = async () => {
 	isDev && outputHost(port);
 };
 
-export const stop = () => procs.forEach((proc) => proc.kill());
+export const stop = () => Daemon.stop(config);
