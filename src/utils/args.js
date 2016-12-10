@@ -25,7 +25,7 @@ const { argv } = yargs
 		},
 		script: {
 			desc: 'Bootstrap command',
-			default: 'node',
+			default: process.execPath,
 			type: 'string',
 		},
 		p: {
@@ -40,11 +40,12 @@ const { argv } = yargs
 ;
 
 const { env } = process;
+const useBabelNode = env._.endsWith('babel-node');
 
 Object.assign(env, {
 	[`${prefix}_NAME`]: argv.name || '',
 	[`${prefix}_PORT`]: argv.port,
-	[`${prefix}_COMMAND`]: argv.script,
+	[`${prefix}_COMMAND`]: useBabelNode ? 'babel-node' : argv.script,
 });
 
 if (argv.production) {

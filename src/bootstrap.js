@@ -1,6 +1,7 @@
 
-import forever from 'forever';
-import foreverMonitor from 'forever-monitor';
+import { start } from './daemon';
+// import forever from 'forever';
+// import foreverMonitor from 'forever-monitor';
 import config from './utils/getConfig';
 import { relative, join } from 'path';
 
@@ -15,14 +16,14 @@ export default () => new Promise((resolve) => {
 	const cwd = process.cwd();
 	const serverFile = join(relative(cwd, __dirname), './app.js');
 
-	// const run = daemon ? forever.startDaemon : foreverMonitor.start;
-	const run = daemon ? forever.startDaemon : forever.start;
+	// const start = daemon ? forever.startDaemon : foreverMonitor.start;
+	// const start = daemon ? forever.startDaemon : forever.start;
 
-	proc = run(serverFile, {
-		uid: name,
-		max: 1,
-		silent: false,
+	proc = start(serverFile, {
 		command,
+		daemon,
+		name,
+		maxRestarts: 1,
 		watch: enable,
 		watchIgnoreDotFiles: ignoreDotFiles,
 		watchDirectory: directory,
@@ -35,8 +36,8 @@ export default () => new Promise((resolve) => {
 	.on('watch:error', (err) => {
 		console.log('WATCH ERROR', err);
 	})
-	.on('exit', () => {
-		console.log('exit');
+	.on('exit', (...args) => {
+		console.log('exit', args);
 	});
 
 });

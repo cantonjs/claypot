@@ -7,7 +7,7 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "babel-node src/cli --script=babel-node",
+    "start": "babel-node src/cli",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
@@ -35,10 +35,12 @@
     "koa-static-cache": "^3.1.7",
     "koa-weixin-jssdk": "^1.2.0",
     "lodash": "^4.17.2",
+    "mz": "^2.6.0",
     "output-host": "^1.1.0",
     "qiniu": "^6.1.13",
     "redis": "^2.6.3",
     "request": "^2.79.0",
+    "respawn": "^2.4.1",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
