@@ -76,11 +76,9 @@ const config = merge({
 	},
 	watch: {
 		enable: isDev,
-		// dirs: [rootDir],
-		dirs: [resolve(rootDir, 'src')],
+		dirs: ['.'],
 		interval: 1000,
 		ignoreDotFiles: true,
-		// ignorePatterns: /node_modules/,
 	},
 	env: {
 		NODE_ENV: isDev ? 'development' : 'production',

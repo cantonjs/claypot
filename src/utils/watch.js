@@ -1,13 +1,18 @@
 
 import chokidar from 'chokidar';
 
-export default function watch({ enable, dirs, ...options }, handler) {
+export default function watch(options, handler) {
+	const { enable, dirs, ignoreDotFiles, ...other } = options;
+
 	if (!enable) { return; }
 
+	if (ignoreDotFiles) {
+		other.ignored = /(^|[\/\\])\../;
+	}
+
 	chokidar.watch(dirs, {
-		...options,
+		...other,
 		usePolling: true,
 		ignoreInitial: true,
-		ignored: /(^|[\/\\])\../,
 	}).on('all', handler);
 }

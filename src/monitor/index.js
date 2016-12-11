@@ -52,6 +52,7 @@ export const startMonitor = async (script, { daemon, ...options }) => {
 	const monitor = spawn(execPath, [scriptFile], {
 		detached: daemon,
 		stdio: ['ipc', stdOut, stdErr],
+		cwd: rootDir,
 	});
 
 	const ipc = new IPC(monitor);
