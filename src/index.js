@@ -2,9 +2,9 @@
 import { isDev } from './utils/env';
 import config from './utils/getConfig';
 import exec from './utils/exec';
-import { relative, join } from 'path';
+import { join } from 'path';
 import outputHost from 'output-host';
-import * as Daemon from './daemon';
+import { startMonitor, stopMonitor } from './monitor';
 
 const procs = [];
 
@@ -13,11 +13,10 @@ const bootstrap = () => new Promise(async (resolve, reject) => {
 		script: { command }, ...options,
 	} = config;
 
-	const cwd = process.cwd();
-	const serverFile = join(relative(cwd, __dirname), './app.js');
+	const serverFile = join(__dirname, 'app.js');
 
 	try {
-		const proc = await Daemon.start([command, serverFile], options);
+		const proc = await startMonitor([command, serverFile], options);
 
 		proc
 			.on('start', () => {
@@ -45,4 +44,4 @@ export const start = async () => {
 	isDev && outputHost(port);
 };
 
-export const stop = () => Daemon.stop(config);
+export const stop = () => stopMonitor(config);

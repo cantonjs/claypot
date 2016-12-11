@@ -2,7 +2,7 @@
 import { writeFile, readFile, open, unlink } from 'fs-promise';
 import { spawn } from 'child_process';
 import { resolve } from 'path';
-import IPC from './utils/IPC';
+import IPC from '../utils/IPC';
 
 const getPidFile = (rootDir, name) => resolve(rootDir, `${name}.pid`);
 
@@ -15,7 +15,7 @@ const checkIsPidFileExists = async (pidFile) => {
 	catch (err) { return false; }
 };
 
-export const stop = async ({ rootDir, name }) => {
+export const stopMonitor = async ({ rootDir, name }) => {
 	const pidFile = getPidFile(rootDir, name);
 
 	const isExists = await checkIsPidFileExists(pidFile, name);
@@ -33,7 +33,7 @@ export const stop = async ({ rootDir, name }) => {
 	catch (err) { /* noop */ }
 };
 
-export const start = async (script, { daemon, ...options }) => {
+export const startMonitor = async (script, { daemon, ...options }) => {
 	const { rootDir, name } = options;
 
 	const pidFile = getPidFile(rootDir, name);

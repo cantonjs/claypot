@@ -1,7 +1,7 @@
 
 import respawn from 'respawn';
-import IPC from './utils/IPC';
-import watch from './utils/watch';
+import IPC from '../utils/IPC';
+import watch from '../utils/watch';
 
 const ipc = new IPC(process);
 
