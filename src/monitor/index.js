@@ -45,10 +45,12 @@ export const startMonitor = async (script, { daemon, ...options }) => {
 		throw new Error(`"${name}" is running.`);
 	}
 
+	const stdOut = daemon ? 'ignore' : 'inherit';
+	const stdErr = daemon ? 'ignore' : 'inherit';
 	const { execPath } = process;
 	const monitor = spawn(execPath, [resolve('bin/monitor')], {
 		detached: daemon,
-		stdio: ['ipc', 'inherit', 'inherit'],
+		stdio: ['ipc', stdOut, stdErr],
 	});
 
 	const ipc = new IPC(monitor);

@@ -1,11 +1,13 @@
 
 import { basename, resolve } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
-import { merge, isFunction, isString, upperCase } from 'lodash';
-import { isDev, isProd, name, port, command, daemon } from './env';
-import pkg from '../../package.json';
+import { merge, isFunction, isString, isUndefined } from 'lodash';
+import { isDev, isProd, getEnv, setEnv } from './Env';
 
-const prefix = upperCase(pkg.name);
+const name = getEnv('name');
+const port = getEnv('port');
+const command = getEnv('command');
+const daemon = getEnv('daemon');
 
 let maybeConfig = resolveConfigFile();
 
@@ -48,6 +50,10 @@ const config = merge({
 	rootDir: cwd,
 	port: +port,
 	maxRestarts: isDev ? 0 : -1,
+
+	// 'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', OFF
+	logLevel: 'INFO',
+
 	daemon,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
@@ -83,11 +89,14 @@ if (isFunction(config.middlewares)) {
 
 {
 	const { env } = config;
-	const envNameKey = `${prefix}_NAME`;
-	const envPortKey = `${prefix}_PORT`;
-
-	env[envNameKey] || (env[envNameKey] = name);
-	env[envPortKey] || (env[envPortKey] = port);
+	const setDefault = (key, defaultValue) => {
+		if (!isUndefined(getEnv(key, env))) {
+			setEnv(key, defaultValue, env);
+		}
+	};
+	setDefault('name', name);
+	setDefault('port', port);
+	setEnv('daemon', daemon, env);
 }
 
 export const staticDir = inProj(config.staticDir);

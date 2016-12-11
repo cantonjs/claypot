@@ -2,6 +2,7 @@
 import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { resolve } from 'path';
+import { getEnv } from './Env';
 
 const HTTP = 'http';
 const APP = 'app';
@@ -10,11 +11,11 @@ const MONITOR = 'monitor';
 const baseDir = resolve('.logs');
 const inDir = (name) => resolve(baseDir, `${name}.log`);
 
-ensureDirSync(baseDir);
+let appenders;
 
-log4js.configure({
-	appenders: [
-		{ type: 'console' },
+if (getEnv('daemon')) {
+	ensureDirSync(baseDir);
+	appenders = [
 		{
 			type: 'dateFile',
 			filename: inDir('access'),
@@ -50,7 +51,14 @@ log4js.configure({
 			maxLogSize: 10485760, // 10MB
 			category: MONITOR,
 		},
-	],
+	];
+}
+else {
+	appenders = [{ type: 'console' }];
+}
+
+log4js.configure({
+	appenders,
 	levels: {
 		'[all]': 'INFO',
 	},
