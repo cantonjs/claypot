@@ -2,7 +2,7 @@
 import { basename, resolve } from 'path';
 import { inProj, cwd, resolveConfigFile } from './resolve';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
-import { isDev, isProd, getEnv, setEnv } from './Env';
+import { isDev, isProd, getEnv, setEnv } from './env';
 
 const name = getEnv('name');
 const port = getEnv('port');

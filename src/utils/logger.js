@@ -2,7 +2,7 @@
 import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { resolve } from 'path';
-import { getEnv } from './Env';
+import { getEnv } from './env';
 
 const HTTP = 'http';
 const APP = 'app';

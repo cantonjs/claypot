@@ -1,7 +1,7 @@
 
 import yargs from 'yargs';
 import { version } from '../../package.json';
-import { setEnv, prefix } from './Env';
+import { setEnv, prefix } from './env';
 
 const { argv } = yargs
 	.usage('$0 [args]')

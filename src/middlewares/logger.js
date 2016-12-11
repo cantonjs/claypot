@@ -1,5 +1,5 @@
 
-import { isProd } from '../utils/Env';
+import { isProd } from '../utils/env';
 import { httpLogger } from '../utils/logger';
 
 export default (app) => app.use(function * logger(next) {
