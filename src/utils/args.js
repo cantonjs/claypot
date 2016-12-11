@@ -1,9 +1,7 @@
 
 import yargs from 'yargs';
-import { upperCase } from 'lodash';
-import { version, name } from '../../package.json';
-
-const prefix = upperCase(name);
+import { version } from '../../package.json';
+import { setEnv, prefix } from './Env';
 
 const { argv } = yargs
 	.usage('$0 [args]')
@@ -43,6 +41,14 @@ const { argv } = yargs
 			desc: 'Short hand for set NODE_ENV="production" env',
 			type: 'bool',
 		},
+		l: {
+			alias: 'log-level',
+			desc: 'Log level',
+			choices: [
+				'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
+			],
+			default: 'INFO',
+		},
 	})
 	.alias('h', 'help')
 	.help()
@@ -50,14 +56,13 @@ const { argv } = yargs
 ;
 
 const { env } = process;
-const useBabelNode = env._.endsWith('babel-node');
+const useBabelNode = (env._ || '').endsWith('babel-node');
 
-Object.assign(env, {
-	[`${prefix}_NAME`]: argv.name || '',
-	[`${prefix}_PORT`]: argv.port,
-	[`${prefix}_DAEMON`]: argv.daemon,
-	[`${prefix}_COMMAND`]: useBabelNode ? 'babel-node' : argv.script,
-});
+setEnv('name', argv.name || '');
+setEnv('port', argv.port);
+setEnv('daemon', argv.daemon);
+setEnv('log_level', argv.logLevel);
+setEnv('command', useBabelNode ? 'babel-node' : argv.script);
 
 if (argv.production) {
 	env.NODE_ENV = 'production';

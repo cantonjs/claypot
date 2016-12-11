@@ -8,7 +8,9 @@ const {
 	NODE_ENV = 'development',
 } = env;
 
-const getFullKey = (key) => `${upperCase(pkg.name)}_${upperCase(key)}`;
+export const prefix = upperCase(pkg.name);
+
+const getFullKey = (key) => `${prefix}_${upperCase(key)}`;
 
 export const getEnv = (key, source = env) => {
 	const fullKey = getFullKey(key);

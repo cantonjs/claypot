@@ -8,6 +8,7 @@ const name = getEnv('name');
 const port = getEnv('port');
 const command = getEnv('command');
 const daemon = getEnv('daemon');
+const logLevel = getEnv('log_level');
 
 let maybeConfig = resolveConfigFile();
 
@@ -50,10 +51,7 @@ const config = merge({
 	rootDir: cwd,
 	port: +port,
 	maxRestarts: isDev ? 0 : -1,
-
-	// 'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', OFF
-	logLevel: 'INFO',
-
+	logLevel,
 	daemon,
 	staticDir: 'static',
 	middlewares: defaultMiddlewares,
