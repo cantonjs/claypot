@@ -1,12 +1,13 @@
 
 import { exec } from 'child_process';
+import { monitorLogger } from './logger';
 
 export default (command, options = {}) => {
 	const { timeout = 2000 } = options;
 	let proc;
 
 	const execMain = new Promise((resolve, reject) => {
-		console.log(`> ${command}\n`);
+		monitorLogger.info(`> ${command}\n`);
 
 		proc = exec(command, (error, stdout, stderr) => {
 			if (error || stderr) {

@@ -855,13 +855,17 @@ dashify@^0.1.0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/dashify/download/dashify-0.1.0.tgz#107daf9cca5e326e30a8b39ffa5048b6684922ea"
 
+date-format@^0.0.0:
+  version "0.0.0"
+  resolved "http://registry.npm.taobao.org/date-format/download/date-format-0.0.0.tgz#09206863ab070eb459acea5542cbd856b11966b3"
+
 debug@*, debug@^2.1.1, debug@^2.2.0:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/debug/download/debug-2.3.3.tgz#40c453e67e6e13c901ddec317af8986cda9eff8c"
   dependencies:
     ms "0.7.2"
 
-debug@0.7.2:
+debug@0.7.2, debug@^0.7.2:
   version "0.7.2"
   resolved "http://registry.npm.taobao.org/debug/download/debug-0.7.2.tgz#056692c86670977f115de82917918b8e8b9a10f0"
 
@@ -2120,6 +2124,14 @@ lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "http://registry.npm.taobao.org/lodash.restparam/download/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
+log4js@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/log4js/download/log4js-1.0.1.tgz#faf64c1056b6352a5fbbf0a93b61a9979a8422cc"
+  dependencies:
+    debug "^2.2.0"
+    semver "^5.3.0"
+    streamroller "^0.2.1"
+
 loose-envify@^1.0.0:
   version "1.3.0"
   resolved "http://registry.npm.taobao.org/loose-envify/download/loose-envify-1.3.0.tgz#6b26248c42f6d4fa4b0d8542f78edfcde35642a8"
@@ -2558,6 +2570,15 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
+readable-stream@^1.1.7:
+  version "1.1.14"
+  resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
+  dependencies:
+    core-util-is "~1.0.0"
+    inherits "~2.0.1"
+    isarray "0.0.1"
+    string_decoder "~0.10.x"
+
 "readable-stream@^2.0.0 || ^1.1.13", readable-stream@~2.1.4:
   version "2.1.5"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
@@ -2721,7 +2742,7 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "http://registry.npm.taobao.org/rx-lite/download/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
-"semver@2 || 3 || 4 || 5", semver@~5.3.0:
+"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@~5.3.0:
   version "5.3.0"
   resolved "http://registry.npm.taobao.org/semver/download/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
@@ -2811,6 +2832,14 @@ sshpk@^1.7.0:
 "statuses@>= 1.2.1 < 2", "statuses@>= 1.3.1 < 2", statuses@^1.2.0:
   version "1.3.1"
   resolved "http://registry.npm.taobao.org/statuses/download/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
+
+streamroller@^0.2.1:
+  version "0.2.1"
+  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.2.1.tgz#95173f1a5b811c291e7cdfd600002fdbe063c9c8"
+  dependencies:
+    date-format "^0.0.0"
+    debug "^0.7.2"
+    readable-stream "^1.1.7"
 
 string-width@^1.0.1, string-width@^1.0.2:
   version "1.0.2"

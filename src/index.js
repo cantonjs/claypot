@@ -2,6 +2,7 @@
 import { isDev } from './utils/env';
 import config from './utils/getConfig';
 import exec from './utils/exec';
+import { monitorLogger } from './utils/logger';
 import { join } from 'path';
 import outputHost from 'output-host';
 import { startMonitor, stopMonitor } from './monitor';
@@ -20,10 +21,11 @@ const bootstrap = () => new Promise(async (resolve, reject) => {
 
 		proc
 			.on('start', () => {
+				monitorLogger.debug('proc start');
 				resolve(proc);
 			})
 			.on('exit', (...args) => {
-				console.log('exit', args);
+				monitorLogger.info('exit', args);
 			})
 		;
 	}

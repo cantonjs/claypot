@@ -2,6 +2,7 @@
 import { join } from 'path';
 import { isString } from 'lodash';
 import interpret from 'interpret';
+import { appLogger } from './logger';
 import { argv } from './args';
 
 export const cwd = process.cwd();
@@ -40,6 +41,7 @@ const resolveModules = (type) => (module) => {
 		return resolveES6(resolvedPath);
 	}
 	catch (err) {
+		appLogger.error(err);
 		throw new Error(`Cannot resolve ${type} ${module}`);
 	}
 };
@@ -93,7 +95,8 @@ export const resolveConfigFile = () => {
 		return resolveES6(filePath);
 	}
 	catch (err) {
-		// noop
+		appLogger.debug(err);
+		appLogger.trace('Config file NOT found.');
 	}
 };
 

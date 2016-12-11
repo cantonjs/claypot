@@ -1,6 +1,7 @@
 
 import { writeFile, readFile, open, unlink } from 'fs-promise';
 import { spawn } from 'child_process';
+import { monitorLogger } from '../utils/logger';
 import { resolve } from 'path';
 import IPC from '../utils/IPC';
 
@@ -27,10 +28,10 @@ export const stopMonitor = async ({ rootDir, name }) => {
 	const pid = await readFile(pidFile, 'utf-8');
 
 	try { await unlink(pidFile); }
-	catch (err) { /* noop */ }
+	catch (err) { monitorLogger.debug(err); }
 
 	try { process.kill(pid); }
-	catch (err) { /* noop */ }
+	catch (err) { monitorLogger.debug(err); }
 };
 
 export const startMonitor = async (script, { daemon, ...options }) => {

@@ -1,19 +1,29 @@
 
 import { isProd } from '../utils/env';
+import { httpLogger } from '../utils/logger';
 
 export default (app) => app.use(function * logger(next) {
-	const start = new Date();
+	const start = Date.now();
 
 	yield next;
 
 	const { url, method } = this;
+	const responseTime = `${Date.now() - start}ms`;
 
 	if (isProd) {
+		const { status, header, req } = this;
+		const HTTPVersion = `HTTP/${req.httpVersionMajor}.${req.httpVersionMinor}`;
+		const userAgent = header['user-agent'] || '-';
+		const referer = header['referer'] || '-';
+		const remoteAddress = header['x-forwarded-for'] || '-';
+
 		/* eslint-disable */
-		console.log(`[${new Date()}] "${method} ${url}" ${this.status} ${new Date() - start}ms (${this.header['referer'] || '-'}) (${this.header['user-agent'] || '-'}) ${this.header['x-forwarded-for'] || '-'}`);
+		httpLogger.info(
+			`${method} ${url} ${status} ${HTTPVersion} ${responseTime} ${referer} "${userAgent}" ${remoteAddress}`
+		);
 		/* eslint-enable */
 	}
 	else {
-		console.log(`${method} ${url} - ${new Date() - start}ms`);
+		httpLogger.info(`${method} ${url} ${responseTime}`);
 	}
 });

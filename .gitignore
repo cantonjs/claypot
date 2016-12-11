@@ -6,6 +6,7 @@
 ehthumbs.db
 Thumbs.db
 .log
+.logs
 *.log
 node_modules
 lib

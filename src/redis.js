@@ -1,6 +1,6 @@
 
 import redis from 'redis';
-import { log } from 'util';
+import { appLogger } from './utils/logger';
 import { isObject, padStart } from 'lodash';
 import config from './utils/getConfig';
 
@@ -9,10 +9,10 @@ const client = enable && redis.createClient(redisConfig);
 
 if (client) {
 	client.on('error', (err) => {
-		log('[REDIS CONNECTION ERROR]:', err.message);
+		appLogger.error('[REDIS CONNECTION ERROR]:', err.message);
 	});
 
-	client.on('connect', () => log('redis connected.'));
+	client.on('connect', () => appLogger.info('redis connected.'));
 }
 
 export default client;
