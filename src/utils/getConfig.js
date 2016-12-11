@@ -1,6 +1,6 @@
 
 import { basename, resolve } from 'path';
-import { inProj, cwd, resolveConfigFile } from './resolve';
+import { rootDir, inProj, resolveConfigFile } from './resolve';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
 import { isDev, isProd, getEnv, setEnv } from './env';
 
@@ -15,6 +15,7 @@ let maybeConfig = resolveConfigFile();
 if (!maybeConfig) { maybeConfig = {}; }
 if (isFunction(maybeConfig)) { maybeConfig = maybeConfig(); }
 
+
 const defaultName = (function () {
 	if (name) { return name; }
 
@@ -24,7 +25,7 @@ const defaultName = (function () {
 		return name;
 	}
 	catch (err) {
-		return basename(cwd);
+		return basename(rootDir);
 	}
 }());
 
@@ -48,7 +49,7 @@ const defaultMiddlewares = [
 
 const config = merge({
 	name: defaultName,
-	rootDir: cwd,
+	rootDir,
 	port: +port,
 	maxRestarts: isDev ? 0 : -1,
 	logLevel,
@@ -70,8 +71,8 @@ const config = merge({
 	},
 	watch: {
 		enable: isDev,
-		// dirs: [cwd],
-		dirs: [resolve(cwd, 'src')],
+		// dirs: [rootDir],
+		dirs: [resolve(rootDir, 'src')],
 		interval: 1000,
 		ignoreDotFiles: true,
 		// ignorePatterns: /node_modules/,

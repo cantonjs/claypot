@@ -20,6 +20,11 @@ const { argv } = yargs
 			default: 3000,
 			type: 'number',
 		},
+		e: {
+			alias: 'entry',
+			desc: 'Entry directory',
+			type: 'string',
+		},
 		d: {
 			alias: 'daemon',
 			desc: 'Use as a daemon',
@@ -60,6 +65,7 @@ const useBabelNode = (env._ || '').endsWith('babel-node');
 
 setEnv('name', argv.name || '');
 setEnv('port', argv.port);
+setEnv('entry', argv.entry);
 setEnv('daemon', argv.daemon);
 setEnv('log_level', argv.logLevel);
 setEnv('command', useBabelNode ? 'babel-node' : argv.script);

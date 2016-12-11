@@ -4,9 +4,13 @@ import { isString } from 'lodash';
 import interpret from 'interpret';
 import { appLogger } from './logger';
 import { argv } from './args';
+import { getEnv } from './env';
+
+const entry = getEnv('entry');
 
 export const cwd = process.cwd();
-export const inProj = (...args) => join(cwd, ...args);
+export const rootDir = entry ? join(cwd, entry) : cwd;
+export const inProj = (...args) => join(rootDir, ...args);
 
 const resolveES6 = (path) => {
 	const module = require(path);
