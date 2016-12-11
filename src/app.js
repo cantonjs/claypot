@@ -1,6 +1,6 @@
 
 import './redis';
-import config from './utils/getConfig';
+import config from './config';
 import koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
 import { appLogger } from './utils/logger';

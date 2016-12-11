@@ -2,7 +2,7 @@
 import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { resolve } from 'path';
-import { getEnv } from './env';
+import config from '../config';
 
 const HTTP = 'http';
 const APP = 'app';
@@ -13,7 +13,7 @@ const inDir = (name) => resolve(baseDir, `${name}.log`);
 
 let appenders;
 
-if (getEnv('daemon')) {
+if (config.daemon) {
 	ensureDirSync(baseDir);
 	appenders = [
 		{

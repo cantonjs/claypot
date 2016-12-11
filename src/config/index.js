@@ -1,7 +1,7 @@
 
 import { basename, resolve } from 'path';
-import { rootDir, inProj, resolveConfigFile } from './resolve';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
+import resolveConfigFile from './resolveConfigFile';
 import { isDev, isProd, getEnv, setEnv } from './env';
 
 const name = getEnv('name');
@@ -9,8 +9,13 @@ const port = getEnv('port');
 const command = getEnv('command');
 const daemon = getEnv('daemon');
 const logLevel = getEnv('log_level');
+const entry = getEnv('entry');
 
-let maybeConfig = resolveConfigFile();
+const cwd = process.cwd();
+const rootDir = entry ? resolve(cwd, entry) : cwd;
+const inProj = (...args) => resolve(rootDir, ...args);
+
+let maybeConfig = resolveConfigFile(inProj);
 
 if (!maybeConfig) { maybeConfig = {}; }
 if (isFunction(maybeConfig)) { maybeConfig = maybeConfig(); }
@@ -86,6 +91,8 @@ if (isFunction(config.middlewares)) {
 	config.middlewares = config.middlewares(defaultMiddlewares);
 }
 
+config.staticDir = inProj(config.staticDir);
+
 {
 	const { env } = config;
 	const setDefault = (key, defaultValue) => {
@@ -96,7 +103,8 @@ if (isFunction(config.middlewares)) {
 	setDefault('name', name);
 	setDefault('port', port);
 	setEnv('daemon', daemon, env);
+	setEnv('entry', entry, env);
 }
 
-export const staticDir = inProj(config.staticDir);
+export { isDev, isProd };
 export default config;

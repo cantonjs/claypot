@@ -1,5 +1,5 @@
 
-import { argv } from './utils/args';
+import { argv } from './config/args';
 import { monitorLogger } from './utils/logger';
 import { start, stop } from '.';
 

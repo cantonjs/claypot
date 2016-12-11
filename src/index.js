@@ -1,6 +1,5 @@
 
-import { isDev } from './utils/env';
-import config from './utils/getConfig';
+import config, { isDev } from './config';
 import exec from './utils/exec';
 import { monitorLogger } from './utils/logger';
 import { join } from 'path';

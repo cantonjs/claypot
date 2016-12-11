@@ -1,8 +1,9 @@
 
-import config from './getConfig';
+import config from '../config';
 import mount from 'koa-mount';
 import { resolvePlugin } from './resolve';
 import { isObject, isString, isFunction } from 'lodash';
+import { appLogger } from './logger';
 
 export default (parent) => {
 	config
@@ -20,9 +21,14 @@ export default (parent) => {
 		})
 		.filter(({ enable = true }) => enable)
 		.forEach(({ path, module, options = {} }) => {
-			const createPlugin = resolvePlugin(module);
-			const plugin = createPlugin(options);
-			parent.use(path ? mount(path, plugin) : plugin);
+			try {
+				const createPlugin = resolvePlugin(config.rootDir, module);
+				const plugin = createPlugin(options);
+				parent.use(path ? mount(path, plugin) : plugin);
+			}
+			catch (err) {
+				appLogger.error(err);
+			}
 		})
 	;
 };

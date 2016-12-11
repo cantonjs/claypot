@@ -1,7 +1,8 @@
 
-import config from './getConfig';
+import config from '../config';
 import { resolveMiddleware } from './resolve';
 import { isObject, isString, isFunction } from 'lodash';
+import { appLogger } from './logger';
 
 export default (app) => {
 	config
@@ -19,8 +20,13 @@ export default (app) => {
 		})
 		.filter(({ enable = true }) => enable)
 		.forEach(({ module, options = {} }) => {
-			const use = resolveMiddleware(module);
-			use(app, options);
+			try {
+				const use = resolveMiddleware(config.rootDir, module);
+				use(app, options);
+			}
+			catch (err) {
+				appLogger.error(err);
+			}
 		})
 	;
 };
