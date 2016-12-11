@@ -33,7 +33,7 @@ const { argv } = yargs
 		},
 		c: {
 			alias: 'config',
-			desc: 'Path to the config file. Defaults to "Claypotfile.js"',
+			desc: 'Path to the config file.',
 			type: 'string',
 		},
 		script: {
@@ -56,6 +56,7 @@ const { argv } = yargs
 		},
 	})
 	.alias('h', 'help')
+	.wrap(yargs.terminalWidth())
 	.help()
 	.version(version)
 ;
