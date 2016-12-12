@@ -5,6 +5,7 @@ import { monitorLogger } from './utils/logger';
 import { join } from 'path';
 import outputHost from 'output-host';
 import { startMonitor, stopMonitor, execCommand } from './monitor';
+import Table from 'cli-table';
 
 const procs = [];
 
@@ -48,6 +49,22 @@ export const start = async () => {
 export const stop = () => stopMonitor(config);
 
 export const list = async () => {
-	const data = await execCommand('info');
-	console.log('info', data);
+	const processes = await execCommand('info');
+
+	if (!processes.length) {
+		return console.log('No process.');
+	}
+
+	const table = new Table({
+		head: ['name', 'status', 'create at', 'pid'],
+	});
+	processes.forEach((data) => {
+		table.push([
+			data.name,
+			data.status,
+			data.started,
+			data.pid,
+		]);
+	});
+	console.log(table.toString());
 };

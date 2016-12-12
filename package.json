@@ -20,6 +20,7 @@
   "licenses": "MIT",
   "dependencies": {
     "chokidar": "^1.6.1",
+    "cli-table": "^0.3.1",
     "configstore": "^2.1.0",
     "fs-promise": "^1.0.0",
     "globby": "^6.1.0",
