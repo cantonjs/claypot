@@ -726,6 +726,10 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+colors@*:
+  version "1.1.2"
+  resolved "http://registry.npm.taobao.org/colors/download/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
+
 combined-stream@^1.0.5, combined-stream@~1.0.5:
   version "1.0.5"
   resolved "http://registry.npm.taobao.org/combined-stream/download/combined-stream-1.0.5.tgz#938370a57b4a51dea2c77c15d5c5fdf895164009"
@@ -1182,11 +1186,19 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
+event-pubsub@4.2.3:
+  version "4.2.3"
+  resolved "http://registry.npm.taobao.org/event-pubsub/download/event-pubsub-4.2.3.tgz#0d3142f47ac7e0da38cdc38402d97e2510bc5ecc"
+
 event-stream@~0.5:
   version "0.5.3"
   resolved "http://registry.npm.taobao.org/event-stream/download/event-stream-0.5.3.tgz#b77b9309f7107addfeab63f0c0eafd8db0bd8c1c"
   dependencies:
     optimist "0.2"
+
+eventemitter2@^2.0.0:
+  version "2.2.1"
+  resolved "http://registry.npm.taobao.org/eventemitter2/download/eventemitter2-2.2.1.tgz#bb4f09ff9bdae5920a8f42bef0d296f81b80d034"
 
 eventemitter3@1.x.x:
   version "1.2.0"
@@ -1478,6 +1490,16 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+globby@^6.1.0:
+  version "6.1.0"
+  resolved "http://registry.npm.taobao.org/globby/download/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
+  dependencies:
+    array-union "^1.0.1"
+    glob "^7.0.3"
+    object-assign "^4.0.1"
+    pify "^2.0.0"
+    pinkie-promise "^2.0.0"
+
 graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.5, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "http://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
@@ -1721,6 +1743,13 @@ invert-kv@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/invert-kv/download/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
 
+ipcee@^1.0.6:
+  version "1.0.6"
+  resolved "http://registry.npm.taobao.org/ipcee/download/ipcee-1.0.6.tgz#3c8dc8e6787d81d224c98e8f39cbef09e055e6d4"
+  dependencies:
+    debug "^2.2.0"
+    eventemitter2 "^2.0.0"
+
 is-arrayish@^0.2.1:
   version "0.2.1"
   resolved "http://registry.npm.taobao.org/is-arrayish/download/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
@@ -1876,6 +1905,14 @@ jodid25519@^1.0.0:
   resolved "http://registry.npm.taobao.org/jodid25519/download/jodid25519-1.0.2.tgz#06d4912255093419477d425633606e0e90782967"
   dependencies:
     jsbn "~0.1.0"
+
+js-message@>=1.0.5:
+  version "1.0.5"
+  resolved "http://registry.npm.taobao.org/js-message/download/js-message-1.0.5.tgz#2300d24b1af08e89dd095bc1a4c9c9cfcb892d15"
+
+js-queue@>=1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/js-queue/download/js-queue-1.0.0.tgz#bab2e22621fef2b24a34b80ce02b726941c3ba00"
 
 js-tokens@^2.0.0:
   version "2.0.0"
@@ -2306,12 +2343,26 @@ nocache@0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/nocache/download/nocache-0.3.0.tgz#ed9c2dfc7ca7aafa2c5d575c7e156d11880da05b"
 
+node-cmd@>=1.1.1:
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/node-cmd/download/node-cmd-1.1.1.tgz#9c6159d36e6b35b59ec4ab40840d26ab14a9806d"
+
 node-fetch@^1.0.1, node-fetch@^1.3.3:
   version "1.6.3"
   resolved "http://registry.npm.taobao.org/node-fetch/download/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-ipc@^8.9.2:
+  version "8.9.2"
+  resolved "http://registry.npm.taobao.org/node-ipc/download/node-ipc-8.9.2.tgz#1d01035955c5a6bd1f0b932174ea0330ab9dd976"
+  dependencies:
+    colors "*"
+    event-pubsub "4.2.3"
+    js-message ">=1.0.5"
+    js-queue ">=1.0.0"
+    node-cmd ">=1.1.1"
 
 node-pre-gyp@^0.6.29:
   version "0.6.31"

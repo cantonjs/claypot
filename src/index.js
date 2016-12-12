@@ -4,7 +4,7 @@ import exec from './utils/exec';
 import { monitorLogger } from './utils/logger';
 import { join } from 'path';
 import outputHost from 'output-host';
-import { startMonitor, stopMonitor } from './monitor';
+import { startMonitor, stopMonitor, execCommand } from './monitor';
 
 const procs = [];
 
@@ -46,3 +46,8 @@ export const start = async () => {
 };
 
 export const stop = () => stopMonitor(config);
+
+export const list = async () => {
+	const data = await execCommand('info');
+	console.log('info', data);
+};

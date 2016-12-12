@@ -1,20 +1,13 @@
 
 import respawn from 'respawn';
-import IPC from '../utils/IPC';
+import Ipcee from 'ipcee';
 import watch from '../utils/watch';
 import { monitorLogger } from '../utils/logger';
+import { startServer, stopServer } from './unixDomainSocket';
 
-const ipc = new IPC(process);
+const ipc = new Ipcee(process);
 
-const start = ({ script, options }) => {
-	const { name } = options;
-	const { watch: watchOptions, ...respawnOptions } = options;
-
-	const monitor = respawn(script, {
-		...respawnOptions,
-		stdio: ['ignore', 'inherit', 'inherit'],
-	});
-
+const lifecycle = (monitor, name) => {
 	monitor.on('start', () => {
 		monitorLogger.info(`${name} started.`);
 		ipc.send('start');
@@ -49,8 +42,28 @@ const start = ({ script, options }) => {
 	});
 
 	monitor.start();
+};
+
+const startSocketServer = async (monitor, name) => {
+	const socket = await startServer(name);
+	socket.on('info', (data, sock) => {
+		socket.emit(sock, 'info', monitor.toJSON());
+	});
+};
+
+const start = ({ script, options }) => {
+	const { name } = options;
+	const { watch: watchOptions, ...respawnOptions } = options;
+
+	const monitor = respawn(script, {
+		...respawnOptions,
+		stdio: ['ignore', 'inherit', 'inherit'],
+	});
+
+	lifecycle(monitor, name);
 
 	const exit = () => {
+		stopServer();
 		monitor.stop(() => {
 			process.exit();
 		});
@@ -58,6 +71,8 @@ const start = ({ script, options }) => {
 
 	process.on('SIGINT', exit);
 	process.on('SIGTERM', exit);
+
+	startSocketServer(monitor, name);
 
 	watch(watchOptions, (file, stat) => {
 		monitorLogger.trace('watch:restart', stat);

@@ -9,6 +9,10 @@ const { argv } = yargs
 		command: 'stop',
 		desc: 'Stop server',
 	})
+	.command({
+		command: 'ls',
+		desc: 'List servers',
+	})
 	.env(prefix)
 	.options({
 		name: {

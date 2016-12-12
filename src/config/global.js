@@ -11,5 +11,6 @@ const rootDir = dirname(conf.path);
 
 conf.set('rootDir', rootDir);
 conf.set('pidDir', join(rootDir, 'pids'));
+conf.set('socketDir', join(rootDir, 'sockets'));
 
-export default conf;
+export default conf.all;
