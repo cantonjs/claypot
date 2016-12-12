@@ -4,8 +4,14 @@ import { monitorLogger } from './utils/logger';
 import { start, stop } from '.';
 
 if (!argv._.length) {
-	start().catch((err) => monitorLogger.error(err));
+	start().catch((err) => {
+		console.error(err.message);
+		monitorLogger.error(err);
+	});
 }
 else if (argv._[0] === 'stop') {
-	stop().catch((err) => monitorLogger.error(err));
+	stop().catch((err) => {
+		console.error(err.message);
+		monitorLogger.error(err);
+	});
 }

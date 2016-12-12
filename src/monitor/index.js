@@ -1,13 +1,19 @@
 
-import { writeFile, readFile, open, unlink } from 'fs-promise';
+import { writeFile, readFile, ensureDir, open, unlink } from 'fs-promise';
 import { spawn } from 'child_process';
+import processExists from 'process-exists';
 import { monitorLogger } from '../utils/logger';
 import { resolve } from 'path';
+import { trim } from 'lodash';
 import IPC from '../utils/IPC';
+import configStore from '../config/store';
 
-const getPidFile = (rootDir, name) => resolve(rootDir, `${name}.pid`);
+const pidDir = configStore.get('pidDir');
+
+const getPidFile = (name) => resolve(pidDir, `${name}.pid`);
 
 const writePidFile = async (pidFile, pid) => {
+	await ensureDir(pidDir);
 	await writeFile(pidFile, pid);
 };
 
@@ -16,16 +22,24 @@ const checkIsPidFileExists = async (pidFile) => {
 	catch (err) { return false; }
 };
 
-export const stopMonitor = async ({ rootDir, name }) => {
-	const pidFile = getPidFile(rootDir, name);
+const getPid = async (pidFile) => {
+	const isFileExists = await checkIsPidFileExists(pidFile);
+	if (isFileExists) {
+		const pid = +trim(await readFile(pidFile, 'utf-8'));
+		const isProcessExists = await processExists(pid);
+		return isProcessExists && pid;
+	}
+	return false;
+};
 
-	const isExists = await checkIsPidFileExists(pidFile, name);
+export const stopMonitor = async ({ name }) => {
+	const pidFile = getPidFile(name);
 
-	if (!isExists) {
+	const pid = await getPid(pidFile);
+
+	if (!pid) {
 		throw new Error(`"${name}" not found.`);
 	}
-
-	const pid = await readFile(pidFile, 'utf-8');
 
 	try { await unlink(pidFile); }
 	catch (err) { monitorLogger.debug(err); }
@@ -37,9 +51,9 @@ export const stopMonitor = async ({ rootDir, name }) => {
 export const startMonitor = async (script, { daemon, ...options }) => {
 	const { rootDir, name } = options;
 
-	const pidFile = getPidFile(rootDir, name);
+	const pidFile = getPidFile(name);
 
-	const isExists = await checkIsPidFileExists(pidFile, name);
+	const isExists = !!await getPid(pidFile, name);
 
 	if (isExists) {
 		throw new Error(`"${name}" is running.`);

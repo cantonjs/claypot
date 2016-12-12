@@ -3,6 +3,7 @@ import { basename, resolve } from 'path';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
 import resolveConfigFile from './resolveConfigFile';
 import { isDev, isProd, getEnv, setEnv } from './env';
+import store from './store';
 
 const name = getEnv('name');
 const port = getEnv('port');
@@ -104,5 +105,6 @@ config.staticDir = inProj(config.staticDir);
 	setEnv('entry', entry, env);
 }
 
+export const claypotRoot = store.get('rootDir');
 export { isDev, isProd };
 export default config;
