@@ -1,11 +1,11 @@
 
 import respawn from 'respawn';
-import Ipcee from 'ipcee';
+import ChildIPC from '../utils/ChildIPC';
 import watch from '../utils/watch';
 import { monitorLogger } from '../utils/logger';
 import { startServer, stopServer } from './unixDomainSocket';
 
-const ipc = new Ipcee(process);
+const ipc = new ChildIPC(process);
 
 const lifecycle = (monitor, name) => {
 	monitor.on('start', () => {

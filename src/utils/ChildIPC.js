@@ -1,5 +1,5 @@
 
-class IPC {
+class ChildIPC {
 	constructor(process) {
 		this._process = process;
 	}
@@ -22,4 +22,4 @@ class IPC {
 	}
 }
 
-module.exports = IPC;
+module.exports = ChildIPC;

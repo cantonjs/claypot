@@ -5,7 +5,7 @@ import processExists from 'process-exists';
 import { monitorLogger } from '../utils/logger';
 import { join } from 'path';
 import { trim } from 'lodash';
-import Ipcee from 'ipcee';
+import ChildIPC from '../utils/ChildIPC';
 import { globalConfig } from '../config';
 import { startClient, disconnect } from './unixDomainSocket';
 import globby from 'globby';
@@ -99,7 +99,7 @@ export const startMonitor = async (script, { daemon, ...options }) => {
 		cwd: rootDir,
 	});
 
-	const ipc = new Ipcee(monitor);
+	const ipc = new ChildIPC(monitor);
 
 	ipc
 		.on('pid', async (pid) => {
