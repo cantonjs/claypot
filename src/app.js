@@ -12,4 +12,6 @@ useMiddlewares(app);
 
 app.listen(port, () => {
 	appLogger.info(`${name} started.`);
+}).on('error', (err) => {
+	appLogger.error(err);
 });

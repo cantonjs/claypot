@@ -1,5 +1,5 @@
 
-import { dirname, resolve } from 'path';
+import { dirname, resolve, sep } from 'path';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
 import resolveConfigFile from './resolveConfigFile';
 import { isDev, isProd, getEnv, setEnv } from './env';
@@ -22,7 +22,6 @@ let maybeConfig = resolveConfigFile(inProj);
 if (!maybeConfig) { maybeConfig = {}; }
 if (isFunction(maybeConfig)) { maybeConfig = maybeConfig(); }
 
-
 const defaultName = (function () {
 	if (name) { return name; }
 
@@ -32,7 +31,8 @@ const defaultName = (function () {
 		return name;
 	}
 	catch (err) {
-		return dirname(rootDir);
+		const sepRegExp = new RegExp(sep, 'g');
+		return dirname(rootDir).replace(sepRegExp, '_');
 	}
 }());
 
