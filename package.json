@@ -46,6 +46,7 @@
     "log4js": "^1.0.1",
     "node-ipc": "^8.9.2",
     "output-host": "^1.1.0",
+    "pidusage": "^1.1.0",
     "process-exists": "^2.1.0",
     "qiniu": "^6.1.13",
     "redis": "^2.6.3",

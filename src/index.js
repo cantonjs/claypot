@@ -49,22 +49,35 @@ export const start = async () => {
 export const stop = () => stopMonitor(config);
 
 export const list = async () => {
-	const processes = await execCommand('info');
+	const infoList = await execCommand('info');
 
-	if (!processes.length) {
+	if (!infoList.length) {
 		return console.log('No process.');
 	}
 
 	const table = new Table({
-		head: ['name', 'status', 'create at', 'pid'],
+		head: [
+			'Name', 'Status', 'Crashes', 'Memory', 'Started', 'Pid', 'Port',
+		],
+		style: {
+			head: ['blue'],
+		}
 	});
-	processes.forEach((data) => {
+
+	infoList.filter(Boolean).forEach((info) => {
+		const { heapUsed, heapTotal, formattedHeapUsed } = info.memoryUsage;
+		const memoryPercent = `${(heapUsed / heapTotal / 100).toFixed(2)}%`;
+		const memory = `${formattedHeapUsed} (${memoryPercent})`;
 		table.push([
-			data.name,
-			data.status,
-			data.started,
-			data.pid,
+			info.name,
+			info.status,
+			info.crashes,
+			memory,
+			info.started,
+			info.pid,
+			info.data.port,
 		]);
 	});
+
 	console.log(table.toString());
 };

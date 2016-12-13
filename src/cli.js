@@ -19,5 +19,8 @@ else if (command === 'stop') {
 	});
 }
 else if (command === 'ls') {
-	list();
+	list().catch((err) => {
+		console.error(err, err.message);
+		monitorLogger.error(err);
+	});
 }

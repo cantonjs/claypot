@@ -16,6 +16,7 @@ export const startServer = async (id) => {
 			appspace,
 			id,
 			silent: true,
+			stopRetrying: true,
 		});
 
 		const path = join(globalConfig.socketDir, id);
@@ -41,6 +42,7 @@ export const startClient = (clientId, serverId, path) => {
 			appspace,
 			id: clientId,
 			silent: true,
+			stopRetrying: true,
 		});
 
 		ipc.connectTo(serverId, path, () => {

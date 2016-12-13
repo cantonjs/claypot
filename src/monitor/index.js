@@ -118,5 +118,10 @@ export const startMonitor = async (script, { daemon, ...options }) => {
 		.send('start', { script, options: { pidFile, ...options } })
 	;
 
+	monitor.on('uncaughtException', async () => {
+		await stopMonitor(options);
+		process.exit(1);
+	});
+
 	return monitor;
 };
