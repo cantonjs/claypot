@@ -50,7 +50,6 @@ const { argv } = yargs
 		},
 		port: {
 			desc: 'Server port',
-			default: 3000,
 			type: 'number',
 		},
 		e: {

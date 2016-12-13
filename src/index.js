@@ -37,7 +37,7 @@ const bootstrap = () => new Promise(async (resolve, reject) => {
 });
 
 export const start = async () => {
-	const { pre, post, port } = config.script;
+	const { script: { pre, post }, port } = config;
 
 	pre && await procs.push(exec(pre));
 

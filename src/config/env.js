@@ -19,6 +19,7 @@ export const getEnv = (key, source = env) => {
 	if (val === 'true') { return true; }
 	else if (val === 'false' || (!val && +val !== 0)) { return false; }
 	else if (val === 'undefined') { return; }
+	else if (val === 'NaN') { return NaN; }
 	else { return val; }
 };
 

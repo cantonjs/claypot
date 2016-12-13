@@ -1,8 +1,9 @@
 
-import { dirname, resolve, sep } from 'path';
+import { resolve, sep } from 'path';
 import { merge, isFunction, isString, isUndefined } from 'lodash';
 import resolveConfigFile from './resolveConfigFile';
 import { isDev, isProd, getEnv, setEnv } from './env';
+import findPortSync from 'find-port-sync';
 
 export globalConfig from './global';
 
@@ -32,7 +33,7 @@ const defaultName = (function () {
 	}
 	catch (err) {
 		const sepRegExp = new RegExp(sep, 'g');
-		return dirname(rootDir).replace(sepRegExp, '_');
+		return rootDir.replace(sepRegExp, '_');
 	}
 }());
 
@@ -57,7 +58,7 @@ const defaultMiddlewares = [
 const config = merge({
 	name: defaultName,
 	rootDir,
-	port: +port,
+	port: (port ? +port : findPortSync()),
 	maxRestarts: isDev ? 0 : -1,
 	staticDir: 'static',
 	logsDir: '.logs',
@@ -103,8 +104,8 @@ config.logsDir = inProj(config.logsDir);
 		}
 	};
 	setDefault('name', name);
-	setDefault('port', port);
 	setEnv('daemon', daemon, env);
+	setEnv('port', config.port, env);
 	setEnv('entry', entry, env);
 }
 
