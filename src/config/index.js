@@ -59,9 +59,10 @@ const config = merge({
 	rootDir,
 	port: +port,
 	maxRestarts: isDev ? 0 : -1,
+	staticDir: 'static',
+	logsDir: '.logs',
 	logLevel,
 	daemon,
-	staticDir: 'static',
 	middlewares: defaultMiddlewares,
 	plugins: [],
 	redis: {
@@ -92,6 +93,7 @@ if (isFunction(config.middlewares)) {
 }
 
 config.staticDir = inProj(config.staticDir);
+config.logsDir = inProj(config.logsDir);
 
 {
 	const { env } = config;

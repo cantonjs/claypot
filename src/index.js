@@ -4,8 +4,10 @@ import exec from './utils/exec';
 import { monitorLogger } from './utils/logger';
 import { join } from 'path';
 import outputHost from 'output-host';
-import { startMonitor, stopMonitor, execCommand } from './monitor';
+import { startMonitor, stopMonitor, execAll, execByName } from './monitor';
 import Table from 'cli-table';
+import sliceFile from 'slice-file';
+import chalk from 'chalk';
 
 const procs = [];
 
@@ -49,7 +51,7 @@ export const start = async () => {
 export const stop = () => stopMonitor(config);
 
 export const list = async () => {
-	const infoList = await execCommand('info');
+	const infoList = await execAll('info');
 
 	if (!infoList.length) {
 		return console.log('No process.');
@@ -65,12 +67,26 @@ export const list = async () => {
 	});
 
 	infoList.filter(Boolean).forEach((info) => {
-		const { heapUsed, heapTotal, formattedHeapUsed } = info.memoryUsage;
+		const { status, memoryUsage } = info;
+		const { heapUsed, heapTotal, formattedHeapUsed } = memoryUsage;
 		const memoryPercent = `${(heapUsed / heapTotal / 100).toFixed(2)}%`;
 		const memory = `${formattedHeapUsed} (${memoryPercent})`;
+		const styledStatus = (function () {
+			switch (status) {
+				case 'running':
+					return chalk.green(status);
+				case 'stopped':
+				case 'crashed':
+					return chalk.red(status);
+				case 'sleeping':
+					return chalk.magenta(status);
+				default:
+					return status;
+			}
+		}());
 		table.push([
 			info.name,
-			info.status,
+			styledStatus,
 			info.crashes,
 			memory,
 			info.started,
@@ -80,4 +96,21 @@ export const list = async () => {
 	});
 
 	console.log(table.toString());
+};
+
+export const log = async ({ name, line, category, follow }) => {
+	const info = await execByName(name, 'info');
+	if (!info || !info.data) {
+		throw new Error(`"${name}" is NOT found.`);
+	}
+
+	const { logsDir } = info.data;
+	const logFile = join(logsDir, `${category}.log`);
+	const sf = sliceFile(logFile);
+	const mode = follow ? 'follow' : 'slice';
+	sf.on('error', (err) => {
+		if (err.code !== 'ENOENT') { throw err; }
+		console.log('Log file NOT found.');
+	});
+	sf[mode](-line).pipe(process.stdout);
 };

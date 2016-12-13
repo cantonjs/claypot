@@ -13,7 +13,7 @@ import globby from 'globby';
 const { pidDir, socketDir } = globalConfig;
 
 const getPidFile = (name) => join(pidDir, `${name}.pid`);
-const getSocket = (name) => join(socketDir, name);
+const getSocketPath = (name) => join(socketDir, name);
 
 const writePidFile = async (pidFile, pid) => {
 	await ensureDir(pidDir);
@@ -36,29 +36,50 @@ const getPid = async (pidFile) => {
 	return false;
 };
 
-const getSockets = async () => {
+const getNames = async () => {
 	await ensureDir(socketDir);
-	const names = await globby(['*'], { cwd: socketDir });
+	return await globby(['*'], { cwd: socketDir });
+};
+
+const findSocketByName = async (name) => {
+	const names = await getNames();
+	for (const iteratorName of names) {
+		if (iteratorName === name) {
+			return await startClient('monitor', name, getSocketPath(name));
+		}
+	}
+};
+
+const getSockets = async () => {
+	const names = await getNames();
 	const sockets = [];
 	for (const name of names) {
-		sockets.push(await startClient('monitor', name, getSocket(name)));
+		sockets.push(await startClient('monitor', name, getSocketPath(name)));
 	}
 	return sockets;
 };
 
-export const execCommand = async (command, ...args) => {
+const execCommand = (socket, command, arg) => new Promise((resolve) => {
+	const handler = (data) => {
+		socket.off(command, handler);
+		resolve(data);
+		disconnect(socket.id);
+	};
+	socket.on(command, handler);
+	socket.emit(command, arg);
+});
+
+export const execByName = async (name, command, arg) => {
+	const socket = await findSocketByName(name);
+	if (!socket) { return; }
+	return await execCommand(socket, command, arg);
+};
+
+export const execAll = async (command, arg) => {
 	const sockets = await getSockets();
-	const runners = sockets.map((socket) => {
-		return new Promise((resolve) => {
-			const handler = (data) => {
-				socket.off(command, handler);
-				resolve(data);
-				disconnect(socket.id);
-			};
-			socket.on(command, handler);
-			socket.emit(command, ...args);
-		});
-	});
+	const runners = sockets.map((socket) =>
+		execCommand(socket, command, arg)
+	);
 	return Promise.all(runners);
 };
 

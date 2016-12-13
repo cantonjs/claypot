@@ -73,12 +73,12 @@ const lifecycle = (monitor, name) => {
 
 const start = ({ script, options }) => {
 	const { name } = options;
-	const { watch: watchOptions, port, ...respawnOptions } = options;
+	const { watch: watchOptions, port, logsDir, ...respawnOptions } = options;
 
 	const monitor = respawn(script, {
 		...respawnOptions,
 		stdio: ['ignore', 'inherit', 'inherit'],
-		data: { port },
+		data: { port, logsDir },
 	});
 
 	lifecycle(monitor, name);

@@ -1,20 +1,20 @@
 
 import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
-import { resolve } from 'path';
+import { join } from 'path';
 import config from '../config';
 
 const HTTP = 'http';
 const APP = 'app';
 const MONITOR = 'monitor';
 
-const baseDir = resolve('.logs');
-const inDir = (name) => resolve(baseDir, `${name}.log`);
+const { logsDir, daemon } = config;
+const inDir = (name) => join(logsDir, `${name}.log`);
 
 let appenders;
 
-if (config.daemon) {
-	ensureDirSync(baseDir);
+if (daemon) {
+	ensureDirSync(logsDir);
 	appenders = [
 		{
 			type: 'dateFile',
@@ -34,6 +34,16 @@ if (config.daemon) {
 			backups: 3,
 			compress: true,
 			category: APP,
+		},
+		{
+			type: 'logLevelFilter',
+			level: 'ALL',
+			appender: {
+				type: 'file',
+				filename: inDir('all'),
+				maxLogSize: 10485760, // 10MB
+				backups: 3,
+			},
 		},
 		{
 			type: 'logLevelFilter',
