@@ -11,30 +11,44 @@ const ipc = new ChildIPC(process);
 
 const startSocketServer = async (monitor, name) => {
 	const socket = await startServer(name);
-	const { pid } = monitor.child;
+
 	socket.on('info', (data, sock) => {
-		pidUsage.stat(pid, (err, { memory }) => {
-			let resp = null;
-			if (err) { monitorLogger.error(err); }
-			else {
-				resp = {
-					...monitor.toJSON(),
-					memoryUsage: {
-						heapTotal: process.memoryUsage().heapTotal,
-						heapUsed: memory,
-						formattedHeapUsed: formatBytes(memory),
-					},
-				};
-			}
-			socket.emit(sock, 'info', resp);
+		const emit = (data = {}) => socket.emit(sock, 'info', {
+			memoryUsage: {
+				percent: '-',
+				formattedHeapUsed: '-',
+			},
+			...monitor.toJSON(),
+			...data,
 		});
-		pidUsage.unmonitor(pid);
+
+		const { pid } = monitor;
+		if (pid) {
+			pidUsage.stat(pid, (err, { memory }) => {
+				let resp = null;
+				if (err) { monitorLogger.error(err); }
+				else {
+					const { heapTotal } = process.memoryUsage();
+					resp = {
+						memoryUsage: {
+							percent: `${(memory / heapTotal / 100).toFixed(2)}%`,
+							formattedHeapUsed: formatBytes(memory),
+						},
+					};
+				}
+				emit(resp);
+			});
+			pidUsage.unmonitor(pid);
+		}
+		else {
+			emit();
+		}
+
 	});
 };
 
 const lifecycle = (monitor, name) => {
 	monitor.on('start', () => {
-		startSocketServer(monitor, name);
 		monitorLogger.info(`${name} started.`);
 		ipc.send('start');
 	});
@@ -52,7 +66,6 @@ const lifecycle = (monitor, name) => {
 	});
 
 	monitor.on('exit', async (code, signal) => {
-		stopServer();
 		monitorLogger.info(`${name} exit with code "${code}", signal "${signal}".`);
 	});
 
@@ -78,15 +91,20 @@ const start = ({ script, options }) => {
 	const monitor = respawn(script, {
 		...respawnOptions,
 		stdio: ['ignore', 'inherit', 'inherit'],
-		data: { port, logsDir },
+		data: {
+			port,
+			logsDir,
+			pid: process.pid,
+		},
 	});
 
 	lifecycle(monitor, name);
 
+	startSocketServer(monitor, name);
+
 	const exit = () => {
-		monitor.stop(() => {
-			process.exit();
-		});
+		stopServer();
+		monitor.stop(::process.exit);
 	};
 
 	process.on('SIGINT', exit);
@@ -94,7 +112,7 @@ const start = ({ script, options }) => {
 	process.on('uncaughtException', exit);
 
 	watch(watchOptions, (file, stat) => {
-		monitorLogger.info('watch:restart', stat);
+		monitorLogger.debug('watch:restart', stat);
 
 		process.emit('watch:restart', { file, stat });
 

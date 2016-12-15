@@ -53,6 +53,7 @@ export const startClient = (clientId, serverId, path) => {
 
 			socket.on('error', async (err) => {
 				monitorLogger.debug('socket error', err);
+				console.log('socket error', err);
 				if (err && err.code === 'ECONNREFUSED') {
 					await unlink(path);
 				}

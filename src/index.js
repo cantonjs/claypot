@@ -8,6 +8,7 @@ import { startMonitor, stopMonitor, execAll, execByName } from './monitor';
 import Table from 'cli-table';
 import sliceFile from 'slice-file';
 import chalk from 'chalk';
+import { isUndefined } from 'lodash';
 
 const procs = [];
 
@@ -66,10 +67,9 @@ export const list = async () => {
 	});
 
 	infoList.filter(Boolean).forEach((info) => {
-		const { status, memoryUsage } = info;
-		const { heapUsed, heapTotal, formattedHeapUsed } = memoryUsage;
-		const memoryPercent = `${(heapUsed / heapTotal / 100).toFixed(2)}%`;
-		const memory = `${formattedHeapUsed} (${memoryPercent})`;
+		const { status, memoryUsage, data = {} } = info;
+		const { percent, formattedHeapUsed } = memoryUsage;
+		const memory = `${formattedHeapUsed} (${percent})`;
 		const styledStatus = (function () {
 			switch (status) {
 				case 'running':
@@ -89,9 +89,9 @@ export const list = async () => {
 			info.crashes,
 			memory,
 			info.started,
-			info.pid,
-			info.data.port,
-		]);
+			data.pid,
+			data.port,
+		].map((val) => isUndefined(val) ? '-' : val));
 	});
 
 	console.log(table.toString());
