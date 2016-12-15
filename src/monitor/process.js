@@ -28,7 +28,7 @@ const startSocketServer = async (monitor, name) => {
 			}
 			socket.emit(sock, 'info', resp);
 		});
-		pidUsage.unmonitor(process.pid);
+		pidUsage.unmonitor(pid);
 	});
 };
 
