@@ -1,5 +1,5 @@
 
-import { ensureDir } from 'fs-promise';
+import { ensureDir, unlink } from 'fs-promise';
 import ipc from 'node-ipc';
 import { join } from 'path';
 import { monitorLogger } from '../utils/logger';
@@ -48,12 +48,15 @@ export const startClient = (clientId, serverId, path) => {
 		ipc.connectTo(serverId, path, () => {
 			const socket = ipc.of[serverId];
 			socket.on('connect', () => {
-
-				socket.on('error', (err) => {
-					monitorLogger.error('socket error', err);
-				});
-
 				resolve(socket);
+			});
+
+			socket.on('error', async (err) => {
+				monitorLogger.debug('socket error', err);
+				if (err && err.code === 'ECONNREFUSED') {
+					await unlink(path);
+				}
+				resolve();
 			});
 		});
 	});

@@ -56,7 +56,7 @@ const getSockets = async () => {
 	for (const name of names) {
 		sockets.push(await startClient('monitor', name, getSocketPath(name)));
 	}
-	return sockets;
+	return sockets.filter(Boolean);
 };
 
 const execCommand = (socket, command, arg) => new Promise((resolve) => {

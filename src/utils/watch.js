@@ -1,5 +1,6 @@
 
 import chokidar from 'chokidar';
+import { debounce } from 'lodash';
 
 export default function watch(options, handler) {
 	const { enable, dirs, ignoreDotFiles, ...other } = options;
@@ -14,5 +15,5 @@ export default function watch(options, handler) {
 		...other,
 		usePolling: true,
 		ignoreInitial: true,
-	}).on('all', handler);
+	}).on('all', debounce(handler, 1000));
 }

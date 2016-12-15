@@ -94,10 +94,16 @@ const start = ({ script, options }) => {
 	process.on('uncaughtException', exit);
 
 	watch(watchOptions, (file, stat) => {
-		monitorLogger.trace('watch:restart', stat);
+		monitorLogger.info('watch:restart', stat);
 
 		process.emit('watch:restart', { file, stat });
-		monitor.stop(::monitor.start);
+
+		return new Promise((resolve) => {
+			monitor.stop(() => {
+				monitor.start();
+				resolve();
+			});
+		});
 	});
 };
 
