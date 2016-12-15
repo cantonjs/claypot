@@ -1,7 +1,7 @@
 
 import config, { isDev } from './config';
 import exec from './utils/exec';
-import { monitorLogger } from './utils/logger';
+import logger from './utils/cliLogger';
 import { join } from 'path';
 import outputHost from 'output-host';
 import { startMonitor, stopMonitor, execAll, execByName } from './monitor';
@@ -23,11 +23,10 @@ const bootstrap = () => new Promise(async (resolve, reject) => {
 
 		proc
 			.on('start', () => {
-				monitorLogger.debug('proc start');
 				resolve(proc);
 			})
 			.on('exit', (...args) => {
-				monitorLogger.info('exit', args);
+				// logger.info('exit', args);
 			})
 		;
 	}
@@ -54,7 +53,7 @@ export const list = async () => {
 	const infoList = await execAll('info');
 
 	if (!infoList.length) {
-		return console.log('No process.');
+		return logger.warn('No process.');
 	}
 
 	const table = new Table({
@@ -110,7 +109,7 @@ export const log = async ({ name, line, category, follow }) => {
 	const mode = follow ? 'follow' : 'slice';
 	sf.on('error', (err) => {
 		if (err.code !== 'ENOENT') { throw err; }
-		console.log('Log file NOT found.');
+		logger.warn('Log file NOT found.');
 	});
 	sf[mode](-line).pipe(process.stdout);
 };
