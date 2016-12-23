@@ -21,7 +21,7 @@ export default (app) => {
 		.filter(({ enable = true }) => enable)
 		.forEach(({ module, options = {} }) => {
 			try {
-				const use = resolveMiddleware(config.rootDir, module);
+				const use = resolveMiddleware(config.root, module);
 				use(app, options);
 			}
 			catch (err) {

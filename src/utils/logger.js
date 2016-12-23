@@ -2,18 +2,18 @@
 import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { join } from 'path';
-import config from '../config';
+// import config from '../config';
 
 const HTTP = 'http';
 const APP = 'app';
 const MONITOR = 'monitor';
 
-const { logsDir, daemon } = config;
-const inDir = (name) => join(logsDir, `${name}.log`);
+// const { logsDir, daemon } = config;
+// const inDir = (name) => join(logsDir, `${name}.log`);
 
 let appenders;
 
-if (daemon) {
+if (false && daemon) {
 	ensureDirSync(logsDir);
 	appenders = [
 		{

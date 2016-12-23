@@ -1,14 +1,18 @@
 
 import './redis';
-import config from './config';
 import koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
+import config from './config';
 import { appLogger } from './utils/logger';
 
 const { port, name } = config;
+
 const app = koa();
 
 useMiddlewares(app);
+// app.use(function * () {
+// 	this.body = 'hello claypot';
+// });
 
 app.listen(port, () => {
 	appLogger.info(`${name} started.`);

@@ -7,7 +7,7 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "babel-node src/cli",
+    "start": "babel-node src",
     "start:daemon": "babel-node src/cli --daemon",
     "ls": "babel-node src/cli ls",
     "stop": "babel-node src/cli stop",
@@ -20,9 +20,6 @@
   "licenses": "MIT",
   "dependencies": {
     "chalk": "^1.1.3",
-    "chokidar": "^1.6.1",
-    "cli-table": "^0.3.1",
-    "configstore": "^2.1.0",
     "find-port-sync": "^1.0.0",
     "fs-promise": "^1.0.0",
     "globby": "^6.1.0",
@@ -44,15 +41,10 @@
     "koa-weixin-jssdk": "^1.2.0",
     "lodash": "^4.17.2",
     "log4js": "^1.0.1",
-    "node-ipc": "^8.9.2",
-    "output-host": "^1.1.0",
-    "pidusage": "^1.1.0",
-    "process-exists": "^2.1.0",
+    "pot-js": "^0.0.0-beta.8",
     "qiniu": "^6.1.13",
     "redis": "^2.6.3",
     "request": "^2.79.0",
-    "respawn": "^2.4.1",
-    "slice-file": "^1.0.0",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
@@ -65,6 +57,7 @@
     "babel-polyfill": "^6.13.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.6",
+    "babel-register-cli": "^3.0.0",
     "co-body": "^4.2.0",
     "eslint": "^2.4.0",
     "eslint-plugin-babel": "^3.2.0",
