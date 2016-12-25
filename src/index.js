@@ -1,25 +1,16 @@
 
-import { start } from 'pot-js';
-import { join } from 'path';
-
-const config = {
-	entry: join(__dirname, 'start.js'),
-	execCommand: 'babel-register',
-	stdio: ['ipc', 'inherit', 'inherit'],
-	// logLevel: 'DEBUG',
-	logLevel: 'TRACE',
-	watch: {
-		enable: true,
-	},
-	env: {
-		CLAYPOT_CONFIG: JSON.stringify({
-			port: 3000,
-		}),
-		NODE_ENV: 'development',
-	},
-};
+import { start, resolveConfig } from 'pot-js';
 
 async function init() {
+	const config = await resolveConfig({
+		config: 'Claypotfile.js',
+		configWalk: true,
+		entry: 'src/start.js',
+		workspace: 'claypot',
+		inject: true,
+		stdio: ['ipc', 'inherit', 'inherit'],
+	});
+
 	await start(config);
 }
 

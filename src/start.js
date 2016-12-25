@@ -2,20 +2,26 @@
 import './redis';
 import koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
-import config from './config';
+import { init } from './config';
 import { appLogger } from './utils/logger';
 
-const { port, name } = config;
+process.on('message', (buf) => {
+	const config = init(JSON.parse(buf.toString()));
+	// console.log('config', config);
 
-const app = koa();
+	const { port, name } = config;
 
-useMiddlewares(app);
-// app.use(function * () {
-// 	this.body = 'hello claypot';
-// });
+	const app = koa();
 
-app.listen(port, () => {
-	appLogger.info(`${name} started.`);
-}).on('error', (err) => {
-	appLogger.error(err);
+	useMiddlewares(app);
+	// app.use(function * () {
+	// 	this.body = 'hello claypot';
+	// });
+
+	app.listen(port, () => {
+		appLogger.info(`${name} started.`);
+	}).on('error', (err) => {
+		appLogger.error(err);
+	});
+
 });

@@ -1,25 +1,16 @@
 
 import findPortSync from 'find-port-sync';
-import { merge } from 'lodash';
+import { mergeWith, isNull, isArray } from 'lodash';
 
-const {
-	NODE_ENV = 'development',
-	CLAYPOT_CONFIG,
-	POT_CONFIG,
-} = process.env;
+const { NODE_ENV = 'development' } = process.env;
 
 export const isProd = NODE_ENV === 'production';
 export const isDev = NODE_ENV === 'development';
 
-const claypotConfig = JSON.parse(CLAYPOT_CONFIG) || {};
-const potConfig = JSON.parse(POT_CONFIG) || {};
-
-const { port } = claypotConfig;
-
-const config = merge({
-	port: +port || findPortSync(),
-	maxRestarts: isDev ? 0 : -1,
+const config = {
+	port: findPortSync(),
 	staticDir: 'static',
+	maxRestarts: isDev ? 0 : -1,
 	middlewares: [
 		'responseTime',
 		'logger',
@@ -36,9 +27,27 @@ const config = merge({
 		enable: false,
 		port: 6379,
 		host: '127.0.0.1',
-		prefix: `${potConfig.name}:`,
+
+		// prefix: `${potConfig.name}:`,
+		prefix: 'claypot',
+
 		defaultExpiresIn: 60,
 	},
-}, potConfig, claypotConfig);
+	watch: {
+		enable: isDev,
+	},
+};
 
 export default config;
+
+export const init = function init(newConfig) {
+	return mergeWith(config, newConfig, (input, output) => {
+		if (isArray(output)) {
+			return isArray(input) ? input.concat(output) : output;
+		}
+		if (isNull(output) || isNaN(output)) {
+			return input;
+		}
+		return output;
+	});
+};

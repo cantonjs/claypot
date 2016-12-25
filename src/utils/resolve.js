@@ -21,12 +21,12 @@ export const resolveFromPaths = (paths) => {
 	else { throw error; }
 };
 
-const resolveModules = (type) => (rootDir, module) => {
+const resolveModules = (type) => (root, module) => {
 	if (!isString(module)) { return module; }
 
 	const paths = [
 		`../${type}/${module}`,
-		resolve(rootDir, module),
+		resolve(root, module),
 		module,
 	];
 

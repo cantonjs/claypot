@@ -22,7 +22,7 @@ export default (parent) => {
 		.filter(({ enable = true }) => enable)
 		.forEach(({ path, module, options = {} }) => {
 			try {
-				const createPlugin = resolvePlugin(config.rootDir, module);
+				const createPlugin = resolvePlugin(config.root, module);
 				const plugin = createPlugin(options);
 				parent.use(path ? mount(path, plugin) : plugin);
 			}
