@@ -7,7 +7,7 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "babel-node src",
+    "start": "babel-node src/cli",
     "start:daemon": "babel-node src/cli --daemon",
     "ls": "babel-node src/cli ls",
     "stop": "babel-node src/cli stop",
@@ -39,7 +39,8 @@
     "koa-weixin-jssdk": "^1.2.0",
     "lodash": "^4.17.2",
     "log4js": "^1.0.1",
-    "pot-js": "^0.0.0-alpha.11",
+    "output-host": "^2.0.0",
+    "pot-js": "^0.0.0-alpha.12",
     "qiniu": "^6.1.13",
     "redis": "^2.6.3",
     "yargs": "^6.5.0"

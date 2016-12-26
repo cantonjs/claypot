@@ -1,7 +1,7 @@
 
 import weixinJSSDK from 'koa-weixin-jssdk';
 import Ask from 'http-ask';
-import { getCache, setCache } from '../redis';
+import { getCache, setCache } from '../app/redis';
 
 const WX_TICKET_CACHE_KEY = 'wx_js_ticket';
 

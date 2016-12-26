@@ -1,15 +1,26 @@
 
 import config from '../config';
 import mount from 'koa-mount';
-import { resolvePlugin } from './resolve';
-import { isObject, isString, isFunction } from 'lodash';
+import importModule from 'pot-js/lib/utils/importModule';
+import { resolve } from 'path';
+import { isObject, isString } from 'lodash';
 import { appLogger } from './logger';
+import redis, { getCache, setCache } from '../app/redis';
 
 export default (parent) => {
+	parent.use(function * (next) {
+		this.claypot = {
+			redis,
+			getCache,
+			setCache,
+		};
+		yield next;
+	});
+
 	config
 		.plugins
 		.map((plugin) => {
-			if (isString(plugin) || isFunction(plugin)) {
+			if (isString(plugin)) {
 				return { module: plugin };
 			}
 			else if (isObject(plugin)) {
@@ -22,7 +33,10 @@ export default (parent) => {
 		.filter(({ enable = true }) => enable)
 		.forEach(({ path, module, options = {} }) => {
 			try {
-				const createPlugin = resolvePlugin(config.root, module);
+				const createPlugin = importModule(module, {
+					...config,
+					prefer: resolve(__dirname, '../plugins'),
+				});
 				const plugin = createPlugin(options);
 				parent.use(path ? mount(path, plugin) : plugin);
 			}

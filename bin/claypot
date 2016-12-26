@@ -1,3 +1,11 @@
 #!/usr/bin/env node
 
-require('../lib/cli');
+const { _ = '' } = process.env;
+
+if (_.endsWith('babel-node')) {
+	require('babel-register')();
+	require('../src/cli');
+}
+else {
+	require('../lib/cli');
+}

@@ -1,5 +1,5 @@
 
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import { isString } from 'lodash';
 
 export const resolveES6 = (path) => {
@@ -25,7 +25,7 @@ const resolveModules = (type) => (root, module) => {
 	if (!isString(module)) { return module; }
 
 	const paths = [
-		`../${type}/${module}`,
+		join('..', type, module),
 		resolve(root, module),
 		module,
 	];

@@ -1,8 +1,8 @@
 
 import redis from 'redis';
-import { appLogger } from './utils/logger';
+import { appLogger } from '../utils/logger';
 import { isObject, padStart } from 'lodash';
-import config from './config';
+import config from '../config';
 
 const { defaultExpiresIn, enable, ...redisConfig } = config.redis;
 const client = enable && redis.createClient(redisConfig);

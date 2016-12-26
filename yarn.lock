@@ -842,6 +842,14 @@ cookies@~0.6.1:
     depd "~1.1.0"
     keygrip "~1.0.1"
 
+copy-paste@^1.1.4:
+  version "1.3.0"
+  resolved "http://registry.npm.taobao.org/copy-paste/download/copy-paste-1.3.0.tgz#a7e6c4a1c28fdedf2b081e72b97df2ef95f471ed"
+  dependencies:
+    iconv-lite "^0.4.8"
+  optionalDependencies:
+    sync-exec "~0.6.x"
+
 copy-to@^2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/copy-to/download/copy-to-2.0.1.tgz#2680fbb8068a48d08656b6098092bdafc906f4a5"
@@ -1712,7 +1720,7 @@ http-signature@~1.1.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-iconv-lite@0.4.13, iconv-lite@~0.4.13:
+iconv-lite@0.4.13, iconv-lite@^0.4.8, iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "http://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
@@ -2603,6 +2611,15 @@ output-file-sync@^1.1.0:
     mkdirp "^0.5.1"
     object-assign "^4.1.0"
 
+output-host@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/output-host/download/output-host-2.0.0.tgz#41e5d1519732686dc14face0b7dccb608da9ec89"
+  dependencies:
+    chalk "^1.1.1"
+    copy-paste "^1.1.4"
+    get-my-ip "0.0.1"
+    yargs "^6.5.0"
+
 p-limit@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/p-limit/download/p-limit-1.1.0.tgz#b07ff2d9a5d88bec806035895a2bab66a27988bc"
@@ -2708,9 +2725,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/pluralize/download/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pot-js@^0.0.0-alpha.11:
-  version "0.0.0-alpha.11"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-alpha.11.tgz#4e4b81294361e44a71cc1e77db97dcb73b243137"
+pot-js@^0.0.0-alpha.12:
+  version "0.0.0-alpha.12"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-alpha.12.tgz#99ea6e1808a5c00869f3f49a2365b9f49e040c27"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
@@ -3226,6 +3243,10 @@ swig@^1.3.2:
   dependencies:
     optimist "~0.6"
     uglify-js "~2.4"
+
+sync-exec@~0.6.x:
+  version "0.6.2"
+  resolved "http://registry.npm.taobao.org/sync-exec/download/sync-exec-0.6.2.tgz#717d22cc53f0ce1def5594362f3a89a2ebb91105"
 
 sync-request@3.0.1:
   version "3.0.1"

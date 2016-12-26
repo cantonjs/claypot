@@ -3,10 +3,10 @@ import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { join } from 'path';
 import config from '../config';
+import { logger as potLogger } from 'pot-js';
 
 const HTTP = 'http';
 const APP = 'app';
-const MONITOR = 'monitor';
 
 const { logsDir, daemon } = config;
 const inDir = (name) => join(logsDir, `${name}.log`);
@@ -55,12 +55,6 @@ if (daemon) {
 				backups: 3,
 			},
 		},
-		{
-			type: 'file',
-			filename: inDir('monitor'),
-			maxLogSize: 10485760, // 10MB
-			category: MONITOR,
-		},
 	];
 }
 else {
@@ -74,8 +68,7 @@ log4js.configure({
 	},
 });
 
-export default log4js;
-
+export { potLogger };
 export const httpLogger = log4js.getLogger(HTTP);
 export const appLogger = log4js.getLogger(APP);
-export const monitorLogger = log4js.getLogger(MONITOR);
+export default log4js;

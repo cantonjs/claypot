@@ -18,7 +18,7 @@ const config = {
 		isProd && 'helmet',
 		isProd && 'compress',
 		'plugins',
-		'rewtireIndex',
+		'rewriteIndex',
 		'static',
 		'notFound',
 	].filter(Boolean),
