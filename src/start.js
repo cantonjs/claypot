@@ -20,6 +20,7 @@ export default async function start(options = {}) {
 	await startPot(config);
 
 	outputHost({
+		port: config.port,
 		name: config.name,
 		useCopy: isDev,
 		logger: appLogger.info.bind(appLogger),
