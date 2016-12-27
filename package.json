@@ -7,14 +7,14 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "babel-node src/cli",
-    "start:daemon": "babel-node src/cli --daemon",
-    "ls": "babel-node src/cli ls",
-    "stop": "babel-node src/cli stop",
+    "start": "npm test -- start",
+    "ls": "npm test -- ls",
+    "log": "npm test -- log",
+    "stop": "npm test -- stop",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
-    "test": "babel-node test/proxyServer"
+    "test": "npm run build && babel-node lib/cli"
   },
   "author": "Cap32",
   "licenses": "MIT",

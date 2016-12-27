@@ -2,14 +2,13 @@
 import './redis';
 import koa from 'koa';
 import useMiddlewares from '../utils/useMiddlewares';
-import { init, isDev } from '../config';
+import { init } from '../config';
 import { appLogger } from '../utils/logger';
-import outputHost from 'output-host';
 
 process.on('message', (buf) => {
 	const config = init(JSON.parse(buf.toString()));
 
-	const { port, name } = config;
+	const { port } = config;
 
 	const app = koa();
 
@@ -18,11 +17,7 @@ process.on('message', (buf) => {
 	// 	this.body = 'hello claypot';
 	// });
 
-	app.listen(port, outputHost.curry({
-		name,
-		useCopy: isDev,
-		logger: appLogger.info.bind(appLogger),
-	})).on('error', (err) => {
+	app.listen(port).on('error', (err) => {
 		appLogger.error(err);
 	});
 

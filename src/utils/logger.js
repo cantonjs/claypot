@@ -3,13 +3,13 @@ import log4js from 'log4js';
 import { ensureDirSync } from 'fs-promise';
 import { join } from 'path';
 import config from '../config';
-import { logger as potLogger } from 'pot-js';
 
 const HTTP = 'http';
 const APP = 'app';
 
 const { logsDir, daemon } = config;
-const inDir = (name) => join(logsDir, `${name}.log`);
+
+export const inLogsDir = (name) => join(logsDir, `${name}.log`);
 
 let appenders;
 
@@ -18,7 +18,7 @@ if (daemon) {
 	appenders = [
 		{
 			type: 'dateFile',
-			filename: inDir('access'),
+			filename: inLogsDir('access'),
 			pattern: '-dd.log',
 			category: HTTP,
 			layout: {
@@ -28,7 +28,7 @@ if (daemon) {
 		},
 		{
 			type: 'file',
-			filename: inDir('app'),
+			filename: inLogsDir('app'),
 			level: 'INFO',
 			maxLogSize: 10485760, // 10MB
 			backups: 3,
@@ -40,7 +40,7 @@ if (daemon) {
 			level: 'ALL',
 			appender: {
 				type: 'file',
-				filename: inDir('all'),
+				filename: inLogsDir('all'),
 				maxLogSize: 10485760, // 10MB
 				backups: 3,
 			},
@@ -50,7 +50,7 @@ if (daemon) {
 			level: 'ERROR',
 			appender: {
 				type: 'file',
-				filename: inDir('error'),
+				filename: inLogsDir('error'),
 				maxLogSize: 10485760, // 10MB
 				backups: 3,
 			},
@@ -68,7 +68,6 @@ log4js.configure({
 	},
 });
 
-export { potLogger };
 export const httpLogger = log4js.getLogger(HTTP);
 export const appLogger = log4js.getLogger(APP);
 export default log4js;
