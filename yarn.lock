@@ -2725,9 +2725,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/pluralize/download/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pot-js@^0.0.0-alpha.12:
-  version "0.0.0-alpha.12"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-alpha.12.tgz#99ea6e1808a5c00869f3f49a2365b9f49e040c27"
+pot-js@^0.0.0-beta.13:
+  version "0.0.0-beta.13"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.13.tgz#fc4fa94854cd2cbe271ad76ce115f978fe07da69"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"

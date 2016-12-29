@@ -17,6 +17,8 @@ process.on('message', (buf) => {
 	// 	this.body = 'hello claypot';
 	// });
 
+	appLogger.debug('start');
+
 	app.listen(port).on('error', (err) => {
 		appLogger.error(err);
 	});
