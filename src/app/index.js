@@ -13,11 +13,6 @@ process.on('message', (buf) => {
 	const app = koa();
 
 	useMiddlewares(app);
-	// app.use(function * () {
-	// 	this.body = 'hello claypot';
-	// });
-
-	appLogger.debug('start');
 
 	app.listen(port).on('error', (err) => {
 		appLogger.error(err);

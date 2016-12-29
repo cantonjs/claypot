@@ -32,7 +32,7 @@ export const initLog = (addAppenders = noop) => {
 				type: 'file',
 				filename: inLogsDir('app'),
 				level: 'INFO',
-				maxLogSize: 10485760, // 10MB
+				maxLogSize: 104857600, // 100MB
 				backups: 3,
 				compress: true,
 				category: APP,
@@ -43,7 +43,7 @@ export const initLog = (addAppenders = noop) => {
 				appender: {
 					type: 'file',
 					filename: inLogsDir('all'),
-					maxLogSize: 10485760, // 10MB
+					maxLogSize: 104857600, // 100MB
 					backups: 3,
 				},
 			},
@@ -53,7 +53,7 @@ export const initLog = (addAppenders = noop) => {
 				appender: {
 					type: 'file',
 					filename: inLogsDir('error'),
-					maxLogSize: 10485760, // 10MB
+					maxLogSize: 104857600, // 100MB
 					backups: 3,
 				},
 			},
