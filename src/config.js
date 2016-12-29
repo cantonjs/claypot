@@ -17,6 +17,7 @@ const config = {
 		'error',
 		isProd && 'helmet',
 		isProd && 'compress',
+		'favicon',
 		'plugins',
 		'rewriteIndex',
 		'static',
