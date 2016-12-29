@@ -14,7 +14,8 @@
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
-    "test": "npm run build && babel-node lib/cli"
+    "cli": "babel-node lib/cli",
+    "test": "npm run build && npm run cli"
   },
   "author": "Cap32",
   "licenses": "MIT",
@@ -40,7 +41,7 @@
     "lodash": "^4.17.2",
     "log4js": "^1.0.1",
     "output-host": "^2.0.0",
-    "pot-js": "^0.0.0-beta.13",
+    "pot-js": "^0.0.0-beta.15",
     "qiniu": "^6.1.13",
     "redis": "^2.6.3",
     "yargs": "^6.5.0"
