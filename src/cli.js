@@ -9,6 +9,7 @@ import start from './start';
 import stop from './stop';
 import list from './list';
 import log from './log';
+import dir from './dir';
 
 // eslint-disable-next-line
 yargs
@@ -171,6 +172,13 @@ yargs
 		},
 		handler(argv) {
 			log(argv).catch((err) => appLogger.error(err.message));
+		},
+	})
+	.command({
+		command: 'dir [name]',
+		desc: 'Show dir',
+		handler(argv) {
+			dir(argv).catch((err) => appLogger.error(err.message));
 		},
 	})
 	.env(upperCase(name))
