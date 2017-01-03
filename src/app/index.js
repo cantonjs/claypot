@@ -21,17 +21,29 @@ process.on('message', async (buf) => {
 
 	useMiddlewares(app);
 
+	const handleError = (server) => {
+		server.on('error', ::appLogger.error);
+	};
+
+	const tryReadFile = async (file) => {
+		try {
+			await readFile(resolve(root, file));
+		}
+		catch (err) {
+			appLogger.error(`Failed to read file "${file}".`);
+			appLogger.debug(err);
+		}
+	};
+
 	if (enableHttps) {
 		const options = {
-			key: await readFile(resolve(root, key)),
-			cert: await readFile(resolve(root, cert)),
+			key: await tryReadFile(key),
+			cert: await tryReadFile(cert),
 		};
-		http.createServer(app.callback()).listen(port);
-		https.createServer(options, app.callback()).listen(httpsPort);
+		handleError(http.createServer(app.callback()).listen(port));
+		handleError(https.createServer(options, app.callback()).listen(httpsPort));
 	}
 	else {
-		app.listen(port).on('error', (err) => {
-			appLogger.error(err);
-		});
+		handleError(app.listen(port));
 	}
 });

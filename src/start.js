@@ -32,8 +32,9 @@ export default async function start(options = {}) {
 
 	if (enableHttps) {
 		outputHost({
-			port: config.port,
-			name: `${config.name} https`,
+			port: config.ssl.port,
+			name: `${config.name} HTTPS`,
+			protocol: 'https',
 			useCopy: isDev,
 			logger,
 		});

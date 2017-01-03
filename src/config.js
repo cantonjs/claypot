@@ -1,6 +1,6 @@
 
 import findPortSync from 'find-port-sync';
-import { mergeWith, isNull, isArray } from 'lodash';
+import { mergeWith, isNull, isArray, isObject } from 'lodash';
 
 const { NODE_ENV = 'development' } = process.env;
 
@@ -50,7 +50,7 @@ export const init = function init(newConfig) {
 		if (isArray(output)) {
 			return isArray(input) ? input.concat(output) : output;
 		}
-		if (isNull(output) || isNaN(output)) {
+		if (isNull(output) || Object.is(NaN, output)) {
 			return input;
 		}
 		return output;
