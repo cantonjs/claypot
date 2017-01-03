@@ -19,10 +19,24 @@ export default async function start(options = {}) {
 
 	await startPot(config);
 
+	const enableHttps = config.ssl.enable;
+
+	const logger = appLogger.info.bind(appLogger);
+
 	outputHost({
 		port: config.port,
 		name: config.name,
-		useCopy: isDev,
-		logger: appLogger.info.bind(appLogger),
+		useCopy: isDev && !enableHttps,
+		logger,
 	});
+
+	if (enableHttps) {
+		outputHost({
+			port: config.port,
+			name: `${config.name} https`,
+			useCopy: isDev,
+			logger,
+		});
+
+	}
 }

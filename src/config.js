@@ -9,6 +9,10 @@ export const isDev = NODE_ENV === 'development';
 
 const config = {
 	port: findPortSync(),
+	ssl: {
+		enable: false,
+		port: findPortSync() + 1,
+	},
 	staticDir: 'static',
 	maxRestarts: isDev ? 0 : -1,
 	middlewares: [
