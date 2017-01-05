@@ -27,7 +27,7 @@ process.on('message', async (buf) => {
 
 	const tryReadFile = async (file) => {
 		try {
-			await readFile(resolve(root, file));
+			return await readFile(resolve(root, file));
 		}
 		catch (err) {
 			appLogger.error(`Failed to read file "${file}".`);
