@@ -37,7 +37,7 @@ export default (parent) => {
 					...config,
 					prefer: resolve(__dirname, '../plugins'),
 				});
-				const plugin = createPlugin(options);
+				const plugin = createPlugin(options, config);
 				parent.use(path ? mount(path, plugin) : plugin);
 			}
 			catch (err) {
