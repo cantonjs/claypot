@@ -1,6 +1,6 @@
 
 import findPortSync from 'find-port-sync';
-import { mergeWith, isNull, isArray, isObject } from 'lodash';
+import { mergeWith, isNull, isArray, uniq } from 'lodash';
 
 const { NODE_ENV = 'development' } = process.env;
 
@@ -48,7 +48,7 @@ export default config;
 export const init = function init(newConfig) {
 	return mergeWith(config, newConfig, (input, output) => {
 		if (isArray(output)) {
-			return isArray(input) ? input.concat(output) : output;
+			return uniq(isArray(input) ? input.concat(output) : output);
 		}
 		if (isNull(output) || Object.is(NaN, output)) {
 			return input;
