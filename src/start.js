@@ -14,7 +14,7 @@ export default async function start(options = {}) {
 		workspace,
 		entry: resolve(__dirname, 'app/index.js'),
 		inject: true,
-		stdio: ['ipc', 'inherit', 'inherit'],
+		stdio: ['ipc', 'pipe', 'pipe'],
 	}));
 
 	await startPot(config);

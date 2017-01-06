@@ -7,14 +7,14 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "npm test -- start",
-    "ls": "npm test -- ls",
-    "log": "npm test -- log",
-    "stop": "npm test -- stop",
+    "start": "npm cli -- start",
+    "ls": "npm cli -- ls",
+    "log": "npm cli -- log",
+    "stop": "npm cli -- stop",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "npm run build",
-    "cli": "babel-node lib/cli",
+    "cli": "babel-node src/cli",
     "test": "npm run build && npm run cli"
   },
   "author": "Cap32",
