@@ -1669,12 +1669,13 @@ hsts@0.2.0:
   dependencies:
     core-util-is "1.0.1"
 
-http-ask@^0.0.0-alpha.3:
-  version "0.0.0-alpha.3"
-  resolved "http://registry.npm.taobao.org/http-ask/download/http-ask-0.0.0-alpha.3.tgz#6cf0a51f191f3134a6a94cb6eff93a2d8773d112"
+http-ask@^0.0.0-rc1:
+  version "0.0.0-rc1"
+  resolved "http://registry.npm.taobao.org/http-ask/download/http-ask-0.0.0-rc1.tgz#90d1580c53111387272f58ae144eb4fd4ae5b4fd"
   dependencies:
     isomorphic-fetch "^2.2.1"
     object-assign "^4.1.0"
+    url-join "^1.1.0"
 
 http-assert@^1.1.0:
   version "1.2.0"
@@ -3394,6 +3395,10 @@ uid-number@~0.0.6:
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/unpipe/download/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
+
+url-join@^1.1.0:
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/url-join/download/url-join-1.1.0.tgz#741c6c2f4596c4830d6718460920d0c92202dc78"
 
 urllib@0.5.1:
   version "0.5.1"
