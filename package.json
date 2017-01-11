@@ -7,7 +7,7 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "yarn cli -- start",
+    "start": "yarn cli -- start -f",
     "ls": "yarn cli -- ls",
     "log": "yarn cli -- log",
     "stop": "yarn cli -- stop",
