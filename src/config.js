@@ -2,21 +2,13 @@
 import findPortSync from 'find-port-sync';
 import { mergeWith, isNull, isArray, uniq } from 'lodash';
 
-const {
-	NODE_ENV = 'development',
-
-	PORT = findPortSync(),
-
-	REDIS_PORT = 6379,
-	REDIS_HOST = '127.0.0.1',
-	REDIS_PREFIX = 'claypot', // TODO
-} = process.env;
+const { NODE_ENV = 'development' } = process.env;
 
 export const isProd = NODE_ENV === 'production';
 export const isDev = NODE_ENV === 'development';
 
 const config = {
-	port: PORT,
+	port: findPortSync(),
 	ssl: {
 		enable: false,
 		port: findPortSync() + 1,
@@ -38,11 +30,11 @@ const config = {
 	plugins: [],
 	redis: {
 		enable: false,
-		port: REDIS_PORT,
-		host: REDIS_HOST,
+		port: 6379,
+		host: '127.0.0.1',
 
 		// prefix: `${potConfig.name}:`,
-		prefix: REDIS_PREFIX,
+		prefix: 'claypot',
 
 		defaultExpiresIn: 60,
 	},

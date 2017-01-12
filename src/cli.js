@@ -89,7 +89,6 @@ yargs
 					},
 					port: {
 						desc: 'Server port',
-						default: 3200,
 						type: 'number',
 					},
 				})
