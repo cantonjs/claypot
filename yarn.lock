@@ -519,9 +519,9 @@ babel-preset-stage-3@^6.17.0:
     babel-plugin-transform-exponentiation-operator "^6.3.13"
     babel-plugin-transform-object-rest-spread "^6.16.0"
 
-babel-register-cli@^3.0.0:
-  version "3.0.0"
-  resolved "http://registry.npm.taobao.org/babel-register-cli/download/babel-register-cli-3.0.0.tgz#07570ceb941d1e5978733ebaff80cd4ed4c6510e"
+babel-register-cli@^4.0.0-0:
+  version "4.0.0-0"
+  resolved "http://registry.npm.taobao.org/babel-register-cli/download/babel-register-cli-4.0.0-0.tgz#65213d2bfb7b1e3855b17ea644031eb43e3cea38"
   dependencies:
     babel-register "^6.0.0"
     path-is-absolute "^1.0.0"
