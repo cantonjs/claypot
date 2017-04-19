@@ -1,16 +1,16 @@
 
-import koa from 'koa';
+import Koa from 'koa';
 import Router from 'koa-router';
 import url from 'url';
 import qs from 'qs';
 import { isFunction } from 'lodash';
 
 export default (getOptions) => {
-	const app = koa();
+	const app = new Koa();
 	const router = new Router();
 
-	router.get('*', function * (next) {
-		const options = isFunction(getOptions) ? getOptions(this) : getOptions;
+	router.get('*', async (ctx, next) => {
+		const options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
 
 		const {
 			keys = [
@@ -21,7 +21,7 @@ export default (getOptions) => {
 		const {
 			request: { query, originalUrl },
 			cookies,
-		} = this;
+		} = ctx;
 
 		const { matchedKeys, map } = keys
 			.filter((key) => query[key])
@@ -33,7 +33,7 @@ export default (getOptions) => {
 		;
 
 		if (!matchedKeys.length) {
-			return yield next;
+			return await next();
 		}
 
 		const {
@@ -92,7 +92,7 @@ export default (getOptions) => {
 		const { pathname } = url.parse(originalUrl);
 		const queryStr = qs.stringify(query);
 		const redirectUrl = pathname + (queryStr ? `?${queryStr}` : '');
-		this.redirect(redirectUrl);
+		ctx.redirect(redirectUrl);
 	});
 
 	return app.use(router.middleware());

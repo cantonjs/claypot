@@ -8,13 +8,13 @@ import { appLogger } from './logger';
 import redis, { getCache, setCache } from '../app/redis';
 
 export default (parent) => {
-	parent.use(function * (next) {
-		this.claypot = {
+	parent.use(async (ctx, next) => {
+		ctx.claypot = {
 			redis,
 			getCache,
 			setCache,
 		};
-		yield next;
+		await next();
 	});
 
 	config

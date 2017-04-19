@@ -2,16 +2,16 @@
 import { isProd } from '../config';
 import { httpLogger } from '../utils/logger';
 
-export default (app) => app.use(function * logger(next) {
+export default (app) => app.use(async (ctx, next) => {
 	const start = Date.now();
 
-	yield next;
+	await next();
 
-	const { url, method } = this;
+	const { url, method } = ctx;
 	const responseTime = `${Date.now() - start}ms`;
 
 	if (isProd) {
-		const { status, header, req } = this;
+		const { status, header, req } = ctx;
 		const HTTPVersion = `HTTP/${req.httpVersionMajor}.${req.httpVersionMinor}`;
 		const userAgent = header['user-agent'] || '-';
 		const referer = header['referer'] || '-';

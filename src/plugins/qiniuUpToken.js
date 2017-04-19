@@ -1,10 +1,10 @@
 
-import koa from 'koa';
+import Koa from 'koa';
 import qiniu from 'qiniu';
 
 export default ({ key, secret, bucket }) => {
-	const app = koa();
-	app.use(function * () {
+	const app = new Koa();
+	app.use(async (ctx) => {
 		const expiresIn = 36000000;
 		const expiresInUnix = expiresIn / 1000;
 		qiniu.conf.ACCESS_KEY = key;
@@ -14,7 +14,7 @@ export default ({ key, secret, bucket }) => {
 			expires: expiresInUnix,
 		});
 		const uptoken = putPolicy.token();
-		this.body = { uptoken, expiresIn, expiresInUnix };
+		ctx.body = { uptoken, expiresIn, expiresInUnix };
 	});
 	return app;
 };

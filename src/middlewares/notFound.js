@@ -1,14 +1,14 @@
 
-export default (app) => app.use(function * notFound(next) {
-	yield next;
+export default (app) => app.use(async (ctx, next) => {
+	await next();
 
-	const body = this.body;
-	const status = this.status || 404;
+	const body = ctx.body;
+	const status = ctx.status || 404;
 	const noContent = ~[204, 205, 304].indexOf(status);
 
 	// ignore body
 	if (noContent) { return; }
 
 	// status body
-	if (!body) { this.throw(status); }
+	if (!body) { ctx.throw(status); }
 });

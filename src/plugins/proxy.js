@@ -1,11 +1,11 @@
 
 import httpProxy from 'http-proxy';
-import koa from 'koa';
+import Koa from 'koa';
 import Router from 'koa-router';
 import { isFunction } from 'lodash';
 
 export default (getOptions) => {
-	const app = koa();
+	const app = new Koa();
 	const router = new Router();
 	const proxy = httpProxy.createProxyServer({});
 

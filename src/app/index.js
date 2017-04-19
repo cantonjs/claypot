@@ -2,7 +2,7 @@
 import './redis';
 import http from 'http';
 import https from 'https';
-import koa from 'koa';
+import Koa from 'koa';
 import { readFile } from 'fs-promise';
 import { resolve } from 'path';
 import useMiddlewares from '../utils/useMiddlewares';
@@ -17,12 +17,12 @@ process.on('message', async (buf) => {
 		ssl: { enable: enableHttps, port: httpsPort, key, cert },
 	} = config;
 
-	const app = koa();
+	const app = new Koa();
 
 	useMiddlewares(app);
 
 	const handleError = (server) => {
-		server.on('error', ::appLogger.error);
+		server.on('error', appLogger.error.bind(appLogger));
 	};
 
 	const tryReadFile = async (file) => {
