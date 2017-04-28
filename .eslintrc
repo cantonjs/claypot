@@ -1,9 +1,13 @@
 {
     "parser": "babel-eslint",
+    "plugins": [
+      "jest",
+    ],
     "extends": [
         "standard",
         "plugin:promise/recommended",
         "plugin:import/recommended",
+        "plugin:jest/recommended",
     ],
     "env": {
         "browser": true,
