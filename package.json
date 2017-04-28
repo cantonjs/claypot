@@ -7,15 +7,15 @@
     "claypot": "bin/claypot"
   },
   "scripts": {
-    "start": "yarn cli -- start -f",
+    "start": "yarn test -- --watchAll",
+    "test": "cross-env CLAYPOT_DEV=true jest",
     "ls": "yarn cli -- ls",
     "log": "yarn cli -- log",
     "stop": "yarn cli -- stop",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "yarn build",
-    "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
-    "test": "yarn build && yarn cli"
+    "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli"
   },
   "author": "Cap32",
   "licenses": "MIT",
@@ -77,5 +77,14 @@
     "mkdirp": "^0.5.1",
     "qs": "^6.3.0",
     "rimraf": "^2.5.4"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "modulePathIgnorePatterns": [
+      "node_modules",
+      "lib"
+    ]
   }
 }
