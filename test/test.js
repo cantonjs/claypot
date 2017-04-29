@@ -6,8 +6,8 @@ afterEach(stop);
 test('should works', (done) => {
 	const proc = start(['start']);
 
-	proc.on('data', (data) => {
-		console.log('data', data);
+	proc.on('data', ({ ansi }) => {
+		console.log(ansi);
 		expect(true).toBe(true);
 	});
 

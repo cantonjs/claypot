@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 import { spawn, execSync } from 'child_process';
 import EventEmitter from 'events';
+import stripAnsi from 'strip-ansi';
 
 let child;
 const command = resolve('bin/claypot');
@@ -11,8 +12,8 @@ export const start = (args, options) => {
 
 	child = spawn(
 		command,
-		['--execCommand=babel-register', ...args],
-		// args,
+		// ['--execCommand=babel-register', ...args],
+		args,
 		{
 			// stdio: 'inherit',
 			...options,
@@ -23,15 +24,14 @@ export const start = (args, options) => {
 	child.stderr.setEncoding('utf8');
 	child.stdin.setEncoding('utf8');
 
-	child.stdout.on('data', (data) => {
-		data = data.trim();
-
-		if (JSON.stringify(data).includes('ERROR')) {
+	child.stdout.on('data', (ansi) => {
+		const message = stripAnsi(ansi).trim();
+		if (message.startsWith('ERROR')) {
 			child.stdout.removeAllListeners('data');
-			proc.emit('error', data);
+			proc.emit('error', new Error(message));
 		}
 		else {
-			proc.emit('data', data);
+			proc.emit('data', { message, ansi });
 		}
 	});
 
