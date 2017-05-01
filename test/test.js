@@ -4,25 +4,35 @@ import { start, stop } from './utils';
 afterEach(stop);
 
 test('should works', (done) => {
-	const proc = start(['start']);
+	const kapok = start(['start']);
 
-	proc.on('data', ({ ansi }) => {
-		console.log(ansi);
-		expect(true).toBe(true);
+	kapok.on('data', ({ ansiMessage }) => {
+		console.log(ansiMessage);
 	});
 
-	proc.on('error', (err) => {
-		// stop(() => {
-		// 	console.log('done');
-		// 	done.fail(err);
-		// });
-
-		// proc.child.kill();
-		// done.fail(err);
-
-		// console.log('.');
-		// console.log('=======================error', err);
-		done.fail(err);
-		// setTimeout(() => done.fail(err), 1000);
+	kapok.on('line', ({ ansiMessage, message }) => {
+		if (message.startsWith('Error')) {
+			done.fail(new Error(message));
+		}
 	});
+
+	// kapok.on('data', ({ ansi }) => {
+	// 	console.log(ansi);
+	// 	expect(true).toBe(true);
+	// });
+
+	// kapok.on('error', (err) => {
+	// 	// stop(() => {
+	// 	// 	console.log('done');
+	// 	// 	done.fail(err);
+	// 	// });
+
+	// 	// kapok.child.kill();
+	// 	// done.fail(err);
+
+	// 	// console.log('.');
+	// 	// console.log('=======================error', err);
+	// 	done.fail(err);
+	// 	// setTimeout(() => done.fail(err), 1000);
+	// });
 });

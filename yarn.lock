@@ -623,12 +623,11 @@ babel-preset-stage-3@^6.17.0:
     babel-plugin-transform-exponentiation-operator "^6.3.13"
     babel-plugin-transform-object-rest-spread "^6.16.0"
 
-babel-register-cli@^4.0.0-0:
-  version "4.0.0-0"
-  resolved "http://registry.npm.taobao.org/babel-register-cli/download/babel-register-cli-4.0.0-0.tgz#65213d2bfb7b1e3855b17ea644031eb43e3cea38"
+babel-register-cli@^4.0.0:
+  version "4.0.0"
+  resolved "http://registry.npm.taobao.org/babel-register-cli/download/babel-register-cli-4.0.0.tgz#16d6ee65682a57e065bc66ced46045b6be8033c8"
   dependencies:
     babel-register "^6.0.0"
-    path-is-absolute "^1.0.0"
     yargs "^3.32.0"
 
 babel-register@^6.0.0, babel-register@^6.11.6, babel-register@^6.18.0:
@@ -2712,6 +2711,13 @@ jssha@^2.0.2:
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/jssha/download/jssha-2.2.0.tgz#87dcf60821dc3bec593f3855bbebccd276aacc1c"
 
+kapok-js@^0.0.0:
+  version "0.0.0"
+  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.0.0.tgz#3a905a70f46061a45f11581605c51d15f00e5789"
+  dependencies:
+    lodash "^4.17.4"
+    strip-ansi "^3.0.1"
+
 keygrip@~1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/keygrip/download/keygrip-1.0.1.tgz#b02fa4816eef21a8c4b35ca9e52921ffc89a30e9"
@@ -2914,7 +2920,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.3.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -2980,6 +2986,10 @@ lodash.pick@3.1.0:
 lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "http://registry.npm.taobao.org/lodash.restparam/download/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
+
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
+  version "4.17.4"
+  resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 log4js@^1.0.1:
   version "1.0.1"
@@ -3189,8 +3199,8 @@ node-int64@^0.4.0:
   resolved "http://registry.npm.taobao.org/node-int64/download/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
 node-ipc@^8.9.2:
-  version "8.10.2"
-  resolved "http://registry.npm.taobao.org/node-ipc/download/node-ipc-8.10.2.tgz#dcad76376a66bfa1de565b7bf458fbbea8d3091c"
+  version "8.10.3"
+  resolved "http://registry.npm.taobao.org/node-ipc/download/node-ipc-8.10.3.tgz#223bd431ad7fb2e40c5434f8a5e4558be2568fbd"
   dependencies:
     colors "*"
     event-pubsub "4.2.3"
@@ -3436,8 +3446,8 @@ pause-stream@>=0.0.10:
     through "~2.3"
 
 pidusage@^1.1.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/pidusage/download/pidusage-1.1.0.tgz#ffd58339a97aec470cff7cfe1a9853ec5cd415f8"
+  version "1.1.3"
+  resolved "http://registry.npm.taobao.org/pidusage/download/pidusage-1.1.3.tgz#b4929367a8de2a32432d11c28388c468474537fe"
 
 pify@^2.0.0, pify@^2.2.0:
   version "2.3.0"
@@ -3473,9 +3483,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/pluralize/download/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pot-js@^0.0.0-beta.17:
-  version "0.0.0-beta.17"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.17.tgz#6ca5449cbf21b141af006d958b7591a36496036a"
+pot-js@^0.0.0-beta.18:
+  version "0.0.0-beta.18"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.18.tgz#960216e611811a9b3139a977558a7d60c7c31050"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
@@ -3797,8 +3807,8 @@ resolve@^1.1.6, resolve@^1.1.7, resolve@^1.2.0:
     path-parse "^1.0.5"
 
 respawn@^2.4.1:
-  version "2.4.1"
-  resolved "http://registry.npm.taobao.org/respawn/download/respawn-2.4.1.tgz#988eb7d9bdfdc3844c36612afd8d8cad76c28e0c"
+  version "2.5.0"
+  resolved "http://registry.npm.taobao.org/respawn/download/respawn-2.5.0.tgz#9df0b298c3886813d36b7a9ab4d78ea2258b71d5"
   dependencies:
     ps-tree "0.0.3"
     xtend "~2.1.1"
