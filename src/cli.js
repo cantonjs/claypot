@@ -97,13 +97,17 @@ yargs
 						desc: 'Server port',
 						type: 'number',
 					},
+					feature: {
+						desc: 'Enable or disable feature (by using dot notation)',
+						type: 'bool',
+					},
 				})
 				.argv
 			;
 		},
 		async handler(argv) {
 			const {
-				watch, watchDirs, watchIgnoreDotFiles, ...options,
+				watch, watchDirs, watchIgnoreDotFiles, feature, ...options,
 			} = argv;
 
 			options.watch = {
@@ -111,6 +115,14 @@ yargs
 				dirs: watchDirs,
 				ignoreDotFiles: watchIgnoreDotFiles,
 			};
+
+			options.features = Object.keys(feature).reduce((output, name) => {
+				let value = feature[name];
+				if (value === 'false') { value = false; }
+				else if (value === 'true') { value = true; }
+				output[name] = value;
+				return output;
+			}, {});
 
 			try {
 				await start(await resolveConfig(options));
