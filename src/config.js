@@ -1,6 +1,6 @@
 
 import findPortSync from 'find-port-sync';
-import { mergeWith, isNull, isArray, uniq } from 'lodash';
+import { mergeWith, merge, isNull, isArray, isObject, uniq } from 'lodash';
 
 const { NODE_ENV = 'development' } = process.env;
 
@@ -15,18 +15,17 @@ const config = {
 	},
 	staticDir: 'static',
 	maxRestarts: isDev ? 0 : -1,
-	middlewares: [
-		'responseTime',
-		'logger',
-		'error',
-		isProd && 'helmet',
-		isProd && 'compress',
-		'favicon',
-		'plugins',
-		'rewriteIndex',
-		'static',
-		'notFound',
-	].filter(Boolean),
+	features: {
+		responseTime: true,
+		logger: true,
+		helmet: isProd,
+		compress: isProd,
+		favicon: true,
+		plugins: true,
+		historyAPIFallback: false,
+		static: true,
+		notFound: true,
+	},
 	plugins: [],
 	redis: {
 		enable: false,
@@ -52,6 +51,9 @@ export const init = function init(newConfig) {
 		}
 		if (isNull(output) || Object.is(NaN, output)) {
 			return input;
+		}
+		else if (isObject(output)) {
+			return merge(input, output);
 		}
 		return output;
 	});

@@ -27,7 +27,7 @@ export default (parent) => {
 				return plugin;
 			}
 			else {
-				throw `Plugin ${plugin} is INVALID.`;
+				throw new Error(`Plugin ${plugin} is INVALID.`);
 			}
 		})
 		.filter(({ enable = true }) => enable)
