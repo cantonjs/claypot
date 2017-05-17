@@ -26,6 +26,12 @@ yargs
 						desc: 'Server name',
 						type: 'string',
 					},
+					s: {
+						alias: 'static-dir',
+						desc: 'Static files dir',
+						default: 'static',
+						type: 'string',
+					},
 					d: {
 						alias: 'daemon',
 						desc: 'Use as a daemon',
