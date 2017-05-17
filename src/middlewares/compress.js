@@ -1,8 +1,4 @@
 
-import gzip from 'koa-gzip';
-import conditional from 'koa-conditional-get';
+import compress from 'koa-compress';
 
-export default (app) => app
-	.use(gzip())
-	.use(conditional())
-;
+export default (app, options) => app.use(compress(options));
