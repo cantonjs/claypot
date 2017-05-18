@@ -15,6 +15,7 @@
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "prepublish": "yarn build",
+    "server:test": "babel-register test/proxyServer",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli"
   },
   "author": "Cap32",

@@ -9,13 +9,13 @@ export default (getOptions) => {
 	const router = new Router();
 	const proxy = httpProxy.createProxyServer({});
 
-	router.all('*', function * () {
+	router.all('*', async (ctx) => {
 		var handleError;
 
-		const options = isFunction(getOptions) ? getOptions(this) : getOptions;
+		const options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
 
-		this.respond = false;
-		this.status = 200; // prevent koa-error handling
+		ctx.respond = false;
+		ctx.status = 200; // prevent koa-error handling
 
 		const removeListeners = () => {
 			proxy.off('error', handleError);
@@ -23,10 +23,10 @@ export default (getOptions) => {
 		};
 
 		handleError = (err) => {
-			this.set('Content-Type', 'application/json');
-			this.status = 500;
+			ctx.set('Content-Type', 'application/json');
+			ctx.status = 500;
 
-			this.res.end(JSON.stringify({
+			ctx.res.end(JSON.stringify({
 				message: err.message,
 				code: err.code,
 			}));
@@ -38,7 +38,7 @@ export default (getOptions) => {
 
 		proxy.on('error', handleError);
 
-		proxy.web(this.req, this.res, options);
+		proxy.web(ctx.req, ctx.res, options);
 	});
 
 	return app.use(router.middleware());

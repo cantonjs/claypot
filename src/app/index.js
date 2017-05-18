@@ -5,7 +5,7 @@ import https from 'https';
 import Koa from 'koa';
 import { readFile } from 'fs-promise';
 import { resolve } from 'path';
-import useFeatures from '../utils/useFeatures';
+import useMiddlewares from '../utils/useMiddlewares';
 import { init } from '../config';
 import { appLogger } from '../utils/logger';
 
@@ -19,7 +19,7 @@ process.on('message', async (buf) => {
 
 	const app = new Koa();
 
-	useFeatures(app);
+	useMiddlewares(app);
 
 	const handleError = (server) => {
 		server.on('error', appLogger.error.bind(appLogger));

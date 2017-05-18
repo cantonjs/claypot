@@ -4,7 +4,7 @@ import url from 'url';
 import bodyParser from 'co-body';
 import qs from 'qs';
 
-const delay = (t = 1000) => new Promise((done) => setTimeout(done, +t));
+const delay = (t = 1000) => new Promise((resolve) => setTimeout(resolve, +t));
 
 export const server = http.createServer((req, res) => {
 	const { method, headers, url: reqURL } = req;
@@ -29,8 +29,7 @@ export const server = http.createServer((req, res) => {
 		'POST /test/form': () => bodyParser.form(req).then(end),
 		'GET /headers': () => end(headers),
 		'GET /delay': () => delay(query.delay)
-			.then(() => end({ delay: query.delay || 2000 }))
-		,
+			.then(() => end({ delay: query.delay || 2000 })),
 		'GET /foo/bar': () => end(query),
 		'GET /bad': () => end({ message: 'you bad bad' }, 400),
 		'GET /too/bad': () => { throw new Error('oh shit'); },

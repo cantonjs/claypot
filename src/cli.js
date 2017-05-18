@@ -27,7 +27,7 @@ yargs
 						type: 'string',
 					},
 					s: {
-						alias: 'static-dir',
+						alias: 'static',
 						desc: 'Static files dir',
 						default: 'static',
 						type: 'string',
@@ -97,10 +97,6 @@ yargs
 						desc: 'Server port',
 						type: 'number',
 					},
-					feature: {
-						desc: 'Enable or disable feature (by using dot notation)',
-						type: 'bool',
-					},
 				})
 				.argv
 			;
@@ -115,14 +111,6 @@ yargs
 				dirs: watchDirs,
 				ignoreDotFiles: watchIgnoreDotFiles,
 			};
-
-			options.features = Object.keys(feature).reduce((output, name) => {
-				let value = feature[name];
-				if (value === 'false') { value = false; }
-				else if (value === 'true') { value = true; }
-				output[name] = value;
-				return output;
-			}, {});
 
 			try {
 				await start(await resolveConfig(options));

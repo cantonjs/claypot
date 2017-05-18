@@ -33,7 +33,7 @@ export default (getOptions) => {
 		;
 
 		if (!matchedKeys.length) {
-			return await next();
+			return next();
 		}
 
 		const {
