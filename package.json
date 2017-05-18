@@ -30,8 +30,6 @@
     "http-ask": "^0.0.0-rc1",
     "http-proxy": "^1.12.0",
     "koa": "^2.2.0",
-    "koa-body": "^1.2.1",
-    "koa-bodyparser": "^2.0.1",
     "koa-compress": "^2.0.0",
     "koa-connect-history-api-fallback": "^0.3.1",
     "koa-error": "^3.0.0",
