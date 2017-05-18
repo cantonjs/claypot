@@ -2,7 +2,7 @@
 import httpProxy from 'http-proxy';
 import Koa from 'koa';
 import Router from 'koa-router';
-import { isFunction } from 'lodash';
+import { isFunction, isString } from 'lodash';
 
 export default (getOptions) => {
 	const app = new Koa();
@@ -12,7 +12,8 @@ export default (getOptions) => {
 	router.all('*', async (ctx) => {
 		var handleError;
 
-		const options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
+		let options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
+		if (isString(options)) { options = { target: options }; }
 
 		ctx.respond = false;
 		ctx.status = 200; // prevent koa-error handling
