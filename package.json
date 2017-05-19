@@ -14,6 +14,7 @@
     "stop": "yarn cli -- stop",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
+    "postbuild": "cp src/error.html lib/error.html",
     "prepublish": "yarn build",
     "server:test": "babel-register test/proxyServer",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli"
