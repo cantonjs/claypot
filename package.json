@@ -21,7 +21,9 @@
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli"
   },
   "author": "Cap32",
-  "licenses": "MIT",
+  "license": "MIT",
+  "repository": "cantonjs/claypot.git",
+  "bugs": "https://github.com/cantonjs/output-host/issues",
   "engines": {
     "node": ">= 7.6.0"
   },
