@@ -2923,7 +2923,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -2935,7 +2935,7 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3423,9 +3423,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/pluralize/download/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pot-js@^0.0.0-beta.19:
-  version "0.0.0-beta.19"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.19.tgz#5db8ddfca69a33421629a4cbc635443639c0505a"
+pot-js@^0.0.0-beta.20:
+  version "0.0.0-beta.20"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.20.tgz#bc1271a1972141dcab28405c912afc1ef9bedca6"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
