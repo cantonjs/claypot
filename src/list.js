@@ -11,7 +11,7 @@ export default async function list(options = {}) {
 		],
 		setTable(info) {
 			return [
-				info.name,
+				info.data.name,
 				info.styledStatus,
 				info.crashes,
 				info.memoryUsage.formattedString,
