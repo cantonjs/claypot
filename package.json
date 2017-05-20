@@ -23,7 +23,6 @@
   "author": "Cap32",
   "license": "MIT",
   "repository": "cantonjs/claypot.git",
-  "bugs": "https://github.com/cantonjs/output-host/issues",
   "engines": {
     "node": ">= 7.6.0"
   },
