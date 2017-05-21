@@ -8,9 +8,13 @@ import { resolve } from 'path';
 import useMiddlewares from '../utils/useMiddlewares';
 import { init } from '../config';
 import { appLogger } from '../utils/logger';
+import mount from 'koa-mount';
+import { initPlugins } from '../utils/plugins';
 
 process.on('message', async (buf) => {
 	const config = init(JSON.parse(buf.toString()));
+
+	initPlugins(config);
 
 	const {
 		port, root,
@@ -18,6 +22,8 @@ process.on('message', async (buf) => {
 	} = config;
 
 	const app = new Koa();
+
+	app.mount = (...args) => app.use(mount(...args));
 
 	useMiddlewares(app);
 
