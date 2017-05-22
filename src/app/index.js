@@ -14,7 +14,7 @@ import { initPlugins } from '../utils/plugins';
 process.on('message', async (buf) => {
 	const config = init(JSON.parse(buf.toString()));
 
-	initPlugins(config);
+	await initPlugins(config);
 
 	const {
 		port, root,

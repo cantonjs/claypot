@@ -6,7 +6,9 @@ import { appLogger } from './logger';
 
 const middlewarePhasePlugins = [];
 
-export function initPlugins(config) {
+export async function initPlugins(config) {
+	const asyncPlugins = [];
+
 	config
 		.plugins
 		.map((plugin) => {
@@ -42,11 +44,18 @@ export function initPlugins(config) {
 		})
 		.filter(Boolean)
 		.forEach((plugin) => {
+			if (isFunction(plugin.initAsync)) {
+				asyncPlugins.push(plugin);
+			}
 			if (isFunction(plugin.middleware)) {
 				middlewarePhasePlugins.push(::plugin.middleware);
 			}
 		})
 	;
+
+	for (const plugin of asyncPlugins) {
+		await plugin.initAsync();
+	}
 }
 
 export function middlewarePhase(app, config) {
