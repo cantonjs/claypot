@@ -12,44 +12,53 @@ import mount from 'koa-mount';
 import { initPlugins } from '../utils/plugins';
 
 process.on('message', async (buf) => {
-	const config = init(JSON.parse(buf.toString()));
+	try {
+		const config = init(JSON.parse(buf.toString()));
 
-	await initPlugins(config);
+		await initPlugins(config);
 
-	const {
-		port, root,
-		ssl: { enable: enableHttps, port: httpsPort, key, cert },
-	} = config;
+		const {
+			port, root,
+			ssl: { enable: enableHttps, port: httpsPort, key, cert },
+		} = config;
 
-	const app = new Koa();
+		const app = new Koa();
 
-	app.mount = (...args) => app.use(mount(...args));
+		app.mount = (...args) => app.use(mount(...args));
 
-	useMiddlewares(app);
+		useMiddlewares(app);
 
-	const handleError = (server) => {
-		server.on('error', appLogger.error.bind(appLogger));
-	};
-
-	const tryReadFile = async (file) => {
-		try {
-			return await readFile(resolve(root, file));
-		}
-		catch (err) {
-			appLogger.error(`Failed to read file "${file}".`);
-			appLogger.debug(err);
-		}
-	};
-
-	if (enableHttps) {
-		const options = {
-			key: await tryReadFile(key),
-			cert: await tryReadFile(cert),
+		const handleError = (server) => {
+			server.on('error', appLogger.error.bind(appLogger));
 		};
-		handleError(http.createServer(app.callback()).listen(port));
-		handleError(https.createServer(options, app.callback()).listen(httpsPort));
+
+		const tryReadFile = async (file) => {
+			try {
+				return await readFile(resolve(root, file));
+			}
+			catch (err) {
+				appLogger.error(`Failed to read file "${file}".`);
+				appLogger.debug(err);
+			}
+		};
+
+		if (enableHttps) {
+			const options = {
+				key: await tryReadFile(key),
+				cert: await tryReadFile(cert),
+			};
+			handleError(
+				http.createServer(app.callback()).listen(port)
+			);
+			handleError(
+				https.createServer(options, app.callback()).listen(httpsPort)
+			);
+		}
+		else {
+			handleError(app.listen(port));
+		}
 	}
-	else {
-		handleError(app.listen(port));
+	catch (err) {
+		appLogger.fatal(`Failed to start server:`, err);
 	}
 });
