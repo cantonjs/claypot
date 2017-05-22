@@ -1,10 +1,20 @@
 
-import Koa from 'koa';
-import { logger, config } from '../src';
+import { logger } from '../src';
 
-export default function server(opts, config) {
-	// logger.info('config', config);
-	logger.info('server started [logger]');
-	console.log('server started [console]');
-	return new Koa();
+export default class CustomServer {
+	constructor(options) {
+		this._options = options;
+	}
+
+	middleware(app) {
+		app.use(async (ctx, next) => {
+			if (ctx.path === '/fork') {
+				logger.info('fork');
+				ctx.body = 'fork';
+			}
+			else {
+				await next();
+			}
+		});
+	}
 }
