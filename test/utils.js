@@ -21,7 +21,6 @@ export const start = (args, options) => {
 
 export const stop = (done) => {
 	try {
-		console.log('kill');
 		execSync(`${command} stop -f`);
 		kapok.exit(done);
 	}
