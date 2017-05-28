@@ -3,6 +3,7 @@ import httpProxy from 'http-proxy';
 import Koa from 'koa';
 import Router from 'koa-router';
 import { isFunction, isString } from 'lodash';
+import url from 'url';
 
 export default (getOptions) => {
 	const app = new Koa();
@@ -14,6 +15,8 @@ export default (getOptions) => {
 
 		let options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
 		if (isString(options)) { options = { target: options }; }
+
+		const { target, forward } = options;
 
 		ctx.respond = false;
 		ctx.status = 200; // prevent koa-error handling
@@ -34,6 +37,11 @@ export default (getOptions) => {
 
 			removeListeners();
 		};
+
+		proxy.on('proxyReq', (proxyReq) => {
+			const { host } = url.parse(target || forward);
+			proxyReq.setHeader('host', host);
+		});
 
 		proxy.on('proxyRes', removeListeners);
 
