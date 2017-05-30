@@ -17,7 +17,7 @@ yargs
 	.demand(1, 'Please specify one of the commands!')
 	.command({
 		command: 'start',
-		desc: 'Start process',
+		desc: 'Start claypot server',
 		builder(yargs) {
 			yargs // eslint-disable-line
 				.default('entry', Defaults.ENTRY)

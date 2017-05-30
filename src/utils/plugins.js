@@ -1,5 +1,5 @@
 
-import importModule from 'pot-js/lib/utils/importModule';
+import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
 import { appLogger } from './logger';
@@ -32,9 +32,10 @@ export async function initPlugins(config) {
 			}
 
 			try {
-				const PluginModule = importModule(module, {
-					...config,
-					prefer: resolve(__dirname, '../plugins'),
+				const PluginModule = importFile(module, {
+					cwd: config.root,
+					resolvers: [resolve(__dirname, '../plugins')],
+					useLoader: false,
 				});
 				return new PluginModule(options, config);
 			}

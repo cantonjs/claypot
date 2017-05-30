@@ -1,6 +1,6 @@
 
 import config from '../config';
-import importModule from 'pot-js/lib/utils/importModule';
+import importFile from 'import-file';
 import { resolve } from 'path';
 import { isBoolean, isUndefined } from 'lodash';
 import { appLogger } from './logger';
@@ -46,9 +46,10 @@ const perform = function perform(app, middlewares) {
 		.filter(({ isEnabled }) => isEnabled)
 		.forEach(({ options, name }) => {
 			try {
-				const use = importModule(name, {
-					root: config.root,
-					prefer: resolve(__dirname, '../middlewares'),
+				const use = importFile(name, {
+					cwd: config.root,
+					resolvers: [resolve(__dirname, '../middlewares')],
+					useLoader: false,
 				});
 				use(app, options);
 			}
