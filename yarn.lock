@@ -2170,6 +2170,15 @@ import-file@^1.2.0:
     rechoir "^0.6.2"
     require-reload "^0.2.2"
 
+import-file@^1.2.2:
+  version "1.2.2"
+  resolved "http://registry.npm.taobao.org/import-file/download/import-file-1.2.2.tgz#612823cb946b29fe55ed5f8127b1bdc835db1f91"
+  dependencies:
+    find-up "^2.1.0"
+    interpret "^1.0.1"
+    rechoir "^0.6.2"
+    require-reload "^0.2.2"
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/imurmurhash/download/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -3045,7 +3054,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3057,7 +3066,7 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
