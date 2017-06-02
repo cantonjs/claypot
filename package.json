@@ -6,6 +6,12 @@
   "bin": {
     "claypot": "bin/claypot"
   },
+  "files": [
+    "LICENSE.md",
+    "README.md",
+    "bin",
+    "lib"
+  ],
   "scripts": {
     "start": "yarn test -- --watchAll",
     "test": "cross-env CLAYPOT_DEV=true jest",
@@ -32,7 +38,7 @@
     "fs-promise": "^1.0.0",
     "http-ask": "^0.0.0-rc1",
     "http-proxy": "^1.12.0",
-    "import-file": "^1.2.0",
+    "import-file": "^1.2.2",
     "koa": "^2.2.0",
     "koa-compress": "^2.0.0",
     "koa-connect-history-api-fallback": "^0.3.1",
