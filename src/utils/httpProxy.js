@@ -22,8 +22,9 @@ export default (getOptions, handleProxy, middlewares = []) => {
 		ctx.status = 200; // prevent koa-error handling
 
 		const removeListeners = () => {
-			proxy.off('error', handleError);
-			proxy.off('proxyRes', removeListeners);
+			proxy.off('error');
+			proxy.off('proxyRes');
+			proxy.off('proxyReq');
 		};
 
 		handleError = (err) => {
@@ -38,7 +39,7 @@ export default (getOptions, handleProxy, middlewares = []) => {
 			removeListeners();
 		};
 
-		proxy.on('proxyReq', (proxyReq) => {
+		proxy.on('proxyReq', (proxyReq, req) => {
 			const { host } = url.parse(target || forward);
 			proxyReq.setHeader('host', host);
 		});
