@@ -10,6 +10,7 @@
     "LICENSE.md",
     "README.md",
     "bin",
+    "assets",
     "lib"
   ],
   "scripts": {
