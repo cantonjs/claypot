@@ -1,2 +1,2 @@
 
-export { middlewarePhase as default } from '../utils/plugins';
+export { applyMiddlewares as default } from '../utils/plugins';

@@ -5,7 +5,7 @@ import Router from 'koa-router';
 import { isFunction, isString } from 'lodash';
 import url from 'url';
 
-export default (getOptions) => {
+export default (getOptions, handleProxy, middlewares = []) => {
 	const app = new Koa();
 	const router = new Router();
 	const proxy = httpProxy.createProxyServer({});
@@ -43,12 +43,17 @@ export default (getOptions) => {
 			proxyReq.setHeader('host', host);
 		});
 
-		proxy.on('proxyRes', removeListeners);
 
 		proxy.on('error', handleError);
 
+		if (isFunction(handleProxy)) { handleProxy(proxy); }
+
+		proxy.on('proxyRes', removeListeners);
+
 		proxy.web(ctx.req, ctx.res, options);
 	});
+
+	middlewares.forEach((middleware) => app.use(middleware));
 
 	return app.use(router.middleware());
 };

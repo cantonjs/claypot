@@ -1,9 +1,12 @@
 
 import importFile from 'import-file';
+import mount from 'koa-mount';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
 import { appLogger } from './logger';
+import httpProxy from './httpProxy';
 
+const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
 export async function initPlugins(config) {
@@ -48,6 +51,9 @@ export async function initPlugins(config) {
 			if (isFunction(plugin.initAsync)) {
 				asyncPlugins.push(plugin);
 			}
+			if (isFunction(plugin.proxy)) {
+				proxyPhasePlugins.push(::plugin.proxy);
+			}
 			if (isFunction(plugin.middleware)) {
 				middlewarePhasePlugins.push(::plugin.middleware);
 			}
@@ -59,8 +65,22 @@ export async function initPlugins(config) {
 	}
 }
 
-export function middlewarePhase(app, config) {
-	return middlewarePhasePlugins.forEach((invokePlugin) => {
-		invokePlugin(app, config);
+function middlewarePhase(app, config) {
+	return middlewarePhasePlugins.forEach((applyPlugin) => {
+		applyPlugin(app, config);
 	});
+}
+
+function proxyPhase(app, config) {
+	const createProxyMiddleware = (path, ...args) => {
+		app.use(mount(path, httpProxy(...args)));
+	};
+	return proxyPhasePlugins.forEach((applyPlugin) => {
+		applyPlugin(createProxyMiddleware, app, config);
+	});
+}
+
+export function applyMiddlewares(app, config) {
+	proxyPhase(app, config);
+	middlewarePhase(app, config);
 }
