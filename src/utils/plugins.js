@@ -72,11 +72,8 @@ function middlewarePhase(app, config) {
 }
 
 function proxyPhase(app, config) {
-	const createProxyMiddleware = (path, ...args) => {
-		app.use(mount(path, httpProxy(...args)));
-	};
 	return proxyPhasePlugins.forEach((applyPlugin) => {
-		applyPlugin(createProxyMiddleware, app, config);
+		applyPlugin(app, httpProxy, config);
 	});
 }
 

@@ -1,18 +1,12 @@
 
 import httpProxy from 'http-proxy';
-import Koa from 'koa';
-import Router from 'koa-router';
 import { isFunction, isString } from 'lodash';
 import url from 'url';
 
-export default (getOptions, handleProxy, middlewares = []) => {
-	const app = new Koa();
-	const router = new Router();
+export default (getOptions, handleProxy) => {
 	const proxy = httpProxy.createProxyServer({});
 
-	router.all('*', async (ctx) => {
-		var handleError;
-
+	const proxyMiddleware = async (ctx) => {
 		let options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
 		if (isString(options)) { options = { target: options }; }
 
@@ -23,11 +17,21 @@ export default (getOptions, handleProxy, middlewares = []) => {
 
 		const removeListeners = () => {
 			proxy.off('error');
+			proxy.off('upgrade');
 			proxy.off('proxyRes');
 			proxy.off('proxyReq');
+			proxy.off('proxyReqWs');
+			proxy.off('open');
+			proxy.off('close');
 		};
 
-		handleError = (err) => {
+		proxy.on('proxyReq', (proxyReq, req) => {
+			const { host } = url.parse(target || forward);
+			proxyReq.setHeader('host', host);
+		});
+
+
+		proxy.on('error', (err) => {
 			ctx.set('Content-Type', 'application/json');
 			ctx.status = 500;
 
@@ -37,24 +41,14 @@ export default (getOptions, handleProxy, middlewares = []) => {
 			}));
 
 			removeListeners();
-		};
-
-		proxy.on('proxyReq', (proxyReq, req) => {
-			const { host } = url.parse(target || forward);
-			proxyReq.setHeader('host', host);
 		});
-
-
-		proxy.on('error', handleError);
-
-		if (isFunction(handleProxy)) { handleProxy(proxy); }
 
 		proxy.on('proxyRes', removeListeners);
 
+		if (isFunction(handleProxy)) { handleProxy(proxy); }
+
 		proxy.web(ctx.req, ctx.res, options);
-	});
+	};
 
-	middlewares.forEach((middleware) => app.use(middleware));
-
-	return app.use(router.middleware());
+	return proxyMiddleware;
 };
