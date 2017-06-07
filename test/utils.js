@@ -3,26 +3,33 @@ import { resolve } from 'path';
 import { execSync } from 'child_process';
 import Kapok from 'kapok-js';
 
-let kapok;
-const command = resolve('bin/claypot');
+const kapoks = [];
 
-export const start = (args, options) => {
-	kapok = new Kapok(
+export const command = resolve('bin/claypot');
+
+export const start = (args, options, name = 'claypot') => {
+	const kapok = new Kapok(
 		command,
-		['--execCommand=babel-register', ...args],
-		// args,
-		{
-			// stdio: 'inherit',
-			...options,
-		},
+		['--execCommand=babel-register', ...args, '--name', name],
+		options,
 	);
+	kapoks.push({ name, kapok });
 	return kapok;
 };
 
-export const stop = (done) => {
+export const stop = async () => {
 	try {
-		execSync(`${command} stop -f`);
-		kapok.exit(done);
+		const promises = [];
+
+		while (kapoks.length) {
+			const { kapok, name } = kapoks.shift();
+			promises.push(new Promise((resolve) => {
+				execSync(`${command} stop ${name} -f`);
+				kapok.exit(resolve);
+			}));
+		}
+
+		return Promise.all(promises);
 	}
 	catch (err) {}
 };
