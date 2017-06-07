@@ -1,6 +1,6 @@
 
-import Koa from 'koa';
-import Router from 'koa-router';
+// TODO: deprecated
+
 import url from 'url';
 import qs from 'qs';
 import { isFunction } from 'lodash';
@@ -11,17 +11,14 @@ export default class QueryToCookie {
 	}
 
 	middleware(parent) {
-		const app = new Koa();
-		const router = new Router();
 		const options = this._options;
+		const {
+			keys = [
+				'access_token',
+			],
+		} = options;
 
-		router.get('*', async (ctx, next) => {
-			const {
-				keys = [
-					'access_token',
-				],
-			} = options;
-
+		const middleware = async (ctx, next) => {
 			const {
 				request: { query, originalUrl },
 				cookies,
@@ -97,8 +94,8 @@ export default class QueryToCookie {
 			const queryStr = qs.stringify(query);
 			const redirectUrl = pathname + (queryStr ? `?${queryStr}` : '');
 			ctx.redirect(redirectUrl);
-		});
+		};
 
-		parent.mount(options.urlPrefix || '/', app.use(router.middleware()));
+		parent.mount(options.urlPrefix || '/', middleware);
 	}
 }
