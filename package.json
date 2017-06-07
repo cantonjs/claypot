@@ -21,7 +21,6 @@
     "stop": "yarn cli -- stop",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
-    "postbuild": "cp src/error.html lib/error.html",
     "build:watch": "yarn build -- -w",
     "prepublish": "yarn build",
     "server:test": "babel-register test/proxyServer",
