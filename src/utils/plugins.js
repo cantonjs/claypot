@@ -1,6 +1,5 @@
 
 import importFile from 'import-file';
-import mount from 'koa-mount';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
 import { appLogger } from './logger';

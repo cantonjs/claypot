@@ -3,13 +3,15 @@ import httpProxy from 'http-proxy';
 import { isFunction, isString } from 'lodash';
 import url from 'url';
 
-export default (getOptions, handleProxy) => {
-	const proxy = httpProxy.createProxyServer({});
+export default (options = {}, handleProxy) => {
+	if (isString(options)) { options = { target: options }; }
+	const { ssl, enable = true } = options;
+
+	if (!enable) { return; }
+
+	const proxy = httpProxy.createProxyServer({ ssl });
 
 	const proxyMiddleware = async (ctx) => {
-		let options = isFunction(getOptions) ? getOptions(ctx) : getOptions;
-		if (isString(options)) { options = { target: options }; }
-
 		const { target, forward } = options;
 
 		ctx.respond = false;
@@ -26,7 +28,10 @@ export default (getOptions, handleProxy) => {
 		};
 
 		proxy.on('proxyReq', (proxyReq, req) => {
-			const { host } = url.parse(target || forward);
+			const dest = target || forward;
+			let host;
+			if (isString(dest)) { host = url.parse(dest).host; }
+			else { host = dest.host; }
 			proxyReq.setHeader('host', host);
 		});
 
