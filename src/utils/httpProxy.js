@@ -2,12 +2,28 @@
 import httpProxy from 'http-proxy';
 import { isFunction, isString } from 'lodash';
 import url from 'url';
+import config from '../config';
+import getCertOption from './getCertOption';
+
+const ensureSSL = (ssl) => {
+	if (ssl && ssl.cert && ssl.key) {
+		const { root } = config;
+		return {
+			...ssl,
+			...getCertOption(root, ssl.key, ssl.cert),
+		};
+	}
+	return ssl;
+
+};
 
 export default (options = {}, handleProxy) => {
 	if (isString(options)) { options = { target: options }; }
 	const { ssl, enable = true } = options;
 
 	if (!enable) { return; }
+
+	ensureSSL(ssl);
 
 	const proxy = httpProxy.createProxyServer({ ssl });
 

@@ -3,13 +3,12 @@ import './redis';
 import http from 'http';
 import https from 'https';
 import Koa from 'koa';
-import { readFile } from 'fs-promise';
-import { resolve } from 'path';
 import useMiddlewares from '../utils/useMiddlewares';
 import { init } from '../config';
 import { appLogger } from '../utils/logger';
 import mount from 'koa-mount';
 import { initPlugins } from '../utils/plugins';
+import getCertOption from '../utils/getCertOption';
 
 process.on('message', async (buf) => {
 	try {
@@ -32,21 +31,8 @@ process.on('message', async (buf) => {
 			server.on('error', appLogger.error.bind(appLogger));
 		};
 
-		const tryReadFile = async (file) => {
-			try {
-				return await readFile(resolve(root, file));
-			}
-			catch (err) {
-				appLogger.error(`Failed to read file "${file}".`);
-				appLogger.debug(err);
-			}
-		};
-
 		if (enableHttps) {
-			const options = {
-				key: await tryReadFile(key),
-				cert: await tryReadFile(cert),
-			};
+			const options = getCertOption(root, key, cert);
 			handleError(
 				http.createServer(app.callback()).listen(port)
 			);
