@@ -19,17 +19,17 @@ const ensureSSL = (ssl) => {
 
 export default (options = {}, handleProxy) => {
 	if (isString(options)) { options = { target: options }; }
-	const { ssl, enable = true } = options;
+	const { ssl, enable = true, target, forward } = options;
 
 	if (!enable) { return; }
+
 
 	ensureSSL(ssl);
 
 	const proxy = httpProxy.createProxyServer({ ssl });
+	const dest = target || forward;
 
 	const proxyMiddleware = async (ctx) => {
-		const { target, forward } = options;
-
 		ctx.respond = false;
 		ctx.status = 200; // prevent koa-error handling
 
@@ -44,7 +44,6 @@ export default (options = {}, handleProxy) => {
 		};
 
 		proxy.on('proxyReq', (proxyReq, req) => {
-			const dest = target || forward;
 			let host;
 			if (isString(dest)) { host = url.parse(dest).host; }
 			else { host = dest.host; }
