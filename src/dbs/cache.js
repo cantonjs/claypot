@@ -20,6 +20,7 @@ const extendJsonMethods = (cacheStore) => {
 		const str = await cacheStore.wrap(key, jsonWork, ...args);
 		return str ? JSON.parse(str) : null;
 	};
+	return cacheStore;
 };
 
 let cache;
@@ -35,3 +36,10 @@ export function initCache(toBeCache) {
 export function getCache() {
 	return cache;
 };
+
+export default new Proxy({}, {
+	get(target, key) {
+		if (!cache) { throw new Error('Please run `initCache` before get cache'); }
+		return cache[key];
+	}
+});

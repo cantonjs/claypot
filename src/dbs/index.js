@@ -1,30 +1,27 @@
 
 import { initCache } from './cache';
-import * as memory from './memory';
+import { getByStore } from './register';
 import { appLogger } from '../utils/logger';
 
 const dbs = {};
-const dbsPlugins = { memory };
 
-export function registerDBPlugin(key, connect, cacheStore) {
-	dbsPlugins[key] = { connect, cacheStore };
-}
-
-export function initDbs(config) {
+export function initDbs(dbsConfig) {
 	const toBeCache = [];
 
-	Object.keys(config).forEach((key) => {
+	Object.keys(dbsConfig).forEach((key) => {
 
-		const { cache, ...options } = config[key];
+		const { cache, ...options } = dbsConfig[key];
 
 		if (!options.store) { options.store = 'memory'; }
 
-		if (!dbsPlugins.hasOwnProperty(options.store)) {
+		const dbStore = getByStore(options.store);
+
+		if (!dbStore) {
 			appLogger.warn(`"${options.store}" is NOT a valid db.`);
 			return;
 		}
 
-		const { connect, cacheStore } = dbsPlugins[options.store];
+		const { connect, cacheStore } = dbStore;
 		dbs[key] = connect(options);
 
 		if (cache) {

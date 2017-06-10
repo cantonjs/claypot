@@ -4,6 +4,7 @@ import { mergeWith, merge, isNull, isArray, isObject, uniq } from 'lodash';
 
 const { NODE_ENV = 'development' } = process.env;
 
+export const defaultConfigFilename = 'Claypotfile.js';
 export const isProd = NODE_ENV === 'production';
 export const isDev = NODE_ENV === 'development';
 

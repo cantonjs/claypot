@@ -1,16 +1,16 @@
 
 import importFile from 'import-file';
 import { resolve } from 'path';
-import { isObject, isFunction } from 'lodash';
+import { isObject, isFunction, once } from 'lodash';
 import { appLogger } from './logger';
 import httpProxy from './httpProxy';
-import { registerDBPlugin } from '../dbs';
+import { registerDBPlugin } from '../dbs/register';
 
 const connectDBPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
-export async function initPlugins(config) {
+export const initPlugins = once(async function (config) {
 	const asyncPlugins = [];
 
 	config
@@ -71,7 +71,7 @@ export async function initPlugins(config) {
 	for (const plugin of connectDBPhasePlugins) {
 		plugin.connectDB(registerDBPlugin);
 	}
-}
+});
 
 function middlewarePhase(app, config) {
 	return middlewarePhasePlugins.forEach((applyPlugin) => {

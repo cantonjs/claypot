@@ -1,14 +1,14 @@
 
 import { start as startPot, resolveConfig } from 'pot-js';
 import { resolve } from 'path';
-import { init, isDev } from './config';
+import { init, isDev, defaultConfigFilename } from './config';
 import workspace from './utils/workspace';
 import { appLogger } from './utils/logger';
 import outputHost from 'output-host';
 
 export default async function start(options = {}) {
 	const config = init(await resolveConfig({
-		config: 'Claypotfile.js',
+		config: defaultConfigFilename,
 		configWalk: true,
 		...options,
 		workspace,
