@@ -3243,14 +3243,7 @@ nocache@2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/nocache/download/nocache-2.0.0.tgz#202b48021a0c4cbde2df80de15a17443c8b43980"
 
-node-fetch@^1.0.1, node-fetch@^1.3.3:
-  version "1.6.3"
-  resolved "http://registry.npm.taobao.org/node-fetch/download/node-fetch-1.6.3.tgz#dc234edd6489982d58e8f0db4f695029abcd8c04"
-  dependencies:
-    encoding "^0.1.11"
-    is-stream "^1.0.1"
-
-node-fetch@^1.7.1:
+node-fetch@^1.0.1, node-fetch@^1.3.3, node-fetch@^1.7.1:
   version "1.7.1"
   resolved "http://registry.npm.taobao.org/node-fetch/download/node-fetch-1.7.1.tgz#899cb3d0a3c92f952c47f1b876f4c8aeabd400d5"
   dependencies:
