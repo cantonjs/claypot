@@ -12,6 +12,7 @@ const middlewaresWhiteList = [
 	'helmet',
 	'compress',
 	'favicon',
+	'clayInjection',
 	'plugins',
 	'proxy',
 	'historyAPIFallback',

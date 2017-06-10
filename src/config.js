@@ -21,23 +21,33 @@ const config = {
 	helmet: isProd,
 	compress: isProd,
 	favicon: true,
+	clayInjection: true,
 	plugins: [],
 	historyAPIFallback: false,
 	static: 'static',
 	notFound: true,
 
-	redis: {
-		enable: false,
-		port: 6379,
-		host: '127.0.0.1',
+	// redis: {
+	// 	enable: false,
+	// 	port: 6379,
+	// 	host: '127.0.0.1',
 
-		// prefix: `${potConfig.name}:`,
-		prefix: 'claypot',
+	// 	// prefix: `${potConfig.name}:`,
+	// 	prefix: 'claypot',
 
-		defaultExpiresIn: 60,
-	},
+	// 	defaultExpiresIn: 60,
+	// },
 	watch: {
 		enable: isDev,
+	},
+	dbs: {
+		__default: {
+			store: 'memory',
+			cache: {
+				max: 100,
+				ttl: 60,
+			},
+		}
 	},
 };
 

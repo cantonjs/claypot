@@ -34,6 +34,12 @@ export const stop = async () => {
 	catch (err) {}
 };
 
+export function delay(t = 1000) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, t);
+	});
+}
+
 process.on('SIGINT', stop);
 process.on('SIGTERM', stop);
 process.on('uncaughtException', stop);

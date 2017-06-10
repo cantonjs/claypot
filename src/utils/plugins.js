@@ -4,7 +4,9 @@ import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
 import { appLogger } from './logger';
 import httpProxy from './httpProxy';
+import { registerDBPlugin } from '../dbs';
 
+const connectDBPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
@@ -50,6 +52,9 @@ export async function initPlugins(config) {
 			if (isFunction(plugin.initAsync)) {
 				asyncPlugins.push(plugin);
 			}
+			if (isFunction(plugin.connectDB)) {
+				connectDBPhasePlugins.push(plugin);
+			}
 			if (isFunction(plugin.proxy)) {
 				proxyPhasePlugins.push(::plugin.proxy);
 			}
@@ -61,6 +66,10 @@ export async function initPlugins(config) {
 
 	for (const plugin of asyncPlugins) {
 		await plugin.initAsync();
+	}
+
+	for (const plugin of connectDBPhasePlugins) {
+		plugin.connectDB(registerDBPlugin);
 	}
 }
 

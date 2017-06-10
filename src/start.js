@@ -12,7 +12,7 @@ export default async function start(options = {}) {
 		configWalk: true,
 		...options,
 		workspace,
-		entry: resolve(__dirname, 'app/index.js'),
+		entry: resolve(__dirname, 'app.js'),
 		inject: true,
 		stdio: ['ipc', 'pipe', 'pipe'],
 	}));

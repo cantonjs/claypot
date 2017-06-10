@@ -1,14 +1,14 @@
 
-import './redis';
 import http from 'http';
 import https from 'https';
 import Koa from 'koa';
-import useMiddlewares from '../utils/useMiddlewares';
-import { init } from '../config';
-import { appLogger } from '../utils/logger';
+import useMiddlewares from './utils/useMiddlewares';
+import { init } from './config';
+import { appLogger } from './utils/logger';
 import mount from 'koa-mount';
-import { initPlugins } from '../utils/plugins';
-import getCertOption from '../utils/getCertOption';
+import { initPlugins } from './utils/plugins';
+import getCertOption from './utils/getCertOption';
+import { initDbs } from './dbs/index';
 
 process.on('message', async (buf) => {
 	try {
@@ -17,9 +17,11 @@ process.on('message', async (buf) => {
 		await initPlugins(config);
 
 		const {
-			port, root,
+			port, root, dbs,
 			ssl: { enable: enableHttps, port: httpsPort, key, cert },
 		} = config;
+
+		initDbs(dbs);
 
 		const app = new Koa();
 
