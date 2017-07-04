@@ -1,6 +1,6 @@
 
 import log4js from 'log4js';
-import { ensureDirSync } from 'fs-promise';
+import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 import config from '../config';
 import { noop } from 'lodash';
