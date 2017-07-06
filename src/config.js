@@ -28,16 +28,6 @@ const config = {
 	static: 'static',
 	notFound: true,
 
-	// redis: {
-	// 	enable: false,
-	// 	port: 6379,
-	// 	host: '127.0.0.1',
-
-	// 	// prefix: `${potConfig.name}:`,
-	// 	prefix: 'claypot',
-
-	// 	defaultExpiresIn: 60,
-	// },
 	watch: {
 		enable: isDev,
 	},

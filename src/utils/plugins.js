@@ -90,9 +90,9 @@ export async function applyConnectDB(...args) {
 	}
 }
 
-export function applyRegisterModels(...args) {
+export async function applyRegisterModels(...args) {
 	for (const plugin of registerModelsPhasePlugins) {
-		plugin.registerModels(...args);
+		await plugin.registerModels(...args);
 	}
 }
 

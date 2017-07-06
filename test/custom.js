@@ -24,7 +24,7 @@ export default class CustomServer {
 	middleware(app) {
 		app.use(async (ctx, next) => {
 			if (ctx.path === '/fork') {
-				ctx.clay.models.Fork.test();
+				ctx.clay.models.Hello.test();
 				ctx.body = 'fork';
 			}
 			else {

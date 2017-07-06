@@ -1,32 +1,29 @@
 
-import { isString, forEach } from 'lodash';
+import importModuels from 'import-modules';
+import { join } from 'path';
+import { forEach } from 'lodash';
 import { applyRegisterModels } from './utils/plugins';
-import mapModules from './utils/mapModules';
 import { appLogger } from './utils/logger';
 
 const models = {};
 
-export async function init(modelsConfig, root, dbs) {
-	if (isString(modelsConfig)) {
-		modelsConfig = { dir: modelsConfig };
-	}
-	const { dir, ext } = modelsConfig;
-	const modules = await mapModules(dir, root, ext);
+export async function init(modelsDir, root, dbs) {
+	const modules = importModuels(join(root, modelsDir));
 
 	const register = (dbName, dbModels) => {
 		const prop = `$${dbName}`;
 		forEach(dbModels, (dbModel, name) => {
-			const Model = modules[name];
+			const Model = modules[name].default;
 			Model.prototype[prop] = dbModel;
 		});
 	};
 
 	const names = Object.keys(modules);
 
-	applyRegisterModels(register, names);
+	await applyRegisterModels(register, names);
 
 	names.forEach((name) => {
-		const Model = modules[name];
+		const Model = modules[name].default;
 		Model.prototype.$models = models;
 		models[name] = new Model();
 		appLogger.trace(`Created model "${name}"`);
