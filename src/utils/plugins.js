@@ -6,6 +6,7 @@ import { appLogger } from './logger';
 import httpProxy from './httpProxy';
 
 const connectDBPhasePlugins = [];
+const registerCachePhasePlugins = [];
 const registerModelsPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
@@ -55,6 +56,9 @@ export const initPlugins = once(async function (config) {
 			if (isFunction(plugin.connectDB)) {
 				connectDBPhasePlugins.push(plugin);
 			}
+			if (isFunction(plugin.registerCache)) {
+				registerCachePhasePlugins.push(plugin);
+			}
 			if (isFunction(plugin.registerModels)) {
 				registerModelsPhasePlugins.push(plugin);
 			}
@@ -87,6 +91,12 @@ function proxyPhase(app, config) {
 export async function applyConnectDB(...args) {
 	for (const plugin of connectDBPhasePlugins) {
 		await plugin.connectDB(...args);
+	}
+}
+
+export async function applyRegisterCache(...args) {
+	for (const plugin of registerCachePhasePlugins) {
+		await plugin.registerCache(...args);
 	}
 }
 

@@ -1,13 +1,13 @@
 
 import dbs from './index';
-import { initCache } from './cache';
+import { initCache } from '../cache';
 import { applyConnectDB } from '../utils/plugins';
 import { appLogger } from '../utils/logger';
 import * as memory from './memory';
 
 const dbsPlugins = { memory };
 
-const registerDBPlugin = function registerDBPlugin(key, connect, cacheStore) {
+const register = function register(key, connect, cacheStore) {
 	dbsPlugins[key] = { connect, cacheStore };
 };
 
@@ -18,7 +18,7 @@ const getByStore = function getByStore(store) {
 export default async function init(dbsConfig) {
 	const toBeCache = [];
 
-	await applyConnectDB(registerDBPlugin);
+	await applyConnectDB(register);
 
 	Object.keys(dbsConfig).forEach((key) => {
 

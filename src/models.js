@@ -32,4 +32,8 @@ export async function init(modelsDir, root, dbs) {
 	appLogger.debug(`${names.length} model(s) created`);
 }
 
+export function getModels() {
+	return models;
+};
+
 export default models;
