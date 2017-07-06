@@ -4,9 +4,9 @@ import { resolve } from 'path';
 import { isObject, isFunction, once } from 'lodash';
 import { appLogger } from './logger';
 import httpProxy from './httpProxy';
-import { registerDBPlugin } from '../dbs/register';
 
 const connectDBPhasePlugins = [];
+const registerModelsPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
@@ -55,6 +55,9 @@ export const initPlugins = once(async function (config) {
 			if (isFunction(plugin.connectDB)) {
 				connectDBPhasePlugins.push(plugin);
 			}
+			if (isFunction(plugin.registerModels)) {
+				registerModelsPhasePlugins.push(plugin);
+			}
 			if (isFunction(plugin.proxy)) {
 				proxyPhasePlugins.push(::plugin.proxy);
 			}
@@ -66,10 +69,6 @@ export const initPlugins = once(async function (config) {
 
 	for (const plugin of asyncPlugins) {
 		await plugin.initAsync();
-	}
-
-	for (const plugin of connectDBPhasePlugins) {
-		plugin.connectDB(registerDBPlugin);
 	}
 });
 
@@ -83,6 +82,18 @@ function proxyPhase(app, config) {
 	return proxyPhasePlugins.forEach((applyPlugin) => {
 		applyPlugin(app, httpProxy, config);
 	});
+}
+
+export async function applyConnectDB(...args) {
+	for (const plugin of connectDBPhasePlugins) {
+		await plugin.connectDB(...args);
+	}
+}
+
+export function applyRegisterModels(...args) {
+	for (const plugin of registerModelsPhasePlugins) {
+		plugin.registerModels(...args);
+	}
 }
 
 export function applyMiddlewares(app, config) {

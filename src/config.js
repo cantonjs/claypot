@@ -41,6 +41,7 @@ const config = {
 	watch: {
 		enable: isDev,
 	},
+	models: 'models',
 	dbs: {
 		__default: {
 			store: 'memory',
