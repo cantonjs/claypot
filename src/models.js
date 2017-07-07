@@ -1,7 +1,7 @@
 
 import importModuels from 'import-modules';
 import { join } from 'path';
-import { forEach } from 'lodash';
+import { forEach, isUndefined, isFunction } from 'lodash';
 import { applyRegisterModels } from './utils/plugins';
 import { appLogger } from './utils/logger';
 
@@ -15,6 +15,7 @@ export async function init(modelsDir, root, dbs) {
 		forEach(dbModels, (dbModel, name) => {
 			const Model = modules[name].default;
 			Model.prototype[prop] = dbModel;
+			Model[prop] = dbModel;
 		});
 	};
 
@@ -25,6 +26,7 @@ export async function init(modelsDir, root, dbs) {
 	names.forEach((name) => {
 		const Model = modules[name].default;
 		Model.prototype.$models = models;
+		Model.$models = models;
 		models[name] = new Model();
 		appLogger.trace(`Created model "${name}"`);
 	});
@@ -34,6 +36,24 @@ export async function init(modelsDir, root, dbs) {
 
 export function getModels() {
 	return models;
-};
+}
 
-export default models;
+export default new Proxy({}, {
+	get(_1, name) {
+		const model = new Proxy({}, {
+			get(_2, key) {
+				const m = models[name];
+				if (isUndefined(m)) {
+					appLogger.error(`Models "${name}" is undefined`);
+					return;
+				}
+				if (isUndefined(m[key])) {
+					appLogger.error(`Models "${name}.${key}" is undefined`);
+					return;
+				}
+				return isFunction(m[key]) ? m[key].bind(m) : m[key];
+			},
+		});
+		return model;
+	}
+});
