@@ -1,6 +1,6 @@
 
 export default class Hello {
-	test() {
-		console.log('hello');
+	say() {
+		return this.$wtf.getData();
 	}
 }

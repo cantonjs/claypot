@@ -1,33 +1,39 @@
 
 import importModuels from 'import-modules';
 import { join } from 'path';
-import { forEach, isUndefined, isFunction } from 'lodash';
-import { applyRegisterModels } from './utils/plugins';
+import { forEach, isFunction } from 'lodash';
 import { appLogger } from './utils/logger';
+import createProxyObject from './utils/createProxyObject';
 
 const models = {};
 
-export async function init(modelsDir, root, dbs) {
+export async function initModels(dbs, appConfig) {
+	const { models: modelsDir, root } = appConfig;
 	const modules = importModuels(join(root, modelsDir));
 
-	const register = (dbName, dbModels) => {
-		const prop = `$${dbName}`;
+	const extendModel = (Model, key, extension) => {
+		const prop = `$${key}`;
+		Model = Model.default || Model;
+		Model[prop] = extension;
+		if (isFunction(Model)) { Model.prototype[prop] = extension; }
+		return Model;
+	};
+
+	const registerDb = (key, dbModels) => {
 		forEach(dbModels, (dbModel, name) => {
-			const Model = modules[name].default;
-			Model.prototype[prop] = dbModel;
-			Model[prop] = dbModel;
+			extendModel(modules[name], key, dbModel);
 		});
 	};
 
 	const names = Object.keys(modules);
 
-	await applyRegisterModels(register, names);
+	dbs.forEach(({ key, createModels, options }) => {
+		registerDb(key, createModels(names, options));
+	});
 
 	names.forEach((name) => {
-		const Model = modules[name].default;
-		Model.prototype.$models = models;
-		Model.$models = models;
-		models[name] = new Model();
+		const Model = extendModel(modules[name], 'models', models);
+		models[name] = isFunction(Model) ? new Model() : Model;
 		appLogger.trace(`Created model "${name}"`);
 	});
 
@@ -38,22 +44,4 @@ export function getModels() {
 	return models;
 }
 
-export default new Proxy({}, {
-	get(_1, name) {
-		const model = new Proxy({}, {
-			get(_2, key) {
-				const m = models[name];
-				if (isUndefined(m)) {
-					appLogger.error(`Models "${name}" is undefined`);
-					return;
-				}
-				if (isUndefined(m[key])) {
-					appLogger.error(`Models "${name}.${key}" is undefined`);
-					return;
-				}
-				return isFunction(m[key]) ? m[key].bind(m) : m[key];
-			},
-		});
-		return model;
-	}
-});
+export default createProxyObject(models, 'Models');

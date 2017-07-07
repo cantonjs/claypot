@@ -1,6 +1,8 @@
 
 import cacheManager from 'cache-manager';
-import { isObject } from 'lodash';
+import { isObject, noop } from 'lodash';
+import { appLogger } from './utils/logger';
+import createProxyObject from './utils/createProxyObject';
 
 const extendJsonMethods = (cacheStore) => {
 	cacheStore.getJson = async (key) => {
@@ -23,13 +25,15 @@ const extendJsonMethods = (cacheStore) => {
 	return cacheStore;
 };
 
+const stores = {};
 let cache;
 
-export function initCache(toBeCache) {
-	toBeCache.forEach(({ _key, ...options }) => {
-		const cacheStore = extendJsonMethods(cacheManager.caching(options));
-		if (!cache) { cache = cacheStore; }
-		cache[_key] = cacheStore;
+export function initCache(creators) {
+	creators.forEach(({ key, createCache, options }, index) => {
+		const creater = createCache(options);
+		const cacheStore = extendJsonMethods(cacheManager.caching(creater));
+		if (!index) { cache = cacheStore; }
+		stores[key] = cacheStore;
 	});
 }
 
@@ -37,9 +41,18 @@ export function getCache() {
 	return cache;
 };
 
+export function getCacheStores() {
+	return stores;
+}
+
 export default new Proxy({}, {
 	get(target, key) {
-		if (!cache) { throw new Error('Please run `initCache` before get cache'); }
+		if (!cache) {
+			appLogger.error('Cache is NOT ready');
+			return noop;
+		}
 		return cache[key];
 	}
 });
+
+export const cacheStores = createProxyObject(stores, 'CacheStores');

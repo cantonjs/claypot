@@ -32,15 +32,7 @@ const config = {
 		enable: isDev,
 	},
 	models: 'models',
-	dbs: {
-		__default: {
-			store: 'memory',
-			cache: {
-				max: 100,
-				ttl: 60,
-			},
-		}
-	},
+	dbs: {},
 };
 
 export default config;

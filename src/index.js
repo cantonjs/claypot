@@ -8,7 +8,7 @@ export log from './log';
 export logger, { initLog } from './utils/logger';
 export config, { isDev, isProd } from './config';
 export connectDbs from './dbs/connect';
-export cache from './cache';
+export cache, { cacheStores } from './cache';
 export models from './models';
 
 export function createApp() {

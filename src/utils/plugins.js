@@ -5,9 +5,7 @@ import { isObject, isFunction, once } from 'lodash';
 import { appLogger } from './logger';
 import httpProxy from './httpProxy';
 
-const connectDBPhasePlugins = [];
-const registerCachePhasePlugins = [];
-const registerModelsPhasePlugins = [];
+const registerDatabasePhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
@@ -53,14 +51,8 @@ export const initPlugins = once(async function (config) {
 			if (isFunction(plugin.initAsync)) {
 				asyncPlugins.push(plugin);
 			}
-			if (isFunction(plugin.connectDB)) {
-				connectDBPhasePlugins.push(plugin);
-			}
-			if (isFunction(plugin.registerCache)) {
-				registerCachePhasePlugins.push(plugin);
-			}
-			if (isFunction(plugin.registerModels)) {
-				registerModelsPhasePlugins.push(plugin);
+			if (isFunction(plugin.registerDatabase)) {
+				registerDatabasePhasePlugins.push(plugin);
 			}
 			if (isFunction(plugin.proxy)) {
 				proxyPhasePlugins.push(::plugin.proxy);
@@ -88,21 +80,9 @@ function proxyPhase(app, config) {
 	});
 }
 
-export async function applyConnectDB(...args) {
-	for (const plugin of connectDBPhasePlugins) {
-		await plugin.connectDB(...args);
-	}
-}
-
-export async function applyRegisterCache(...args) {
-	for (const plugin of registerCachePhasePlugins) {
-		await plugin.registerCache(...args);
-	}
-}
-
-export async function applyRegisterModels(...args) {
-	for (const plugin of registerModelsPhasePlugins) {
-		await plugin.registerModels(...args);
+export async function applyRegisterDatabase(...args) {
+	for (const plugin of registerDatabasePhasePlugins) {
+		await plugin.registerDatabase(...args);
 	}
 }
 

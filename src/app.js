@@ -8,8 +8,7 @@ import { appLogger } from './utils/logger';
 import mount from 'koa-mount';
 import { initPlugins } from './utils/plugins';
 import getCertOption from './utils/getCertOption';
-import initDbs from './dbs/init';
-import { init as initModels } from './models';
+import initDbs from './dbs';
 
 process.on('message', async (buf) => {
 	try {
@@ -18,12 +17,11 @@ process.on('message', async (buf) => {
 		await initPlugins(config);
 
 		const {
-			port, root, models, dbs,
+			port, root,
 			ssl: { enable: enableHttps, port: httpsPort, key, cert },
 		} = config;
 
-		await initDbs(dbs);
-		await initModels(models, root, dbs);
+		await initDbs(config);
 
 		const app = new Koa();
 
