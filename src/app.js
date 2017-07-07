@@ -6,7 +6,7 @@ import useMiddlewares from './utils/useMiddlewares';
 import { init } from './config';
 import { appLogger } from './utils/logger';
 import mount from 'koa-mount';
-import { initPlugins } from './utils/plugins';
+import { initPlugins, applyInitServer } from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import initDbs from './dbs';
 
@@ -14,7 +14,7 @@ process.on('message', async (buf) => {
 	try {
 		const config = init(JSON.parse(buf.toString()));
 
-		await initPlugins(config);
+		initPlugins(config);
 
 		const {
 			port, root,
@@ -26,6 +26,8 @@ process.on('message', async (buf) => {
 		const app = new Koa();
 
 		app.mount = (...args) => app.use(mount(...args));
+
+		await applyInitServer(app);
 
 		useMiddlewares(app);
 

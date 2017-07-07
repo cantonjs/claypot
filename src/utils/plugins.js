@@ -1,17 +1,16 @@
 
 import importFile from 'import-file';
 import { resolve } from 'path';
-import { isObject, isFunction, once } from 'lodash';
+import { isObject, isFunction } from 'lodash';
 import { appLogger } from './logger';
 import httpProxy from './httpProxy';
 
 const registerDatabasePhasePlugins = [];
+const initServerPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
 
-export const initPlugins = once(async function (config) {
-	const asyncPlugins = [];
-
+export function initPlugins(config) {
 	config
 		.plugins
 		.map((plugin) => {
@@ -48,11 +47,11 @@ export const initPlugins = once(async function (config) {
 		})
 		.filter(Boolean)
 		.forEach((plugin) => {
-			if (isFunction(plugin.initAsync)) {
-				asyncPlugins.push(plugin);
-			}
 			if (isFunction(plugin.registerDatabase)) {
 				registerDatabasePhasePlugins.push(plugin);
+			}
+			if (isFunction(plugin.initServer)) {
+				initServerPhasePlugins.push(plugin);
 			}
 			if (isFunction(plugin.proxy)) {
 				proxyPhasePlugins.push(::plugin.proxy);
@@ -63,10 +62,7 @@ export const initPlugins = once(async function (config) {
 		})
 	;
 
-	for (const plugin of asyncPlugins) {
-		await plugin.initAsync();
-	}
-});
+}
 
 function middlewarePhase(app, config) {
 	return middlewarePhasePlugins.forEach((applyPlugin) => {
@@ -78,6 +74,12 @@ function proxyPhase(app, config) {
 	return proxyPhasePlugins.forEach((applyPlugin) => {
 		applyPlugin(app, httpProxy, config);
 	});
+}
+
+export async function applyInitServer(...args) {
+	for (const plugin of initServerPhasePlugins) {
+		await plugin.initServer(...args);
+	}
 }
 
 export async function applyRegisterDatabase(...args) {
