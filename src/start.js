@@ -12,9 +12,8 @@ export default async function start(options = {}) {
 		configWalk: true,
 		...options,
 		workspace,
+		configToEnv: 'CLAYPOT_CONFIG',
 		entry: resolve(__dirname, 'app.js'),
-		inject: true,
-		stdio: ['ipc', 'pipe', 'pipe'],
 	}));
 
 	await startPot(config);

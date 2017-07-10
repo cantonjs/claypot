@@ -10,9 +10,9 @@ import { initPlugins, applyInitServer } from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import initDbs from './dbs';
 
-process.on('message', async (buf) => {
+(async function main() {
 	try {
-		const config = init(JSON.parse(buf.toString()));
+		const config = init(JSON.parse(process.env.CLAYPOT_CONFIG));
 
 		initPlugins(config);
 
@@ -51,4 +51,4 @@ process.on('message', async (buf) => {
 	catch (err) {
 		appLogger.fatal(`Failed to start server:`, err);
 	}
-});
+}());
