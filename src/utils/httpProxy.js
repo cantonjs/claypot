@@ -4,6 +4,7 @@ import { isFunction, isString } from 'lodash';
 import url from 'url';
 import config from '../config';
 import getCertOption from './getCertOption';
+import { appLogger } from '../utils/logger';
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
@@ -47,9 +48,9 @@ export default (options = {}, handleProxy) => {
 			let host;
 			if (isString(dest)) { host = url.parse(dest).host; }
 			else { host = dest.host; }
-			proxyReq.setHeader('host', host);
+			try { proxyReq.setHeader('host', host); }
+			catch (err) { appLogger.warn(err); }
 		});
-
 
 		proxy.on('error', (err) => {
 			ctx.set('Content-Type', 'application/json');
