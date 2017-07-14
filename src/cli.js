@@ -97,6 +97,14 @@ yargs
 						desc: 'Server port',
 						type: 'number',
 					},
+					'max-restarts': {
+						desc: 'How many restarts are allowed within 60s. `-1` for infinite restarts. If `production` is `true`, default value is `-1`, otherwise is `0`',
+						type: 'number',
+					},
+					inspect: {
+						desc: 'Activate inspector. Require Node.js >= v6.3.0',
+						type: 'string',
+					},
 				})
 				.argv
 			;
