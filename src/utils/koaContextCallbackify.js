@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 const _callbackified = Symbol('callbackified');
 
-const set = () => noop;
+const returnNoop = () => noop;
 
 export default function koaContextCallbackify(ctx) {
 	if (ctx[_callbackified]) { return ctx; }
@@ -15,11 +15,15 @@ export default function koaContextCallbackify(ctx) {
 		Object.defineProperties(ctx, {
 			status: {
 				get: () => 100,
-				set,
+				set: returnNoop,
 			},
 			set: {
-				get: set,
-				set,
+				get: returnNoop,
+				set: returnNoop,
+			},
+			response: {
+				get: () => ({ status: 100 }),
+				set: returnNoop,
 			},
 		});
 	}
