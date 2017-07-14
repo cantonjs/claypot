@@ -4,6 +4,7 @@ import httpProxy from 'http-proxy';
 import { isFunction, isString, isNumber, isObject } from 'lodash';
 import url from 'url';
 import qs from 'qs';
+import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
@@ -20,18 +21,24 @@ const ensureSSL = (ssl) => {
 	return ssl;
 };
 
+const MayHasBodyMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+
 export default (options = {}, handleProxyContext) => {
 	if (isString(options)) { options = { target: options }; }
 
 	const {
 		enable = true,
 		query: queryModifier,
+		contentType,
 		...opts,
 	} = options;
 
 	if (!enable) { return; }
 
 	const { ssl, target, forward } = opts;
+
+	const isFormContent = contentType === 'application/x-www-form-urlencoded';
+	const isJsonContent = contentType === 'application/json';
 
 	ensureSSL(ssl);
 
@@ -61,7 +68,20 @@ export default (options = {}, handleProxyContext) => {
 	});
 
 	proxy.on('proxyReq', (proxyReq, req, res) => {
-		if (!res.headersSent) { proxyReq.setHeader('host', host); }
+		if (!res.headersSent) {
+			proxyReq.setHeader('host', host);
+
+			if (isJsonContent || isFormContent) {
+				proxyReq.setHeader('Content-Type', contentType);
+			}
+
+			if (req._transformedBody) {
+				const body = req._transformedBody;
+				proxyReq.setHeader('Content-Length', Buffer.byteLength(body));
+				proxyReq.write(body);
+			}
+		}
+
 		if (requests.has(res)) {
 			const proxyContext = requests.get(res);
 			proxyContext.emit('proxyReq', proxyReq, req, res);
@@ -121,7 +141,29 @@ export default (options = {}, handleProxyContext) => {
 		ctx.req.url = url.format(urlObject);
 	};
 
+	const maybeTransformBody = async (ctx) => {
+		if (!isFormContent && !isJsonContent) { return; }
+
+		const originContentType = ctx.get('Content-Type');
+		if (contentType === originContentType) { return; }
+
+		if (!MayHasBodyMethods.includes(ctx.method.toUpperCase())) { return; }
+
+		let body = await getBody(ctx.req);
+
+		if (isFormContent) {
+			body = qs.stringify(JSON.parse(body.toString()));
+		}
+		else if (isJsonContent) {
+			body = JSON.stringify(qs.parse(body.toString()));
+		}
+
+		ctx.req._transformedBody = body;
+	};
+
 	const proxyMiddleware = async (ctx) => {
+
+		await maybeTransformBody(ctx);
 
 		modifyQuery(ctx);
 		koaContextCallbackify(ctx);
