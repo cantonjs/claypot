@@ -14,8 +14,10 @@ export const server = http.createServer((req, res) => {
 	console.log('url', reqURL);
 
 	const end = (data, statusCode = 200) => {
-		res.writeHead(statusCode, { 'Content-Type': 'application/json' });
-		res.end(JSON.stringify(data));
+		setTimeout(() => {
+			res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+			res.end(JSON.stringify(data));
+		}, 1000);
 	};
 
 	const routes = {
@@ -31,8 +33,9 @@ export const server = http.createServer((req, res) => {
 		'GET /delay': () => delay(query.delay)
 			.then(() => end({ delay: query.delay || 2000 })),
 		'GET /foo/bar': () => end(query),
-		'GET /bad': () => end({ message: 'you bad bad' }, 400),
-		'GET /too/bad': () => { throw new Error('oh shit'); },
+		'GET /bad': () => end({ message: 'you bad' }, 400),
+		'GET /bad/bad': () => end({ message: 'you bad bad' }, 500),
+		'GET /bad/bad/bad': () => { throw new Error('oh shit'); },
 	};
 
 	const route = `${method} ${pathname}`;

@@ -2927,10 +2927,6 @@ koa-mount@^3.0.0:
     debug "^2.6.1"
     koa-compose "^3.2.1"
 
-koa-response-time@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.taobao.org/koa-response-time/download/koa-response-time-2.0.0.tgz#9590b54284dc59a9ec10f80b69048a66188342bb"
-
 koa-send@^4.1.0:
   version "4.1.0"
   resolved "http://registry.npm.taobao.org/koa-send/download/koa-send-4.1.0.tgz#07d5a4eaab212679fe99916aae6b1109c08c2361"
@@ -3022,7 +3018,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3034,7 +3030,7 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
