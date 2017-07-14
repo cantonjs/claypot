@@ -31,6 +31,7 @@ const config = {
 	watch: {
 		enable: isDev,
 	},
+
 	models: 'models',
 	dbs: {},
 };

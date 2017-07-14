@@ -1,10 +1,11 @@
 
 import { start as startPot, resolveConfig } from 'pot-js';
 import { resolve } from 'path';
-import { init, isDev, defaultConfigFilename } from './config';
+import { init, defaultConfigFilename } from './config';
 import workspace from './utils/workspace';
 import { appLogger } from './utils/logger';
 import outputHost from 'output-host';
+import { isUndefined } from 'lodash';
 
 export default async function start(options = {}) {
 	const config = init(await resolveConfig({
@@ -22,10 +23,15 @@ export default async function start(options = {}) {
 
 	const logger = appLogger.info.bind(appLogger);
 
+	if ((!config.outputHost && !isUndefined(config.outputHost)) ||
+		config.production) {
+		return;
+	}
+
 	outputHost({
 		port: config.port,
 		name: config.name,
-		useCopy: isDev && !enableHttps,
+		useCopy: !config.production && !enableHttps,
 		logger,
 	});
 
@@ -34,7 +40,7 @@ export default async function start(options = {}) {
 			port: config.ssl.port,
 			name: `${config.name} HTTPS`,
 			protocol: 'https',
-			useCopy: isDev,
+			useCopy: !config.production,
 			logger,
 		});
 
