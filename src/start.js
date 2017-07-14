@@ -5,7 +5,7 @@ import { init, defaultConfigFilename } from './config';
 import workspace from './utils/workspace';
 import { appLogger } from './utils/logger';
 import outputHost from 'output-host';
-import { isUndefined } from 'lodash';
+import { isUndefined, isObject } from 'lodash';
 
 export default async function start(options = {}) {
 	const config = init(await resolveConfig({
@@ -28,11 +28,14 @@ export default async function start(options = {}) {
 		return;
 	}
 
+	const outputHostConfig = isObject(config.outputHost) ? config.outputHost : {};
+
 	outputHost({
 		port: config.port,
 		name: config.name,
 		useCopy: !config.production && !enableHttps,
 		logger,
+		...outputHostConfig,
 	});
 
 	if (enableHttps) {
@@ -42,6 +45,7 @@ export default async function start(options = {}) {
 			protocol: 'https',
 			useCopy: !config.production,
 			logger,
+			...outputHostConfig,
 		});
 
 	}
