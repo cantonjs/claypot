@@ -61,7 +61,13 @@ export const initLog = (addAppenders = noop) => {
 		appenders = appenders.concat(addAppenders({ inLogsDir }) || []);
 	}
 	else {
-		appenders = [{ type: 'console' }];
+		appenders = [{
+			type: 'stdout',
+			layout: {
+				type: 'pattern',
+				pattern: '%[%p%] %m',
+			},
+		}];
 	}
 
 	log4js.configure({
