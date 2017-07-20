@@ -8,7 +8,7 @@ import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
-// import { appLogger } from '../utils/logger';
+import { appLogger } from '../utils/logger';
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
@@ -100,13 +100,20 @@ export default (options = {}, handleProxyContext) => {
 		if (requests.has(res)) {
 			const proxyContext = requests.get(res);
 
+			appLogger.debug('[ProxyError]', err);
+
 			if (!res.headersSent) {
-				res.setHeader('Content-Type', 'application/json');
-				res.statusCode = isNumber(err.status) ? err.status : 500;
-				res.statusMessage = err.message || 'Internal Server Error';
+				if (isFunction(proxyContext.errorHandler)) {
+					proxyContext.errorHandler(err, req, res);
+				}
+				else {
+					res.setHeader('Content-Type', 'application/json');
+					res.statusCode = isNumber(err.status) ? err.status : 500;
+					res.statusMessage = 'ECONNREFUSED';
+					res.end(JSON.stringify({ message: 'ECONNREFUSED' }));
+				}
 			}
 
-			proxyContext.emit('error', err, req, res);
 			done(proxyContext, res);
 		}
 	});
