@@ -62,7 +62,7 @@ export const initLog = (addAppenders = noop) => {
 	}
 	else {
 		appenders = [{
-			type: 'stdout',
+			type: 'console',
 			layout: {
 				type: 'pattern',
 				pattern: '%[%p%] %m',
