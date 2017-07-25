@@ -3,7 +3,7 @@ import EventEmitter from 'events';
 import httpProxy from 'http-proxy';
 import { isFunction, isString, isNumber, isObject } from 'lodash';
 import url from 'url';
-import qs from 'qs';
+import qs from 'querystring';
 import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
