@@ -3,9 +3,6 @@ import { start as startPot, resolveConfig } from 'pot-js';
 import { resolve } from 'path';
 import { init, defaultConfigFilename } from './config';
 import workspace from './utils/workspace';
-import { appLogger } from './utils/logger';
-import outputHost from 'output-host';
-import { isUndefined, isObject } from 'lodash';
 
 export default async function start(options = {}) {
 	const config = init(await resolveConfig({
@@ -18,35 +15,4 @@ export default async function start(options = {}) {
 	}));
 
 	await startPot(config);
-
-	const enableHttps = config.ssl.enable;
-
-	const logger = appLogger.info.bind(appLogger);
-
-	if ((!config.outputHost && !isUndefined(config.outputHost)) ||
-		config.production) {
-		return;
-	}
-
-	const outputHostConfig = isObject(config.outputHost) ? config.outputHost : {};
-
-	outputHost({
-		port: config.port,
-		name: config.name,
-		useCopy: !config.production && !enableHttps,
-		logger,
-		...outputHostConfig,
-	});
-
-	if (enableHttps) {
-		outputHost({
-			port: config.ssl.port,
-			name: `${config.name} HTTPS`,
-			protocol: 'https',
-			useCopy: !config.production,
-			logger,
-			...outputHostConfig,
-		});
-
-	}
 }
