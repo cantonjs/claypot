@@ -1,5 +1,5 @@
 
-import { cache, cacheStores, logger } from '../src';
+import { createLogger } from '../src';
 
 export default class CustomServer {
 	constructor(options) {
@@ -24,8 +24,8 @@ export default class CustomServer {
 	middleware(app) {
 		app.use(async (ctx, next) => {
 			if (ctx.path === '/fork') {
-				logger.info('typeof cache', typeof cache);
-				logger.info('typeof cacheStores.memory', typeof cacheStores.memory);
+				const forkLogger = createLogger('fork');
+				forkLogger.info('fork you');
 				ctx.body = ctx.clay.models.Hello.say();
 			}
 			else {
