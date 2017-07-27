@@ -8,8 +8,10 @@ import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
-import logger from '../utils/logger';
+import { createLogger } from '../utils/logger';
 import chalk from 'chalk';
+
+const logger = createLogger('proxy', 'greenBright');
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
@@ -50,7 +52,6 @@ export default (options = {}, handleProxyContext) => {
 	const dest = target || forward;
 
 	logger.trace(
-		'[proxy]',
 		`"${dest}" added`,
 		pathname ? chalk.gray(` (from "${pathname}")`) : '',
 	);
@@ -110,10 +111,7 @@ export default (options = {}, handleProxyContext) => {
 			const proxyUrl = host + proxyRes.req.path;
 			const proxyMethod = proxyRes.req.method;
 			const proxyReq = chalk.yellow(`${proxyMethod} ${protocol}//${proxyUrl}`);
-			logger.trace(
-				'[proxy]',
-				`${originReq} ${chalk.gray('to')} ${proxyReq}`,
-			);
+			logger.trace(`${originReq} ${chalk.gray('to')} ${proxyReq}`);
 
 			done(proxyContext, req, res);
 		}
@@ -123,7 +121,7 @@ export default (options = {}, handleProxyContext) => {
 		if (requests.has(res)) {
 			const proxyContext = requests.get(res);
 
-			logger.error('[proxy]', err);
+			logger.error(err);
 
 			if (!res.headersSent) {
 				if (isFunction(proxyContext.errorHandler)) {

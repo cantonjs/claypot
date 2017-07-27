@@ -2,9 +2,10 @@
 import { initCache } from '../cache';
 import { initModels } from '../models';
 import { applyRegisterDatabase } from '../utils/plugins';
-import { appLogger } from '../utils/logger';
+import { createLogger } from '../utils/logger';
 import { isFunction } from 'lodash';
 
+const logger = createLogger('dbs', 'red');
 const dbs = {};
 const cacheCreators = [];
 const modelCreators = [];
@@ -28,24 +29,32 @@ export default async function init(appConfig) {
 		} = dbsConfig[key];
 
 		if (!store) {
-			appLogger.error(`Database "${key}" requires "${store}" field.`);
+			logger.error(`database "${key}" requires "${store}" field`);
 			return;
 		}
 
 		const db = dbs[store];
 
 		if (!db) {
-			appLogger.warn(`"${store}" is NOT a valid db.`);
+			logger.warn(`"${store}" is NOT a valid db`);
 			return;
 		}
 
 		const { connect, createCache, createModels } = db;
 
-		isFunction(connect) && connect(options);
+		if (isFunction(connect)) {
+			try {
+				connect(options);
+				logger.trace(`"${store}" connected`);
+			}
+			catch (err) {
+				logger.error(`connect "${store}" failed.`, err);
+			}
+		}
 
 		if (cache) {
 			if (!isFunction(createCache)) {
-				appLogger.warn(`"${store}" does NOT support cache.`);
+				logger.warn(`"${store}" does NOT support cache`);
 			}
 			else {
 				const { isDefault, ...other } = cache;

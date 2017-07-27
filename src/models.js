@@ -1,15 +1,16 @@
 
-import importModuels from 'import-modules';
+import importModules from 'import-modules';
 import { join } from 'path';
 import { forEach, isFunction } from 'lodash';
-import logger from './utils/logger';
+import { createLogger } from './utils/logger';
 import createProxyObject from './utils/createProxyObject';
 
+const logger = createLogger('model', ['blueBright']);
 const models = {};
 
 export async function initModels(dbs, appConfig) {
 	const { models: modelsDir, root } = appConfig;
-	const modules = importModuels(join(root, modelsDir));
+	const modules = importModules(join(root, modelsDir));
 
 	const extendModel = (Model, key, extension) => {
 		const prop = `$${key}`;

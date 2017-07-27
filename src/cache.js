@@ -1,9 +1,10 @@
 
 import cacheManager from 'cache-manager';
 import { noop } from 'lodash';
-import { appLogger } from './utils/logger';
+import { createLogger } from './utils/logger';
 import createProxyObject from './utils/createProxyObject';
 
+const logger = createLogger('cache', 'magentaBright');
 const stores = {};
 let cache;
 
@@ -13,6 +14,7 @@ export function initCache(creators) {
 		const cacheStore = cacheManager.caching(creater);
 		if (!index) { cache = cacheStore; }
 		stores[key] = cacheStore;
+		logger.trace(`created cache "${key}"`);
 	});
 }
 
@@ -27,7 +29,7 @@ export function getCacheStores() {
 export default new Proxy({}, {
 	get(target, key) {
 		if (!cache) {
-			appLogger.error('Cache is NOT ready');
+			logger.error('Cache is NOT ready');
 			return noop;
 		}
 		return cache[key];

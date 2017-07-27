@@ -4,6 +4,7 @@ import { ensureDirSync } from 'fs-extra';
 import { join } from 'path';
 import config from '../config';
 import chalk from 'chalk';
+import { isFunction } from 'lodash';
 
 const HTTP = 'http';
 const APP = 'app';
@@ -38,7 +39,7 @@ export const initLog = (customAppenders) => {
 
 		if (daemon) {
 			ensureDirSync(logsDir);
-			appenders = {
+			Object.assign(appenders, {
 				[HTTP]: {
 					type: 'dateFile',
 					filename: inLogsDir('access'),
@@ -76,10 +77,10 @@ export const initLog = (customAppenders) => {
 						backups: 3,
 					},
 				},
-			};
+			});
 		}
 		else {
-			appenders = {
+			Object.assign(appenders, {
 				[DEFAULT]: {
 					type: 'console',
 					layout: {
@@ -87,7 +88,7 @@ export const initLog = (customAppenders) => {
 						pattern: '%[%p%] %m',
 					},
 				},
-			};
+			});
 		}
 
 		if (customAppenders) { Object.assign(appenders, customAppenders); }
@@ -113,8 +114,29 @@ const lazyGetLogger = (category) => {
 	});
 };
 
-export function createLogger(category, color = 'gray', options) {
+export function createLogger(category, style = 'dim', options) {
 	const { daemon, logLevel } = config;
+
+	const getStyledCategoryStr = () => {
+		const pattern = '[%c]';
+		const validatColor = (style) => {
+			if (!isFunction(chalk[style])) {
+				throw new Error(`category with style "${style}" is NOT support.`);
+			}
+		};
+
+		if (Array.isArray(style)) {
+			const getStyle = style.reduce((chalkChaining, color) => {
+				validatColor(color);
+				return chalkChaining[color].bind(chalkChaining);
+			}, chalk);
+			return getStyle(pattern);
+		}
+		else {
+			validatColor(style);
+			return chalk[style](pattern);
+		}
+	};
 
 	appenders[category] = options || (daemon ? {
 		type: 'file',
@@ -125,17 +147,22 @@ export function createLogger(category, color = 'gray', options) {
 		type: 'console',
 		layout: {
 			type: 'pattern',
-			pattern: `%[%p%] ${chalk[color]('[%c]')} %m`,
+			pattern: `%[%p%] ${getStyledCategoryStr()} %m`,
 		},
 	});
 
-	categories[category] = {
-		appenders: [category],
-		level: logLevel,
-	};
+	if (hasRunInit) {
+		categories[category] = {
+			appenders: [category],
+			level: logLevel,
+		};
 
-	log4js.configure({ appenders, categories });
-	return log4js.getLogger(category);
+		log4js.configure({ appenders, categories });
+		return log4js.getLogger(category);
+	}
+	else {
+		return lazyGetLogger(category);
+	}
 }
 
 export const httpLogger = lazyGetLogger(HTTP);

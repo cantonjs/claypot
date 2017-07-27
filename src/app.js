@@ -4,11 +4,14 @@ import https from 'https';
 import Koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
 import { init } from './config';
-import { appLogger } from './utils/logger';
+import { createLogger } from './utils/logger';
 import mount from 'koa-mount';
 import { initPlugins, applyInitServer } from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import initDbs from './dbs';
+import { once } from 'lodash';
+
+const logger = createLogger('server', 'yellow');
 
 (async function main() {
 	try {
@@ -32,23 +35,28 @@ import initDbs from './dbs';
 		useMiddlewares(app);
 
 		const handleError = (server) => {
-			server.on('error', appLogger.error.bind(appLogger));
+			server.on('error', logger.error.bind(logger));
 		};
+
+		const readyLogger = once((port) => logger.info('server is ready'));
+		const createListener = (port) => () => readyLogger(port);
 
 		if (enableHttps) {
 			const options = getCertOption(root, key, cert);
 			handleError(
-				http.createServer(app.callback()).listen(port)
+				http.createServer(app.callback()).listen(createListener(port))
 			);
 			handleError(
-				https.createServer(options, app.callback()).listen(httpsPort)
+				https
+					.createServer(options, app.callback())
+					.listen(createListener(httpsPort))
 			);
 		}
 		else {
-			handleError(app.listen(port));
+			handleError(app.listen(createListener(port)));
 		}
 	}
 	catch (err) {
-		appLogger.fatal(`Failed to start server:`, err);
+		logger.fatal(`failed to start server:`, err);
 	}
 }());
