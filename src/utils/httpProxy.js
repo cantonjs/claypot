@@ -8,7 +8,8 @@ import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
-import { appLogger } from '../utils/logger';
+import logger from '../utils/logger';
+import chalk from 'chalk';
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
@@ -22,12 +23,14 @@ const ensureSSL = (ssl) => {
 };
 
 const MayHasBodyMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+const _originalUrl = Symbol('originalUrl');
 
 export default (options = {}, handleProxyContext) => {
 	if (isString(options)) { options = { target: options }; }
 
 	const {
 		enable = true,
+		pathname,
 		query: queryModifier,
 		contentType,
 		...opts,
@@ -46,11 +49,21 @@ export default (options = {}, handleProxyContext) => {
 	const proxy = httpProxy.createProxyServer({ ssl });
 	const dest = target || forward;
 
+	logger.trace(
+		'[proxy]',
+		`"${dest}" added`,
+		pathname ? chalk.gray(` (from "${pathname}")`) : '',
+	);
+
 	let host;
 	if (isString(dest)) { host = url.parse(dest).host; }
 	else { host = dest.host; }
 
-	const done = (proxyContext, res) => {
+	let protocol = dest.protocol;
+	if (isString(dest)) { protocol = url.parse(dest).protocol; }
+	if (!protocol) { protocol = 'http'; }
+
+	const done = (proxyContext, req, res) => {
 		if (!res.headersSent && res._getResponseTime) {
 			const { key, value } = res._getResponseTime();
 			res.setHeader(key, value);
@@ -92,7 +105,17 @@ export default (options = {}, handleProxyContext) => {
 		if (requests.has(res)) {
 			const proxyContext = requests.get(res);
 			proxyContext.emit('proxyRes', proxyRes, req, res);
-			done(proxyContext, res);
+
+			const originReq = chalk.cyan(`${req.method} ${req[_originalUrl]}`);
+			const proxyUrl = host + proxyRes.req.path;
+			const proxyMethod = proxyRes.req.method;
+			const proxyReq = chalk.yellow(`${proxyMethod} ${protocol}//${proxyUrl}`);
+			logger.trace(
+				'[proxy]',
+				`${originReq} ${chalk.gray('to')} ${proxyReq}`,
+			);
+
+			done(proxyContext, req, res);
 		}
 	});
 
@@ -100,7 +123,7 @@ export default (options = {}, handleProxyContext) => {
 		if (requests.has(res)) {
 			const proxyContext = requests.get(res);
 
-			appLogger.debug('[ProxyError]', err);
+			logger.error('[proxy]', err);
 
 			if (!res.headersSent) {
 				if (isFunction(proxyContext.errorHandler)) {
@@ -114,11 +137,12 @@ export default (options = {}, handleProxyContext) => {
 				}
 			}
 
-			done(proxyContext, res);
+			done(proxyContext, req, res);
 		}
 	});
 
 	const modifyQuery = (ctx) => {
+		ctx.req[_originalUrl] = ctx.originalUrl;
 		if (!queryModifier) { return; }
 
 		const urlObject = url.parse(ctx.req.url);

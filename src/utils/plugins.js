@@ -2,7 +2,7 @@
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
-import { appLogger } from './logger';
+import logger from './logger';
 import httpProxy from './httpProxy';
 
 const registerDatabasePhasePlugins = [];
@@ -42,7 +42,7 @@ export function initPlugins(config) {
 				return new PluginModule(options, config);
 			}
 			catch (err) {
-				appLogger.error(err);
+				logger.error(err);
 			}
 		})
 		.filter(Boolean)
@@ -54,10 +54,10 @@ export function initPlugins(config) {
 				initServerPhasePlugins.push(plugin);
 			}
 			if (isFunction(plugin.proxy)) {
-				proxyPhasePlugins.push(::plugin.proxy);
+				proxyPhasePlugins.push(plugin);
 			}
 			if (isFunction(plugin.middleware)) {
-				middlewarePhasePlugins.push(::plugin.middleware);
+				middlewarePhasePlugins.push(plugin);
 			}
 		})
 	;
@@ -65,14 +65,14 @@ export function initPlugins(config) {
 }
 
 function middlewarePhase(app, config) {
-	return middlewarePhasePlugins.forEach((applyPlugin) => {
-		applyPlugin(app, config);
+	return middlewarePhasePlugins.forEach((plugin) => {
+		plugin.middleware(app, config);
 	});
 }
 
 function proxyPhase(app, config) {
-	return proxyPhasePlugins.forEach((applyPlugin) => {
-		applyPlugin(app, httpProxy, config);
+	return proxyPhasePlugins.forEach((plugin) => {
+		plugin.proxy(app, httpProxy, config);
 	});
 }
 

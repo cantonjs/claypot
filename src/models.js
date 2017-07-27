@@ -2,7 +2,7 @@
 import importModuels from 'import-modules';
 import { join } from 'path';
 import { forEach, isFunction } from 'lodash';
-import { appLogger } from './utils/logger';
+import logger from './utils/logger';
 import createProxyObject from './utils/createProxyObject';
 
 const models = {};
@@ -34,10 +34,12 @@ export async function initModels(dbs, appConfig) {
 	names.forEach((name) => {
 		const Model = extendModel(modules[name], 'models', models);
 		models[name] = isFunction(Model) ? new Model() : Model;
-		appLogger.trace(`Created model "${name}"`);
+		logger.trace(`created model "${name}"`);
 	});
 
-	appLogger.debug(`${names.length} model(s) created`);
+	logger.debug(
+		`${names.length} model${names.length > 1 ? 's' : ''} created`,
+	);
 }
 
 export function getModels() {
