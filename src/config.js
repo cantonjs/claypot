@@ -9,31 +9,24 @@ export const isProd = NODE_ENV === 'production';
 export const isDev = NODE_ENV === 'development';
 
 const config = {
-	port: findPortSync(),
-	ssl: {
-		enable: false,
-		port: findPortSync() + 1,
-	},
-
-	maxRestarts: isDev ? 0 : -1,
-	responseTime: true,
+	clayInjection: true,
+	compress: isProd,
+	dbs: {},
+	favicon: true,
+	helmet: isProd,
+	historyAPIFallback: false,
 	httpError: true,
 	httpLogger: true,
-	helmet: isProd,
-	compress: isProd,
-	favicon: true,
-	clayInjection: true,
-	plugins: [],
-	historyAPIFallback: false,
-	static: 'static',
-	notFound: true,
-
-	watch: {
-		enable: isDev,
-	},
-
+	maxRestarts: isDev ? 0 : -1,
 	models: 'models',
-	dbs: {},
+	notFound: true,
+	plugins: [],
+	port: findPortSync(),
+	responseTime: true,
+	rewriteConsole: false,
+	ssl: { enable: false, port: findPortSync() + 1 },
+	static: 'static',
+	watch: { enable: isDev },
 };
 
 export default config;

@@ -2,7 +2,8 @@
 import yargs from 'yargs';
 import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
-import { appLogger } from './utils/logger';
+import logger from './utils/logger';
+import { stripCliArgs } from './utils/stripArgs';
 import { Defaults } from 'pot-js/lib/utils/resolveConfig';
 import { resolveConfig } from 'pot-js';
 import start from './start';
@@ -121,12 +122,13 @@ yargs
 			};
 
 			try {
+				stripCliArgs(options);
 				await start(await resolveConfig(options));
 			}
 			catch (err) {
-				appLogger.setLevel(options.logLevel);
-				appLogger.error(err.message);
-				appLogger.debug(err);
+				logger.setLevel(options.logLevel);
+				logger.error(err.message);
+				logger.debug(err);
 			}
 		},
 	})
@@ -154,7 +156,7 @@ yargs
 			;
 		},
 		handler(argv) {
-			stop(argv).catch((err) => appLogger.error(err.message));
+			stop(argv).catch((err) => logger.error(err.message));
 		},
 	})
 	.command({
@@ -162,7 +164,7 @@ yargs
 		aliases: ['ls'],
 		desc: 'List processes',
 		handler(argv) {
-			list(argv).catch((err) => appLogger.error(err.message));
+			list(argv).catch((err) => logger.error(err.message));
 		},
 	})
 	.command({
@@ -192,14 +194,14 @@ yargs
 			;
 		},
 		handler(argv) {
-			log(argv).catch((err) => appLogger.error(err.message));
+			log(argv).catch((err) => logger.error(err.message));
 		},
 	})
 	.command({
 		command: 'dir [name]',
 		desc: 'Show dir',
 		handler(argv) {
-			dir(argv).catch((err) => appLogger.error(err.message));
+			dir(argv).catch((err) => logger.error(err.message));
 		},
 	})
 	.env(upperCase(name))
