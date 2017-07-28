@@ -3,22 +3,16 @@ const argsKeyBlackList = [
 	'$0',
 	'_',
 	'c',
-	'config-walk',
 	'd',
 	'dev',
 	'f',
 	'h',
 	'help',
 	'l',
-	'log-level',
-	'logs-dir',
-	'max-restarts',
 	'p',
 	's',
 	'version',
 	'w',
-	'watch-dirs',
-	'watch-ignore-dot-files',
 ];
 
 const configKeyBlackList = [

@@ -46,7 +46,7 @@ yargs
 						type: 'bool',
 					},
 					l: {
-						alias: 'log-level',
+						alias: 'logLevel',
 						desc: 'Log level',
 						choices: [
 							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
@@ -59,12 +59,12 @@ yargs
 						default: Defaults.WATCH,
 						type: 'bool',
 					},
-					'watch-dirs': {
+					'watchDirs': {
 						desc: 'Watch dirs',
 						default: Defaults.WATCH_DIRS,
 						type: 'array',
 					},
-					'watch-ignore-dot-files': {
+					'watchIgnoreDotFiles': {
 						desc: 'Ignore watch dot files',
 						default: Defaults.WATCH_IGNORE_DOT_FILES,
 						type: 'bool',
@@ -80,7 +80,7 @@ yargs
 						default: 'Claypotfile.js',
 						type: 'string',
 					},
-					'config-walk': {
+					'configWalk': {
 						desc: 'Walk to resolve config file',
 						default: true,
 						type: 'bool',
@@ -89,7 +89,7 @@ yargs
 						desc: 'Root dir. Defaults to `process.cwd()`',
 						type: 'string',
 					},
-					'logs-dir': {
+					'logsDir': {
 						desc: 'Log files dir. Resolve from `root`',
 						default: Defaults.LOGS_DIR,
 						type: 'string',
@@ -98,7 +98,7 @@ yargs
 						desc: 'Server port',
 						type: 'number',
 					},
-					'max-restarts': {
+					'maxRestarts': {
 						desc: 'How many restarts are allowed within 60s. `-1` for infinite restarts. If `production` is `true`, default value is `-1`, otherwise is `0`',
 						type: 'number',
 					},
@@ -144,7 +144,7 @@ yargs
 						type: 'bool',
 					},
 					l: {
-						alias: 'log-level',
+						alias: 'logLevel',
 						desc: 'Log level',
 						choices: [
 							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
