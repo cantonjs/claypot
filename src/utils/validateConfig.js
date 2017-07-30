@@ -32,8 +32,7 @@ const keyTypes = {
 	root: Types.string,
 	ssl: Types.object,
 	static: Types.oneOfType([Types.bool, Types.string, Types.object]),
-	// watch: Types.oneOfType([Types.bool, Types.object]),
-	watch: Types.array,
+	watch: Types.oneOfType([Types.bool, Types.object]),
 };
 
 export default function validateConfig(config) {

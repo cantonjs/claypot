@@ -3189,7 +3189,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3201,17 +3201,17 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 log4js@^1.0.1:
-  version "1.0.1"
-  resolved "http://registry.npm.taobao.org/log4js/download/log4js-1.0.1.tgz#faf64c1056b6352a5fbbf0a93b61a9979a8422cc"
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/log4js/download/log4js-1.1.1.tgz#c21d29c7604089e4f255833e7f94b3461de1ff43"
   dependencies:
     debug "^2.2.0"
     semver "^5.3.0"
-    streamroller "^0.2.1"
+    streamroller "^0.4.0"
 
 log4js@^2.3.1:
   version "2.3.1"
@@ -3242,13 +3242,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/longest/download/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0:
-  version "1.3.0"
-  resolved "http://registry.npm.taobao.org/loose-envify/download/loose-envify-1.3.0.tgz#6b26248c42f6d4fa4b0d8542f78edfcde35642a8"
-  dependencies:
-    js-tokens "^2.0.0"
-
-loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.3.1:
   version "1.3.1"
   resolved "http://registry.npm.taobao.org/loose-envify/download/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -3807,8 +3801,8 @@ pause-stream@>=0.0.10:
     through "~2.3"
 
 pidusage@^1.1.0:
-  version "1.1.4"
-  resolved "http://registry.npm.taobao.org/pidusage/download/pidusage-1.1.4.tgz#ab83ffdec051fe345d8ea08cc23085a3e7684ebd"
+  version "1.1.6"
+  resolved "http://registry.npm.taobao.org/pidusage/download/pidusage-1.1.6.tgz#d708d8e38cc7ccfaa191fb6adac1fd674a4be184"
 
 pify@^2.0.0, pify@^2.2.0, pify@^2.3.0:
   version "2.3.0"
@@ -4377,8 +4371,8 @@ semver@~5.0.1:
   resolved "http://registry.npm.taobao.org/semver/download/semver-5.0.3.tgz#77466de589cd5d3c95f138aa78bc569a3cb5d27a"
 
 serialize-javascript@^1.3.0:
-  version "1.3.0"
-  resolved "http://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-1.3.0.tgz#86a4f3752f5c7e47295449b0bbb63d64ba533f05"
+  version "1.4.0"
+  resolved "http://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-1.4.0.tgz#7c958514db6ac2443a8abc062dc9f7886a7f6005"
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
@@ -4558,12 +4552,13 @@ sshpk@^1.7.0:
   version "1.3.1"
   resolved "http://registry.npm.taobao.org/statuses/download/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
 
-streamroller@^0.2.1:
-  version "0.2.1"
-  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.2.1.tgz#95173f1a5b811c291e7cdfd600002fdbe063c9c8"
+streamroller@^0.4.0:
+  version "0.4.1"
+  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.4.1.tgz#d435bd5974373abd9bd9068359513085106cc05f"
   dependencies:
     date-format "^0.0.0"
     debug "^0.7.2"
+    mkdirp "^0.5.1"
     readable-stream "^1.1.7"
 
 streamroller@^0.5.1:

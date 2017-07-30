@@ -82,7 +82,7 @@ export const initLog = (customAppenders) => {
 		const {
 			logsDir,
 			daemon,
-			logLevel,
+			logLevel = 'INFO',
 			rewriteConsole: shouldRewriteConsole,
 		} = config;
 
