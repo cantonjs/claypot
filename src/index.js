@@ -6,9 +6,9 @@ export stop from './stop';
 export list from './list';
 export log from './log';
 export logger, {
-	initLog, createLogger, inLogsDir,
-	rewriteConsole, resetConsole, rewriteConsoleInRuntime,
-} from './utils/logger';
+	setConfig as setLogger, createLogger,
+	overrideConsole, resetConsole, overrideConsoleInRuntime,
+} from 'pot-logger';
 export config, { isDev, isProd } from './config';
 export connectDbs from './dbs/connect';
 export cache, { cacheStores } from './cache';

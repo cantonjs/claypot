@@ -1,7 +1,7 @@
 
 import cacheManager from 'cache-manager';
 import { noop } from 'lodash';
-import { createLogger } from './utils/logger';
+import { createLogger } from 'pot-logger';
 import createProxyObject from './utils/createProxyObject';
 
 const logger = createLogger('cache', 'magentaBright');

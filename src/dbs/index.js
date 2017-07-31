@@ -2,7 +2,7 @@
 import { initCache } from '../cache';
 import { initModels } from '../models';
 import { applyRegisterDatabase } from '../utils/plugins';
-import { createLogger } from '../utils/logger';
+import { createLogger } from 'pot-logger';
 import { isFunction } from 'lodash';
 
 const logger = createLogger('dbs', 'red');

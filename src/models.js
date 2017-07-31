@@ -2,10 +2,10 @@
 import importModules from 'import-modules';
 import { join } from 'path';
 import { forEach, isFunction } from 'lodash';
-import { createLogger } from './utils/logger';
+import { createLogger } from 'pot-logger';
 import createProxyObject from './utils/createProxyObject';
 
-const logger = createLogger('model', ['blueBright']);
+const logger = createLogger('model', 'blueBright');
 const models = {};
 
 export async function initModels(dbs, appConfig) {

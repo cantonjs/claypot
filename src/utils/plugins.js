@@ -2,7 +2,7 @@
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
-import logger from './logger';
+import logger from 'pot-logger';
 import httpProxy from './httpProxy';
 
 const registerDatabasePhasePlugins = [];

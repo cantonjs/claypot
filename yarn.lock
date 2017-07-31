@@ -3189,7 +3189,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3201,7 +3201,7 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3213,9 +3213,9 @@ log4js@^1.0.1:
     semver "^5.3.0"
     streamroller "^0.4.0"
 
-log4js@^2.3.1:
-  version "2.3.1"
-  resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.3.1.tgz#288f8a9be8c7f313c91d505f5ac95740050e12d2"
+log4js@^2.3.2:
+  version "2.3.2"
+  resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.3.2.tgz#adee9878b2e7a3d225a721d1aa914ceb7b4952af"
   dependencies:
     date-format "^1.1.0"
     debug "^2.6.8"
@@ -3867,6 +3867,13 @@ pot-js@^0.0.0-beta.29:
     xtend "~2.1.1"
     yargs "^6.5.0"
 
+pot-logger@^0.0.0:
+  version "0.0.0"
+  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.0.0.tgz#8254e281bbd1254d00322a71a5951386b1642284"
+  dependencies:
+    chalk "^2.0.1"
+    log4js "^2.3.2"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/prelude-ls/download/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -4041,7 +4048,7 @@ readable-stream@1.1.x, readable-stream@^1.1.7:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@^2.3.0:
+readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.1.5, readable-stream@^2.3.0:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
@@ -4062,7 +4069,7 @@ readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", 
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@~2.0.0, readable-stream@~2.0.5:
+readable-stream@^2.0.2, readable-stream@~2.0.0, readable-stream@~2.0.5:
   version "2.0.6"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:

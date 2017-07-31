@@ -1,7 +1,7 @@
 
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import { appLogger } from '../utils/logger';
+import logger from 'pot-logger';
 
 const makeTryReadFile = (root) => (file) => {
 	const filename = resolve(root, file);
@@ -9,8 +9,8 @@ const makeTryReadFile = (root) => (file) => {
 		return readFileSync(filename);
 	}
 	catch (err) {
-		appLogger.error(`Failed to read file "${filename}".`);
-		appLogger.debug(err);
+		logger.error(`Failed to read file "${filename}".`);
+		logger.debug(err);
 	}
 };
 

@@ -3,7 +3,7 @@ import config from '../config';
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isBoolean, isUndefined } from 'lodash';
-import { appLogger } from './logger';
+import logger from 'pot-logger';
 
 const middlewaresWhiteList = [
 	'responseTime',
@@ -55,7 +55,7 @@ const perform = function perform(app, middlewares) {
 				use(app, options);
 			}
 			catch (err) {
-				appLogger.error(err);
+				logger.error(err);
 			}
 		})
 	;

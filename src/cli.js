@@ -2,7 +2,7 @@
 import yargs from 'yargs';
 import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
-import logger from './utils/logger';
+import logger from 'pot-logger';
 import { stripCliArgs } from './utils/stripArgs';
 import { Defaults } from 'pot-js/lib/utils/resolveConfig';
 import { resolveConfig } from 'pot-js';

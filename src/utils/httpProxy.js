@@ -8,7 +8,7 @@ import getBody from 'raw-body';
 import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
-import { createLogger } from '../utils/logger';
+import { createLogger } from 'pot-logger';
 import chalk from 'chalk';
 
 const logger = createLogger('proxy', 'greenBright');

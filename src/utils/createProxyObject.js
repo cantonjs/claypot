@@ -1,5 +1,5 @@
 
-import { appLogger } from './logger';
+import logger from 'pot-logger';
 import { isUndefined } from 'lodash';
 
 export default function createProxyObject(source, debugName) {
@@ -9,7 +9,7 @@ export default function createProxyObject(source, debugName) {
 				get(_, key) {
 					const dist = source[name];
 					if (isUndefined(dist)) {
-						appLogger.error(`${debugName} "${name}" is undefined`);
+						logger.error(`${debugName} "${name}" is undefined`);
 						return {}; // avoid throw `undefined.sth()` like error
 					}
 					return dist[key];

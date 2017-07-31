@@ -1,5 +1,5 @@
 
-import { createLogger, rewriteConsoleInRuntime } from './logger';
+import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import Types from 'prop-types';
 
 const keyTypes = {
@@ -47,7 +47,7 @@ export default function validateConfig(config) {
 		}
 	});
 
-	rewriteConsoleInRuntime(
+	overrideConsoleInRuntime(
 		() => {
 			Types.checkPropTypes(keyTypes, config, 'key', 'config');
 		},
