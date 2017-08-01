@@ -30,7 +30,7 @@ const keyTypes = {
 	responseTime: Types.bool,
 	rewriteConsole: Types.bool,
 	root: Types.string,
-	ssl: Types.object,
+	ssl: Types.oneOfType([Types.bool, Types.object]),
 	static: Types.oneOfType([Types.bool, Types.string, Types.object]),
 	watch: Types.oneOfType([Types.bool, Types.object]),
 };

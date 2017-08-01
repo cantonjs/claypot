@@ -20,10 +20,8 @@ const logger = createLogger('server', 'yellow');
 
 		initPlugins(config);
 
-		const {
-			port, root,
-			ssl: { enable: enableHttps, port: httpsPort, key, cert },
-		} = config;
+		const { port, root, ssl } = config;
+
 
 		await initDbs(config);
 
@@ -42,7 +40,8 @@ const logger = createLogger('server', 'yellow');
 		const readyLogger = once((port) => logger.info('server is ready'));
 		const createListener = (port) => () => readyLogger(port);
 
-		if (enableHttps) {
+		if (ssl && ssl.enable !== false) {
+			const { port: httpsPort, key, cert } = ssl;
 			const options = getCertOption(root, key, cert);
 			handleError(
 				http.createServer(app.callback()).listen(createListener(port))
