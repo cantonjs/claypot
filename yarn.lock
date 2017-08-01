@@ -3189,7 +3189,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3201,17 +3201,9 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
-log4js@^1.0.1:
-  version "1.1.1"
-  resolved "http://registry.npm.taobao.org/log4js/download/log4js-1.1.1.tgz#c21d29c7604089e4f255833e7f94b3461de1ff43"
-  dependencies:
-    debug "^2.2.0"
-    semver "^5.3.0"
-    streamroller "^0.4.0"
 
 log4js@^2.3.2:
   version "2.3.2"
@@ -3842,9 +3834,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.29:
-  version "0.0.0-beta.29"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.29.tgz#09a391b47eb038f619e410d78e3f62fd92989782"
+pot-js@^0.0.0-beta.30:
+  version "0.0.0-beta.30"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.30.tgz#5f9be7394b63c3fd3167cb17e4caa91e9e3c6de4"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
@@ -3856,9 +3848,9 @@ pot-js@^0.0.0-beta.29:
     import-file "^1.2.2"
     inquirer "^2.0.0"
     lodash "^4.17.2"
-    log4js "^1.0.1"
     node-ipc "^8.9.2"
     pidusage "^1.1.0"
+    pot-logger "^0.0.0"
     process-exists "^2.1.0"
     ps-tree "0.0.3"
     respawn "^2.5.0"
@@ -4039,7 +4031,7 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
-readable-stream@1.1.x, readable-stream@^1.1.7:
+readable-stream@1.1.x:
   version "1.1.14"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   dependencies:
@@ -4048,7 +4040,7 @@ readable-stream@1.1.x, readable-stream@^1.1.7:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.1.5, readable-stream@^2.3.0:
+readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@^2.3.0:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
@@ -4069,7 +4061,7 @@ readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", 
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^2.0.2, readable-stream@~2.0.0, readable-stream@~2.0.5:
+readable-stream@~2.0.0, readable-stream@~2.0.5:
   version "2.0.6"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
@@ -4558,15 +4550,6 @@ sshpk@^1.7.0:
 "statuses@>= 1.2.1 < 2", "statuses@>= 1.3.1 < 2", statuses@^1.0.0, statuses@^1.2.0, statuses@~1.3.1:
   version "1.3.1"
   resolved "http://registry.npm.taobao.org/statuses/download/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
-
-streamroller@^0.4.0:
-  version "0.4.1"
-  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.4.1.tgz#d435bd5974373abd9bd9068359513085106cc05f"
-  dependencies:
-    date-format "^0.0.0"
-    debug "^0.7.2"
-    mkdirp "^0.5.1"
-    readable-stream "^1.1.7"
 
 streamroller@^0.5.1:
   version "0.5.1"
