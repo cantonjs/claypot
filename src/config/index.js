@@ -1,7 +1,8 @@
 
 import applyDefaults from './defaults';
-import strip from './strip';
 import validate from './validate';
+
+export stripArgs from './stripArgs';
 
 const config = {};
 
@@ -10,7 +11,6 @@ export const isDev = !isProd;
 
 export function initConfig(userConfig) {
 	applyDefaults(config, userConfig, isProd);
-	strip(config);
 	validate(config);
 	return config;
 }

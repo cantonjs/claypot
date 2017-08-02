@@ -1,7 +1,7 @@
 
 import { start as startPot } from 'pot-js';
 import { resolve } from 'path';
-import { initConfig } from './config';
+import { initConfig, stripArgs } from './config';
 import workspace from './utils/workspace';
 import { importConfigFile, defaultConfigFile } from './utils/importConfigFile';
 import { defaults } from 'lodash';
@@ -19,7 +19,7 @@ const startClaypot = async (config) => {
 export async function cliStart(argv) {
 	const {
 		force, configFile, configWalk,
-		...rest,
+		...restArgs,
 	} = argv;
 
 	let config = {};
@@ -34,8 +34,10 @@ export async function cliStart(argv) {
 		configFile && logger.error(err);
 	}
 
+	stripArgs(restArgs);
+
 	await startClaypot({
-		...defaults(rest, initConfig(config)),
+		...defaults(restArgs, initConfig(config)),
 		force,
 	});
 }
