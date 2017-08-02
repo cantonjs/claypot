@@ -9,10 +9,11 @@ import stop from './stop';
 import list from './list';
 import log from './log';
 import dir from './dir';
+import gradient from 'gradient-string';
 
 // eslint-disable-next-line
 yargs
-	.usage('$0 <command> [args]')
+	.usage(`\n${gradient.fruit('claypot')} <command> [args]`)
 	.demand(1, 'Please specify one of the commands!')
 	.command({
 		command: 'start',
@@ -27,19 +28,16 @@ yargs
 					s: {
 						alias: 'static',
 						desc: 'Static files dir. Defaults to "static"',
-						// default: 'static',
 						type: 'string',
 					},
 					d: {
 						alias: 'daemon',
 						desc: 'Use as a daemon. Defaults to `false`',
-						// default: false,
 						type: 'bool',
 					},
 					p: {
 						alias: 'production',
 						desc: 'Enable `production` mode. Defaults to `false`',
-						// default: false,
 						type: 'bool',
 					},
 					l: {
@@ -48,12 +46,10 @@ yargs
 						choices: [
 							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
 						],
-						// default: Defaults.LOG_LEVEL,
 					},
 					w: {
 						alias: 'watch',
 						desc: 'Enable watch mode. Defaults to `false`',
-						// default: Defaults.WATCH,
 						type: 'bool',
 					},
 					f: {
@@ -64,7 +60,6 @@ yargs
 					c: {
 						alias: 'configFile',
 						desc: `Path to the config file. Defaults to "${defaultConfigFile}"`,
-						// default: defaultConfigFile,
 						type: 'string',
 					},
 					'configWalk': {
@@ -78,7 +73,6 @@ yargs
 					},
 					'logsDir': {
 						desc: 'Log files dir. Defaults to ".logs"',
-						// default: Defaults.LOGS_DIR,
 						type: 'string',
 					},
 					port: {
@@ -167,8 +161,8 @@ yargs
 	})
 	.env(upperCase(name))
 	.alias('h', 'help')
-	// .wrap(yargs.terminalWidth())
 	.help()
 	.version(version)
+	.epilogue(gradient.mind('Powered by cantonjs'))
 	.argv
 ;
