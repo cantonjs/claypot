@@ -3,8 +3,7 @@ import yargs from 'yargs';
 import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
 import logger from 'pot-logger';
-import { Defaults } from 'pot-js/lib/utils/resolveConfig';
-import { defaultConfigFile } from './utils/importConfigFile';
+import { defaultConfigFile } from './config';
 import { cliStart } from './start';
 import stop from './stop';
 import list from './list';
@@ -112,14 +111,6 @@ yargs
 						alias: 'force',
 						desc: 'Stop without confirming',
 						type: 'bool',
-					},
-					l: {
-						alias: 'logLevel',
-						desc: 'Log level',
-						choices: [
-							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
-						],
-						default: Defaults.LOG_LEVEL,
 					},
 				})
 				.argv
