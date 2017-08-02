@@ -35,7 +35,7 @@
   "dependencies": {
     "cache-manager": "^2.4.0",
     "chalk": "^2.0.1",
-    "find-port-sync": "^1.0.0",
+    "find-port-sync": "^1.1.0",
     "http-ask": "^0.0.0-rc1",
     "http-proxy": "^1.12.0",
     "import-file": "^1.2.2",

@@ -1,23 +1,45 @@
 
-import { start as startPot, resolveConfig } from 'pot-js';
+import { start as startPot } from 'pot-js';
 import { resolve } from 'path';
-import { init, defaultConfigFilename } from './config';
+import { initConfig } from './config';
 import workspace from './utils/workspace';
-import { stripConfigArgs } from './utils/stripArgs';
-import validateConfig from './utils/validateConfig';
+import { importConfigFile, defaultConfigFile } from './utils/importConfigFile';
+import { defaults } from 'lodash';
+import logger from 'pot-logger';
 
-export default async function start(options = {}) {
-	const config = init(await resolveConfig(options));
-
-	stripConfigArgs(options);
-	validateConfig(options);
-
+const startClaypot = async (config) => {
 	await startPot({
-		config: defaultConfigFilename,
-		configWalk: true,
 		...config,
 		workspace,
 		configToEnv: 'CLAYPOT_CONFIG',
 		entry: resolve(__dirname, 'app.js'),
 	});
+};
+
+export async function cliStart(argv) {
+	const {
+		force, configFile, configWalk,
+		...rest,
+	} = argv;
+
+	let config = {};
+
+	try {
+		config = await importConfigFile(
+			configFile || defaultConfigFile,
+			configWalk,
+		);
+	}
+	catch (err) {
+		configFile && logger.error(err);
+	}
+
+	await startClaypot({
+		...defaults(rest, initConfig(config)),
+		force,
+	});
+}
+
+export default async function start(config) {
+	await startClaypot(initConfig(config));
 }

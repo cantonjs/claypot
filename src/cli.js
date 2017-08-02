@@ -3,10 +3,9 @@ import yargs from 'yargs';
 import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
 import logger from 'pot-logger';
-import { stripCliArgs } from './utils/stripArgs';
 import { Defaults } from 'pot-js/lib/utils/resolveConfig';
-import { resolveConfig } from 'pot-js';
-import start from './start';
+import { defaultConfigFile } from './utils/importConfigFile';
+import { cliStart } from './start';
 import stop from './stop';
 import list from './list';
 import log from './log';
@@ -21,7 +20,6 @@ yargs
 		desc: 'Start claypot server',
 		builder(yargs) {
 			yargs // eslint-disable-line
-				.default('entry', Defaults.ENTRY)
 				.options({
 					name: {
 						desc: 'Server name',
@@ -29,44 +27,34 @@ yargs
 					},
 					s: {
 						alias: 'static',
-						desc: 'Static files dir',
-						default: 'static',
+						desc: 'Static files dir. Defaults to "static"',
+						// default: 'static',
 						type: 'string',
 					},
 					d: {
 						alias: 'daemon',
-						desc: 'Use as a daemon',
-						default: false,
+						desc: 'Use as a daemon. Defaults to `false`',
+						// default: false,
 						type: 'bool',
 					},
 					p: {
 						alias: 'production',
-						desc: 'Short hand for set NODE_ENV="production" env',
-						default: false,
+						desc: 'Enable `production` mode. Defaults to `false`',
+						// default: false,
 						type: 'bool',
 					},
 					l: {
 						alias: 'logLevel',
-						desc: 'Log level',
+						desc: 'Defining log level. Defaults to "INFO" in `production` mode, "DEBUG" in `development` mode',
 						choices: [
 							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
 						],
-						default: Defaults.LOG_LEVEL,
+						// default: Defaults.LOG_LEVEL,
 					},
 					w: {
 						alias: 'watch',
-						desc: 'Enable watch mode',
-						default: Defaults.WATCH,
-						type: 'bool',
-					},
-					'watchDirs': {
-						desc: 'Watch dirs',
-						default: Defaults.WATCH_DIRS,
-						type: 'array',
-					},
-					'watchIgnoreDotFiles': {
-						desc: 'Ignore watch dot files',
-						default: Defaults.WATCH_IGNORE_DOT_FILES,
+						desc: 'Enable watch mode. Defaults to `false`',
+						// default: Defaults.WATCH,
 						type: 'bool',
 					},
 					f: {
@@ -75,9 +63,9 @@ yargs
 						type: 'bool',
 					},
 					c: {
-						alias: 'config',
-						desc: 'Path to the config file',
-						default: 'Claypotfile.js',
+						alias: 'configFile',
+						desc: `Path to the config file. Defaults to "${defaultConfigFile}"`,
+						// default: defaultConfigFile,
 						type: 'string',
 					},
 					'configWalk': {
@@ -90,8 +78,8 @@ yargs
 						type: 'string',
 					},
 					'logsDir': {
-						desc: 'Log files dir. Resolve from `root`',
-						default: Defaults.LOGS_DIR,
+						desc: 'Log files dir. Defaults to ".logs"',
+						// default: Defaults.LOGS_DIR,
 						type: 'string',
 					},
 					port: {
@@ -99,7 +87,7 @@ yargs
 						type: 'number',
 					},
 					'maxRestarts': {
-						desc: 'How many restarts are allowed within 60s. `-1` for infinite restarts. If `production` is `true`, default value is `-1`, otherwise is `0`',
+						desc: 'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
 						type: 'number',
 					},
 					inspect: {
@@ -111,25 +99,7 @@ yargs
 			;
 		},
 		async handler(argv) {
-			const {
-				watch, watchDirs, watchIgnoreDotFiles, feature, ...options,
-			} = argv;
-
-			options.watch = {
-				enable: watch,
-				dirs: watchDirs,
-				ignoreDotFiles: watchIgnoreDotFiles,
-			};
-
-			try {
-				stripCliArgs(options);
-				await start(await resolveConfig(options));
-			}
-			catch (err) {
-				logger.setLevel(options.logLevel);
-				logger.error(err.message);
-				logger.debug(err);
-			}
+			cliStart(argv).catch(logger.error);
 		},
 	})
 	.command({
@@ -156,7 +126,7 @@ yargs
 			;
 		},
 		handler(argv) {
-			stop(argv).catch((err) => logger.error(err.message));
+			stop(argv).catch(logger.error);
 		},
 	})
 	.command({
@@ -164,7 +134,7 @@ yargs
 		aliases: ['ls'],
 		desc: 'List processes',
 		handler(argv) {
-			list(argv).catch((err) => logger.error(err.message));
+			list(argv).catch(logger.error);
 		},
 	})
 	.command({
@@ -194,19 +164,19 @@ yargs
 			;
 		},
 		handler(argv) {
-			log(argv).catch((err) => logger.error(err.message));
+			log(argv).catch(logger.error);
 		},
 	})
 	.command({
 		command: 'dir [name]',
 		desc: 'Show dir',
 		handler(argv) {
-			dir(argv).catch((err) => logger.error(err.message));
+			dir(argv).catch(logger.error);
 		},
 	})
 	.env(upperCase(name))
 	.alias('h', 'help')
-	.wrap(yargs.terminalWidth())
+	// .wrap(yargs.terminalWidth())
 	.help()
 	.version(version)
 	.argv

@@ -48,7 +48,7 @@ start(config);
 
 It's recommended to use a `Claypotfile.js` config file in the root of project. `Claypotfile.js` file should return a json object.
 
-Here are all options:
+Here are all options: (All options are optional)
 
 - `clayInjection` (Boolean): Inject `clay` object to middleware context. Defaults to `true`.
 - `compress` (Boolean|Object): Compress (gzip) static files. Defaults to `true` in `production` mode, `false` in `development` mode.
@@ -65,21 +65,22 @@ Here are all options:
 - `httpLogger` (Boolean): Enable HTTP access logger. Defaults to `true`.
 - `inspect` (Boolean|String|Object): Enable [node inspector](https://nodejs.org/api/cli.html#cli_inspect_host_port). Defaults to `false`.
 - `logLevel` (String|Object): Defining log level. See [pot-logger](https://github.com/cantonjs/pot-logger) for detail. Here are available levels:
-    + OFF
+    + ALL
     + TRACE
-    + DEBUG
-    + INFO (default)
+    + DEBUG (default in `development` mode)
+    + INFO (default in `production` mode)
     + WARN
     + ERROR
     + FATAL
-    + ALL
+    + OFF
 - `logsDir` (String): Defining log files dir. If `daemon` mode actived, log messages will write to some `.log` files. Defaults to `.logs`.
-- `maxRestarts` (Number): Defining max restarts if crashed. `-1` is equal to `Infinity`. Defaults to `-1` in `production` mode, `0` in `development` mode.
+- `maxRestarts` (Number): Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode.
 - `models` (String): Defining models files dir. Defaults to `models`.
-- `name` (String): Defining server name.
+- `name` (String): Defining server name. Defaults to the basename of `process.cwd()`.
 - `notFound` (Boolean): Enable 404 handling. Defaults to `true`.
+- `overrideConsole` (Boolean): Enable overriding native `console`. Defaults to `false`.
 - `plugins` ([Object]): Defining plugins.
-- `port` (Number): Defining the port of server.
+- `port` (Number): Defining the port of server. Defaults to an available port.
 - `production` (Boolean): Enable `production` mode. Defaults to `false`.
 - `proxy` (Object): Defining HTTP proxies. e.g. `{ '/my/path/': 'http://anti.proxy.com/' }`.
 - `responseTime` (Boolean): Enable `x-response-time` to HTTP response header. Defaults to `true`.

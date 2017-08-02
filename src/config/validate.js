@@ -1,6 +1,7 @@
 
 import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import Types from 'prop-types';
+import { isString } from 'lodash';
 
 const keyTypes = {
 	clayInjection: Types.bool,
@@ -23,35 +24,52 @@ const keyTypes = {
 	models: Types.string,
 	name: Types.string,
 	notFound: Types.bool,
+	overrideConsole: Types.bool,
 	plugins: Types.arrayOf(Types.object),
 	port: Types.number,
 	production: Types.bool,
 	proxy: Types.object,
 	responseTime: Types.bool,
-	rewriteConsole: Types.bool,
 	root: Types.string,
 	ssl: Types.oneOfType([Types.bool, Types.object]),
 	static: Types.oneOfType([Types.bool, Types.string, Types.object]),
 	watch: Types.oneOfType([Types.bool, Types.object]),
 };
 
-export default function validateConfig(config) {
+export default function validate(config) {
 	const logger = createLogger('config');
+	const unknownOptions = {};
+
 	Object.keys(config).forEach((key) => {
 		if (!keyTypes.hasOwnProperty(key)) {
-			logger.warn(
-				`Unknown key "${key}".`,
-				'If you want to use a custom key, please assign it to `configs` object,',
-				`i.e. \`configs: { ${key}: ${JSON.stringify(config[key])} }\``,
-			);
+			unknownOptions[key] = config[key];
+			logger.warn(`unknown key "${key}".`);
 		}
 	});
+
+	if (Object.keys(unknownOptions).length) {
+		logger.warn(
+			'it is recommended to use a `configs` object',
+			'if you want to set some custom keys',
+		);
+		if (!config.daemon) {
+			logger.warn('i.e.\n');
+			console.warn(
+				'"configs":',
+				JSON.stringify(unknownOptions, null, 2),
+				'\n'
+			);
+		}
+	}
 
 	overrideConsoleInRuntime(
 		() => {
 			Types.checkPropTypes(keyTypes, config, 'key', 'config');
 		},
 		logger,
-		([msg = '']) => [msg.replace('Warning: ', '')],
+		([msg, ...args]) => [
+			(isString(msg) ? msg.replace('Warning: ', '') : msg),
+			...args,
+		],
 	);
 }

@@ -1777,6 +1777,12 @@ find-port-sync@^1.0.0:
   dependencies:
     get-port-cli "^1.0.0"
 
+find-port-sync@^1.1.0:
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/find-port-sync/download/find-port-sync-1.1.0.tgz#6f55f8bde9cb851c0a37c07e7310d25b3d085ad5"
+  dependencies:
+    get-port-cli "^1.1.0"
+
 find-up@^1.0.0:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/find-up/download/find-up-1.1.2.tgz#6b2e9822b1a2ce0a60ab64d610eccad53cb24d0f"
@@ -1948,13 +1954,20 @@ get-port-cli@^1.0.0:
     get-port "^2.0.0"
     meow "^3.4.2"
 
+get-port-cli@^1.1.0:
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/get-port-cli/download/get-port-cli-1.1.0.tgz#f334b136995eb52e5a5d5c10e3c6e59e18a946ef"
+  dependencies:
+    get-port "^3.0.0"
+    meow "^3.4.2"
+
 get-port@^2.0.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/get-port/download/get-port-2.1.0.tgz#8783f9dcebd1eea495a334e1a6a251e78887ab1a"
   dependencies:
     pinkie-promise "^2.0.0"
 
-get-port@^3.1.0:
+get-port@^3.0.0, get-port@^3.1.0:
   version "3.1.0"
   resolved "http://registry.npm.taobao.org/get-port/download/get-port-3.1.0.tgz#ef01b18a84ca6486970ff99e54446141a73ffd3e"
 
@@ -3189,7 +3202,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3201,7 +3214,7 @@ lodash.reduce@4.6.0:
   version "4.6.0"
   resolved "http://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
 
-lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4040,7 +4053,7 @@ readable-stream@1.1.x:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@^2.3.0:
+readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.1.5, readable-stream@^2.3.0:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
@@ -4061,7 +4074,7 @@ readable-stream@2, readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", 
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@~2.0.0, readable-stream@~2.0.5:
+readable-stream@^2.0.2, readable-stream@~2.0.0, readable-stream@~2.0.5:
   version "2.0.6"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
