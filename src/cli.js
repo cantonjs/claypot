@@ -13,7 +13,7 @@ import gradient from 'gradient-string';
 
 // eslint-disable-next-line
 yargs
-	.usage(`\n${gradient.fruit('claypot')} <command> [args]`)
+	.usage(`\n${gradient.fruit('claypot <command> [args]')}`)
 	.demand(1, 'Please specify one of the commands!')
 	.command({
 		command: 'start',
