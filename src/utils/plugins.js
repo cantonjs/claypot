@@ -2,13 +2,19 @@
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
-import logger from 'pot-logger';
+import { createLogger } from 'pot-logger';
 import httpProxy from './httpProxy';
+
+const logger = createLogger('plugin', 'cyan');
 
 const registerDatabasePhasePlugins = [];
 const initServerPhasePlugins = [];
 const proxyPhasePlugins = [];
 const middlewarePhasePlugins = [];
+
+const traceNewPlugin = (PluginModule) => {
+	logger.trace(`"${PluginModule.name}" found`);
+};
 
 export function initPlugins(config) {
 	config
@@ -27,9 +33,13 @@ export function initPlugins(config) {
 
 			if (!enable) { return; }
 
-			if (isObject(module)) { return plugin; }
+			if (isObject(module)) {
+				traceNewPlugin(module.constructor);
+				return plugin;
+			}
 			if (isFunction(module)) {
 				const PluginModule = module;
+				traceNewPlugin(PluginModule);
 				return new PluginModule(options);
 			}
 
@@ -39,6 +49,9 @@ export function initPlugins(config) {
 					resolvers: [resolve(__dirname, '../plugins')],
 					useLoader: false,
 				});
+
+				traceNewPlugin(PluginModule);
+
 				return new PluginModule(options, config);
 			}
 			catch (err) {
@@ -67,24 +80,28 @@ export function initPlugins(config) {
 function middlewarePhase(app, config) {
 	return middlewarePhasePlugins.forEach((plugin) => {
 		plugin.middleware(app, config);
+		logger.trace(`"${plugin.constructor.name}" middleware created`);
 	});
 }
 
 function proxyPhase(app, config) {
 	return proxyPhasePlugins.forEach((plugin) => {
 		plugin.proxy(app, httpProxy, config);
+		logger.trace(`"${plugin.constructor.name}" proxy created`);
 	});
 }
 
 export async function applyInitServer(...args) {
 	for (const plugin of initServerPhasePlugins) {
 		await plugin.initServer(...args);
+		logger.trace(`"${plugin.constructor.name}" server initialzed`);
 	}
 }
 
 export async function applyRegisterDatabase(...args) {
 	for (const plugin of registerDatabasePhasePlugins) {
 		await plugin.registerDatabase(...args);
+		logger.trace(`"${plugin.constructor.name}" database registed`);
 	}
 }
 

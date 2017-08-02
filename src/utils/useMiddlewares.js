@@ -1,9 +1,12 @@
 
 import config from '../config';
+import { createLogger } from 'pot-logger';
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isBoolean, isUndefined } from 'lodash';
-import logger from 'pot-logger';
+import chalk from 'chalk';
+
+const middlewareLogger = createLogger('middleware', 'green');
 
 const middlewaresWhiteList = [
 	'responseTime',
@@ -23,7 +26,7 @@ const middlewaresWhiteList = [
 const perform = function perform(app, middlewares) {
 	middlewares
 		.map(({ name, value }) => {
-			const returnValue = { isEnabled: true };
+			const returnValue = { isEnabled: true, name };
 
 			if (!value || value === 'false') {
 				returnValue.isEnabled = false;
@@ -41,10 +44,15 @@ const perform = function perform(app, middlewares) {
 			}
 
 			returnValue.options = options;
-			returnValue.name = name;
 			return returnValue;
 		})
-		.filter(({ isEnabled }) => isEnabled)
+		.filter(({ isEnabled, name }) => {
+			middlewareLogger.trace(
+				`"${name}"`,
+				isEnabled ? chalk.green('enabled') : chalk.red('disabled'),
+			);
+			return isEnabled;
+		})
 		.forEach(({ options, name }) => {
 			try {
 				const use = importFile(name, {
@@ -55,7 +63,7 @@ const perform = function perform(app, middlewares) {
 				use(app, options);
 			}
 			catch (err) {
-				logger.error(err);
+				middlewareLogger.error(err);
 			}
 		})
 	;

@@ -41,7 +41,7 @@ const logger = createLogger('server', 'yellow');
 			logger.info(chalk.green('ready'));
 		});
 
-		logger.debug('HTTP server port', chalk.magenta(port));
+		logger.debug('HTTP port', chalk.magenta(port));
 
 		if (ssl && ssl.enable !== false) {
 			const { port: httpsPort, key, cert } = ssl;
@@ -54,7 +54,7 @@ const logger = createLogger('server', 'yellow');
 					.createServer(options, app.callback())
 					.listen(httpsPort, handleReady)
 			);
-			logger.debug('HTTPS server port', chalk.magenta(httpsPort));
+			logger.debug('HTTPS port', chalk.magenta(httpsPort));
 		}
 		else {
 			handleError(app.listen(port, handleReady));

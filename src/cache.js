@@ -14,7 +14,7 @@ export function initCache(creators) {
 		const cacheStore = cacheManager.caching(creater);
 		if (!index) { cache = cacheStore; }
 		stores[key] = cacheStore;
-		logger.trace(`created cache "${key}"`);
+		logger.trace(`"${key}" created`);
 	});
 }
 
@@ -29,7 +29,7 @@ export function getCacheStores() {
 export default new Proxy({}, {
 	get(target, key) {
 		if (!cache) {
-			logger.error('Cache is NOT ready');
+			logger.error('cache is NOT ready');
 			return noop;
 		}
 		return cache[key];

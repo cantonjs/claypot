@@ -35,7 +35,7 @@ export async function initModels(dbs, appConfig) {
 	names.forEach((name) => {
 		const Model = extendModel(modules[name], 'models', models);
 		models[name] = isFunction(Model) ? new Model() : Model;
-		logger.trace(`created model "${name}"`);
+		logger.trace(`"${name}" created`);
 	});
 
 	logger.debug(

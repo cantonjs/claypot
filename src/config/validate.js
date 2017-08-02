@@ -3,6 +3,8 @@ import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import Types from 'prop-types';
 import { isString } from 'lodash';
 
+const logger = createLogger('config');
+
 const keyTypes = {
 	clayInjection: Types.bool,
 	compress: Types.oneOfType([Types.bool, Types.object]),
@@ -37,7 +39,6 @@ const keyTypes = {
 };
 
 export default function validate(config) {
-	const logger = createLogger('config');
 	const unknownOptions = {};
 
 	Object.keys(config).forEach((key) => {
