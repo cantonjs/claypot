@@ -53,7 +53,7 @@
     "koa-weixin-jssdk": "^2.0.0",
     "lodash": "^4.17.2",
     "pot-js": "^0.0.0-beta.30",
-    "pot-logger": "^0.0.0",
+    "pot-logger": "^0.1.0",
     "prop-types": "^15.5.10",
     "qiniu": "^6.1.13",
     "raw-body": "^2.2.0",

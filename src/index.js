@@ -6,7 +6,7 @@ export stop from './stop';
 export list from './list';
 export log from './log';
 export logger, {
-	setConfig as setLogger, createLogger,
+	setLoggers, createLogger,
 	overrideConsole, resetConsole, overrideConsoleInRuntime,
 } from 'pot-logger';
 export config, { isDev, isProd } from './config';

@@ -3867,6 +3867,13 @@ pot-logger@^0.0.0:
     chalk "^2.0.1"
     log4js "^2.3.2"
 
+pot-logger@^0.1.0:
+  version "0.1.0"
+  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.1.0.tgz#adbf80a34a333d932704aeb9dcd277f89afb1ed1"
+  dependencies:
+    chalk "^2.0.1"
+    log4js "^2.3.2"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/prelude-ls/download/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"

@@ -4,7 +4,7 @@ import https from 'https';
 import Koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
 import { initAppConfig } from './config';
-import { setConfig as setLogger, createLogger } from 'pot-logger';
+import { setLoggers, createLogger } from 'pot-logger';
 import mount from 'koa-mount';
 import { initPlugins, applyInitServer } from './utils/plugins';
 import getCertOption from './utils/getCertOption';
@@ -18,7 +18,7 @@ const logger = createLogger('server', 'yellow');
 	try {
 		const config = initAppConfig(process.env.CLAYPOT_CONFIG);
 
-		setLogger(config);
+		setLoggers(config);
 		initPlugins(config);
 
 		const { port, root, ssl } = config;
