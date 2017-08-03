@@ -7,7 +7,7 @@ export default async function list(options = {}) {
 		...options,
 		workspace,
 		head: [
-			'Name', 'Status', 'Crashes', 'Memory', 'Started', 'Port', 'Pid',
+			'Name', 'Status', 'Crashes', 'Memory', 'CPU', 'Started', 'Port', 'Pid',
 		],
 		setTable(info) {
 			return [
@@ -15,6 +15,7 @@ export default async function list(options = {}) {
 				info.styledStatus,
 				info.crashes,
 				info.memoryUsage.formattedString,
+				info.cpuUsage.percent,
 				info.startedLocal,
 				info.data.port,
 				info.data.parentPid,
