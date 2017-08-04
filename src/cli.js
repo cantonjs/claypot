@@ -20,6 +20,7 @@ yargs
 		desc: 'Start claypot server',
 		builder(yargs) {
 			yargs // eslint-disable-line
+				.usage(`\n${gradient.fruit('claypot start [args]')}`)
 				.options({
 					name: {
 						desc: 'Server name',
@@ -104,6 +105,7 @@ yargs
 		desc: 'Stop process',
 		builder(yargs) {
 			yargs // eslint-disable-line
+				.usage(`\n${gradient.fruit('claypot stop [args]')}`)
 				.options({
 					f: {
 						alias: 'force',
@@ -131,6 +133,7 @@ yargs
 		desc: 'Show log',
 		builder(yargs) {
 			yargs // eslint-disable-line
+				.usage(`\n${gradient.fruit('claypot log [name] [args]')}`)
 				.options({
 					c: {
 						alias: 'category',
