@@ -10,7 +10,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 	const { daemon = false } = userConfig;
 
 	if (isUndefined(userConfig.cwd) && userConfig.root) {
-		userConfig.cwd = userConfig.root;
+		userConfig.cwd = resolve(userConfig.root);
 		Reflect.deleteProperty(userConfig, 'root');
 	}
 
