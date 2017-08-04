@@ -3,7 +3,7 @@ import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import { isString } from 'lodash';
 import { deprecatedProp as deprecated } from '../utils/deprecated';
 import {
-	string, number, bool, object, func, array, arrayOf, oneOfType, shape,
+	string, number, bool, object, func, array, arrayOf, oneOfType, oneOf, shape,
 	checkPropTypes,
 } from 'prop-types';
 
@@ -32,6 +32,15 @@ const propTypes = {
 	models: string,
 	name: string,
 	notFound: bool,
+	outputHost: oneOfType([
+		bool,
+		shape({
+			enable: bool,
+			name: string,
+			port: number,
+			protocol: oneOf(['http', 'https']),
+		}),
+	]),
 	overrideConsole: bool,
 	plugins: arrayOf(
 		oneOfType([

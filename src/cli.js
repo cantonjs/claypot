@@ -92,6 +92,10 @@ yargs
 						desc: 'Activate inspector. Require Node.js >= v6.3.0',
 						type: 'string',
 					},
+					outputHost: {
+						desc: 'Output host info for development. Defaults to `true` in `development` mode',
+						type: 'bool',
+					},
 				})
 				.argv
 			;

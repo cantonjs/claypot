@@ -1,7 +1,7 @@
 
 import findPortSync from 'find-port-sync';
 import { basename, resolve } from 'path';
-import { isObject, isUndefined } from 'lodash';
+import { isObject, isUndefined, defaults } from 'lodash';
 
 export default function applyDefaults(config, userConfig, isProd) {
 	const port = findPortSync(3000);
@@ -35,13 +35,13 @@ export default function applyDefaults(config, userConfig, isProd) {
 		models: 'models',
 		name: basename(cwd),
 		notFound: true,
+		outputHost: !isProd,
 		overrideConsole: daemon,
 		plugins: [],
 		port,
 		production: isProd,
 		proxy: {},
 		responseTime: true,
-		// root: cwd,
 		ssl: false,
 		static: 'static',
 		watch: false,
@@ -49,18 +49,30 @@ export default function applyDefaults(config, userConfig, isProd) {
 
 	Object.assign(config, defaultOptions, userConfig);
 
-	const { ssl, watch } = config;
+	const { ssl, watch, outputHost } = config;
 
 	config.baseDir = resolve(config.cwd, config.baseDir);
 
 	if (ssl) {
-		config.ssl = isObject(ssl) ? ssl : {
+		config.ssl = defaults((isObject(ssl) ? ssl : {}), {
+			enable: true,
 			port: port + 1,
-		};
+		});
 	}
 
 	if (watch) {
 		config.watch = isObject(watch) ? watch : {};
+	}
+
+	if (outputHost) {
+		config.outputHost = isObject(outputHost) ? outputHost : {};
+		const enabledSSL = ssl && ssl.enable;
+		defaults(config.outputHost, {
+			enable: true,
+			name: config.name,
+			port: enabledSSL ? ssl.port : config.port,
+			protocol: enabledSSL ? 'https' : 'http',
+		});
 	}
 
 	return config;

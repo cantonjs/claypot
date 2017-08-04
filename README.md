@@ -80,6 +80,7 @@ Here are all options: (All options are optional)
 - `models` (String): Defining models files directory. Defaults to `models`.
 - `name` (String): Defining server name. Defaults to the basename of `process.cwd()`.
 - `notFound` (Boolean): Enable 404 handling. Defaults to `true`.
+- `outputHost` (Boolean|Object): Output host info for development. Checkout [output-host](https://github.com/die-welle/output-host) for detail. Defaults to `true` in `development` mode.
 - `overrideConsole` (Boolean): Enable overriding native `console`. Defaults to `false`.
 - `plugins` ([Object]): Defining plugins.
 - `port` (Number): Defining the port of server. Defaults to an available port.
