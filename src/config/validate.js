@@ -1,44 +1,79 @@
 
 import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
-import Types from 'prop-types';
 import { isString } from 'lodash';
-import { deprecatedProp } from '../utils/deprecated';
+import { deprecatedProp as deprecated } from '../utils/deprecated';
+import {
+	string, number, bool, object, func, array, arrayOf, oneOfType, shape,
+	checkPropTypes,
+} from 'prop-types';
 
 const logger = createLogger('config');
 
 const propTypes = {
-	baseDir: Types.string,
-	clayInjection: Types.bool,
-	compress: Types.oneOfType([Types.bool, Types.object]),
-	configs: Types.object,
-	cwd: Types.string,
-	daemon: Types.bool,
-	dbs: Types.object,
-	env: Types.object,
-	execArgs: Types.oneOfType([Types.string, Types.arrayOf(Types.string)]),
-	execCommand: Types.string,
-	favicon: Types.oneOfType([Types.bool, Types.string]),
-	helmet: Types.oneOfType([Types.bool, Types.object]),
-	historyAPIFallback: Types.oneOfType([Types.bool, Types.object]),
-	httpError: Types.oneOfType([Types.bool, Types.object]),
-	httpLogger: Types.bool,
-	inspect: Types.oneOfType([Types.bool, Types.string, Types.object]),
-	logLevel: Types.oneOfType([Types.string, Types.object]),
-	logsDir: Types.string,
-	maxRestarts: Types.number,
-	models: Types.string,
-	name: Types.string,
-	notFound: Types.bool,
-	overrideConsole: Types.bool,
-	plugins: Types.arrayOf(Types.object),
-	port: Types.number,
-	production: Types.bool,
-	proxy: Types.object,
-	responseTime: Types.bool,
-	root: deprecatedProp(Types.string, 'please use "cwd" and "baseDir" instead'),
-	ssl: Types.oneOfType([Types.bool, Types.object]),
-	static: Types.oneOfType([Types.bool, Types.string, Types.object]),
-	watch: Types.oneOfType([Types.bool, Types.object]),
+	baseDir: string,
+	clayInjection: bool,
+	compress: oneOfType([bool, object]),
+	configs: object,
+	cwd: string,
+	daemon: bool,
+	dbs: object,
+	env: object,
+	execArgs: oneOfType([string, arrayOf(string)]),
+	execCommand: string,
+	favicon: oneOfType([bool, string]),
+	helmet: oneOfType([bool, object]),
+	historyAPIFallback: oneOfType([bool, object]),
+	httpError: oneOfType([bool, object]),
+	httpLogger: bool,
+	inspect: oneOfType([bool, string, number]),
+	logLevel: oneOfType([string, object]),
+	logsDir: string,
+	maxRestarts: number,
+	models: string,
+	name: string,
+	notFound: bool,
+	overrideConsole: bool,
+	plugins: arrayOf(
+		oneOfType([
+			shape({
+				module: oneOfType([
+					string,
+					object,
+					func,
+				]).isRequired,
+				options: object,
+				enable: bool,
+			}),
+			string,
+			array,
+		]),
+	),
+	port: number,
+	production: bool,
+	proxy: object,
+	responseTime: bool,
+	root: deprecated(string, 'please use "cwd" and "baseDir" instead'),
+	ssl: oneOfType([
+		bool,
+		shape({
+			key: string.isRequired,
+			cert: string.isRequired,
+			port: number,
+		}),
+	]),
+	static: oneOfType([bool, string, object]),
+	watch: oneOfType([
+		bool,
+		shape({
+			enable: bool,
+			dirs: oneOfType([
+				string,
+				arrayOf(string),
+			]),
+			ignoreDotFiles: bool,
+			ignoreNodeModulesDir: bool,
+		}),
+	]),
 };
 
 export default function validate(config) {
@@ -68,7 +103,7 @@ export default function validate(config) {
 
 	overrideConsoleInRuntime(
 		() => {
-			Types.checkPropTypes(propTypes, config, 'key', 'config');
+			checkPropTypes(propTypes, config, 'key', 'config');
 		},
 		logger,
 		([msg, ...args]) => [
