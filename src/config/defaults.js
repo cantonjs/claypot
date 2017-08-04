@@ -1,7 +1,7 @@
 
 import findPortSync from 'find-port-sync';
-import { basename } from 'path';
-import { isObject } from 'lodash';
+import { basename, resolve } from 'path';
+import { isObject, isUndefined } from 'lodash';
 
 export default function applyDefaults(config, userConfig, isProd) {
 	const port = findPortSync(3000);
@@ -9,10 +9,17 @@ export default function applyDefaults(config, userConfig, isProd) {
 
 	const { daemon = false } = userConfig;
 
+	if (isUndefined(userConfig.cwd) && userConfig.root) {
+		userConfig.cwd = userConfig.root;
+		Reflect.delete(userConfig, 'root');
+	}
+
 	const defaultOptions = {
+		baseDir: '',
 		clayInjection: true,
 		compress: isProd,
 		configs: {},
+		cwd,
 		daemon,
 		dbs: {},
 		execArgs: [],
@@ -35,7 +42,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 		production: isProd,
 		proxy: {},
 		responseTime: true,
-		root: cwd,
+		// root: cwd,
 		ssl: false,
 		static: 'static',
 		watch: false,
@@ -44,6 +51,8 @@ export default function applyDefaults(config, userConfig, isProd) {
 	Object.assign(config, defaultOptions, userConfig);
 
 	const { ssl, watch } = config;
+
+	config.baseDir = resolve(config.cwd, config.baseDir);
 
 	if (ssl) {
 		config.ssl = isObject(ssl) ? ssl : {

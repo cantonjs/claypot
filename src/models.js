@@ -9,8 +9,8 @@ const logger = createLogger('model', 'blueBright');
 const models = {};
 
 export async function initModels(dbs, appConfig) {
-	const { models: modelsDir, root } = appConfig;
-	const modules = importModules(join(root, modelsDir));
+	const { models: modelsDir, baseDir } = appConfig;
+	const modules = importModules(join(baseDir, modelsDir));
 
 	const extendModel = (Model, key, extension) => {
 		const prop = `$${key}`;

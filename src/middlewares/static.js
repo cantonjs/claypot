@@ -12,7 +12,7 @@ export default function serveStatic(app, options) {
 	}
 
 	const { dir, ...other } = options;
-	return app.use(koaStatic(resolve(config.root, dir), {
+	return app.use(koaStatic(resolve(config.baseDir, dir), {
 		maxAge: isProd ? maxAge : 0,
 		gzip: isProd,
 		...other,

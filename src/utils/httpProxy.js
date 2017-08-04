@@ -15,10 +15,10 @@ const logger = createLogger('proxy', 'greenBright');
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
-		const { root } = config;
+		const { baseDir } = config;
 		return {
 			...ssl,
-			...getCertOption(root, ssl.key, ssl.cert),
+			...getCertOption(baseDir, ssl.key, ssl.cert),
 		};
 	}
 	return ssl;

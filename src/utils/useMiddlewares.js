@@ -56,7 +56,7 @@ const perform = function perform(app, middlewares) {
 		.forEach(({ options, name }) => {
 			try {
 				const use = importFile(name, {
-					cwd: config.root,
+					cwd: config.baseDir,
 					resolvers: [resolve(__dirname, '../middlewares')],
 					useLoader: false,
 				});

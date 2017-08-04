@@ -45,7 +45,7 @@ export function initPlugins(config) {
 
 			try {
 				const PluginModule = importFile(module, {
-					cwd: config.root,
+					cwd: config.baseDir,
 					resolvers: [resolve(__dirname, '../plugins')],
 					useLoader: false,
 				});

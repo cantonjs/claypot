@@ -7,6 +7,7 @@ import workspace from './utils/workspace';
 const startClaypot = async (config) => {
 	await startPot({
 		...config,
+		root: config.cwd,
 		workspace,
 		configToEnv: 'CLAYPOT_CONFIG',
 		entry: resolve(__dirname, 'app.js'),

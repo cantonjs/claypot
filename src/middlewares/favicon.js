@@ -7,9 +7,9 @@ import { isString } from 'lodash';
 const defaults = '../../assets/favicon.ico';
 
 export default (app) => {
-	const { favicon, root } = config;
+	const { favicon, baseDir } = config;
 	const icon = isString(favicon) ?
-		resolve(root, favicon) : resolve(__dirname, defaults)
+		resolve(baseDir, favicon) : resolve(__dirname, defaults)
 	;
 	return app.use(fav(icon));
 };

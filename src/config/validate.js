@@ -2,13 +2,16 @@
 import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import Types from 'prop-types';
 import { isString } from 'lodash';
+import { deprecatedProp } from '../utils/deprecated';
 
 const logger = createLogger('config');
 
-const keyTypes = {
+const propTypes = {
+	baseDir: Types.string,
 	clayInjection: Types.bool,
 	compress: Types.oneOfType([Types.bool, Types.object]),
 	configs: Types.object,
+	cwd: Types.string,
 	daemon: Types.bool,
 	dbs: Types.object,
 	env: Types.object,
@@ -32,7 +35,7 @@ const keyTypes = {
 	production: Types.bool,
 	proxy: Types.object,
 	responseTime: Types.bool,
-	root: Types.string,
+	root: deprecatedProp(Types.string, 'please use "cwd" and "baseDir" instead'),
 	ssl: Types.oneOfType([Types.bool, Types.object]),
 	static: Types.oneOfType([Types.bool, Types.string, Types.object]),
 	watch: Types.oneOfType([Types.bool, Types.object]),
@@ -41,17 +44,17 @@ const keyTypes = {
 export default function validate(config) {
 	const unknownOptions = {};
 
-	Object.keys(config).forEach((key) => {
-		if (!keyTypes.hasOwnProperty(key)) {
-			unknownOptions[key] = config[key];
-			logger.warn(`unknown key "${key}".`);
+	Object.keys(config).forEach((prop) => {
+		if (!propTypes.hasOwnProperty(prop)) {
+			unknownOptions[prop] = config[prop];
+			logger.warn(`unknown prop "${prop}".`);
 		}
 	});
 
 	if (Object.keys(unknownOptions).length) {
 		logger.warn(
 			'it is recommended to use a `configs` object',
-			'if you want to set some custom keys',
+			'if you want to set some custom props',
 		);
 		if (!config.daemon) {
 			logger.warn('i.e.\n');
@@ -65,7 +68,7 @@ export default function validate(config) {
 
 	overrideConsoleInRuntime(
 		() => {
-			Types.checkPropTypes(keyTypes, config, 'key', 'config');
+			Types.checkPropTypes(propTypes, config, 'key', 'config');
 		},
 		logger,
 		([msg, ...args]) => [

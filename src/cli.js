@@ -62,24 +62,28 @@ yargs
 						desc: `Path to the config file. Defaults to "${defaultConfigFile}"`,
 						type: 'string',
 					},
-					'configWalk': {
+					configWalk: {
 						desc: 'Walk to resolve config file',
 						default: true,
 						type: 'bool',
 					},
-					root: {
-						desc: 'Root dir. Defaults to `process.cwd()`',
+					baseDir: {
+						desc: 'The base directory for resolving modules or directories. Defaults to the current working directory',
 						type: 'string',
 					},
-					'logsDir': {
-						desc: 'Log files dir. Defaults to ".logs"',
+					cwd: {
+						desc: 'Current working directory. Defaults to `process.cwd()`',
+						type: 'string',
+					},
+					logsDir: {
+						desc: 'Log files directory. Defaults to ".logs"',
 						type: 'string',
 					},
 					port: {
 						desc: 'Server port',
 						type: 'number',
 					},
-					'maxRestarts': {
+					maxRestarts: {
 						desc: 'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
 						type: 'number',
 					},
@@ -153,8 +157,8 @@ yargs
 		},
 	})
 	.command({
-		command: 'dir [name]',
-		desc: 'Show dir',
+		command: 'directory [name]',
+		desc: 'Show directory',
 		handler(argv) {
 			dir(argv).catch(logger.error);
 		},
