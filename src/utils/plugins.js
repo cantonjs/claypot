@@ -23,15 +23,22 @@ export function initPlugins(config) {
 			if (!plugin) {
 				return { enable: false };
 			}
-			else if (plugin.constructor === Object && plugin.module) {
+
+			if (Array.isArray(plugin) && plugin[0]) {
+				return {
+					module: plugin[0],
+					options: plugin[1],
+				};
+			}
+
+			if (plugin.constructor === Object && plugin.module) {
 				return plugin;
 			}
 			return { module: plugin };
 		})
+		.filter(({ enable = true }) => enable)
 		.map((plugin) => {
-			const { module, options = {}, enable = true } = plugin;
-
-			if (!enable) { return; }
+			const { module, options = {} } = plugin;
 
 			if (isObject(module)) {
 				traceNewPlugin(module.constructor);
@@ -58,7 +65,6 @@ export function initPlugins(config) {
 				logger.error(err);
 			}
 		})
-		.filter(Boolean)
 		.forEach((plugin) => {
 			if (isFunction(plugin.registerDatabase)) {
 				registerDatabasePhasePlugins.push(plugin);
@@ -74,7 +80,6 @@ export function initPlugins(config) {
 			}
 		})
 	;
-
 }
 
 function middlewarePhase(app, config) {
