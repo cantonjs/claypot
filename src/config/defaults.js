@@ -11,7 +11,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 
 	if (isUndefined(userConfig.cwd) && userConfig.root) {
 		userConfig.cwd = userConfig.root;
-		Reflect.delete(userConfig, 'root');
+		Reflect.deleteProperty(userConfig, 'root');
 	}
 
 	const defaultOptions = {
