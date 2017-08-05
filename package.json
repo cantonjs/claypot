@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "start": "yarn test -- --watchAll",
+    "start:docs": "gitbook serve ./docs",
     "test": "cross-env CLAYPOT_DEV=true jest",
     "ls": "yarn cli -- ls",
     "log": "yarn cli -- log",
@@ -24,7 +25,10 @@
     "build:watch": "yarn build -- -w",
     "preversion": "yarn build",
     "server:test": "babel-register test/proxyServer",
-    "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli"
+    "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
+    "docs:build": "gitbook build ./docs",
+    "docs:deploy": "git-directory-deploy --directory ./docs",
+    "docs": "run-s build:*"
   },
   "author": "Cap32",
   "license": "MIT",
@@ -84,12 +88,14 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "get-port": "^3.1.0",
+    "gitbook-cli": "^2.3.2",
     "is-port-reachable": "^2.0.0",
     "is-reachable": "^2.3.2",
     "jest": "^19.0.2",
     "kapok-js": "^0.4.1",
     "mkdirp": "^0.5.1",
     "node-fetch": "^1.7.1",
+    "npm-run-all": "^4.0.2",
     "qs": "^6.3.0",
     "rimraf": "^2.5.4"
   },

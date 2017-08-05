@@ -8,7 +8,8 @@ Thumbs.db
 .log
 .logs
 *.log
-node_modules
-lib
-static
+node_modules/
+lib/
+static/
+_book/
 Claypotfile.js
