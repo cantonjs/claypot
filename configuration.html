@@ -1,0 +1,313 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Configuration · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="cli.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="cli.html">
+            
+                <a href="cli.html">
+            
+                    
+                    Command Line Interface
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="configuration.html">
+            
+                <a href="configuration.html">
+            
+                    
+                    Configuration
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Configuration</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="configuration">Configuration</h1>
+<p>One of the most important philosophies of Claypot is declarative programming. You can create a powerful server by defining a configuration file.</p>
+<p>The configuration file must export a <code>JSON</code> object.</p>
+<h2 id="file">File</h2>
+<p>By default, claypot will find up the closest <code>Claypotfile.js</code> as configuration from the root of project.</p>
+<p>You can use a custom file name by adding <code>--configFile</code> option to <code>claypot start</code> command. The <code>--configFile</code> value is the configuration file name for resolving.</p>
+<h2 id="properties">Properties</h2>
+<p><em>Note: all properties are optional.</em></p>
+<ul>
+<li><code>baseDir</code> (String): Defining the base directory for resolving modules or directories. Defaults to <code>cwd</code>.</li>
+<li><code>clayInjection</code> (Boolean): Inject <code>clay</code> object to middleware context. Defaults to <code>true</code>.</li>
+<li><code>compress</code> (Boolean|Object): Compress (gzip) static files. Defaults to <code>true</code> in <code>production</code> mode, <code>false</code> in <code>development</code> mode.</li>
+<li><code>configs</code> (Any): Custom data is recommended to set to here.</li>
+<li><code>cwd</code> (String): Defining the current working directory. Defaults to <code>process.cwd()</code>.</li>
+<li><code>daemon</code> (Boolean): Enable <code>daemon</code> mode. Notice: to kill <code>daemon</code> process, please run <code>claypot stop ${name}</code>. Defaults to <code>false</code>.</li>
+<li><code>dbs</code> (Object): Defining databases. There&apos;s no built-in database by default. You probably need to use some plugins if you to use some databases.</li>
+<li><code>env</code> (Object): Defining custom environments. Defaults to <code>process.env</code>.</li>
+<li><code>execArgs</code> (String|[String]): Executing arguments. Defaults to <code>[]</code>.</li>
+<li><code>execCommand</code> (String): Executing command. Defaults to <code>process.execPath</code>, which returns the absolute pathname of the executable that started the Node.js process i.e. <code>/usr/local/bin/node</code>.</li>
+<li><code>favicon</code> (Boolean|String): Defining favicon. Setting <code>false</code> to disable this feature. Setting a path string to set a custom favicon file. Defaults to <code>true</code>.</li>
+<li><code>helmet</code> (Boolean|Object): Enable helmet for safety. Defaults to <code>true</code> in <code>production</code> mode, <code>false</code> in <code>development</code> mode.</li>
+<li><code>historyAPIFallback</code> (Boolean|Object): Enable history api fallback. Useful for SPA. Defaults to <code>false</code>.</li>
+<li><code>httpError</code> (Boolean|Object): Enable server error handling. Setting a object for custom config. Defaults to <code>true</code>.</li>
+<li><code>httpLogger</code> (Boolean): Enable HTTP access logger. Defaults to <code>true</code>.</li>
+<li><code>inspect</code> (Boolean|String|Object): Enable <a href="https://nodejs.org/api/cli.html#cli_inspect_host_port" target="_blank">node inspector</a>. Defaults to <code>false</code>.</li>
+<li><code>logLevel</code> (String|Object): Defining log level. See <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail. Here are available levels:<ul>
+<li>ALL</li>
+<li>TRACE</li>
+<li>DEBUG (default in <code>development</code> mode)</li>
+<li>INFO (default in <code>production</code> mode)</li>
+<li>WARN</li>
+<li>ERROR</li>
+<li>FATAL</li>
+<li>OFF</li>
+</ul>
+</li>
+<li><code>logsDir</code> (String): Defining log files directory. If <code>daemon</code> mode actived, log messages will write to some <code>.log</code> files. Defaults to <code>.logs</code>.</li>
+<li><code>maxRestarts</code> (Number): Defining max restarts if crashed. Defaults to <code>-1</code> (<code>-1</code> equals to <code>Infinity</code>) in <code>production</code> mode, <code>0</code> in <code>development</code> mode.</li>
+<li><code>models</code> (String): Defining models files directory. Defaults to <code>models</code>.</li>
+<li><code>name</code> (String): Defining server name. Defaults to the basename of <code>process.cwd()</code>.</li>
+<li><code>notFound</code> (Boolean): Enable 404 handling. Defaults to <code>true</code>.</li>
+<li><code>outputHost</code> (Boolean|Object): Output host info for development. Checkout <a href="https://github.com/die-welle/output-host" target="_blank">output-host</a> for detail. Defaults to <code>true</code> in <code>development</code> mode.</li>
+<li><code>overrideConsole</code> (Boolean): Enable overriding native <code>console</code>. Defaults to <code>false</code>.</li>
+<li><code>plugins</code> ([Object]): Defining plugins.</li>
+<li><code>port</code> (Number): Defining the port of server. Defaults to an available port.</li>
+<li><code>production</code> (Boolean): Enable <code>production</code> mode. Defaults to <code>false</code>.</li>
+<li><code>proxy</code> (Object): Defining HTTP proxies. e.g. <code>{ &apos;/my/path/&apos;: &apos;http://anti.proxy.com/&apos; }</code>.</li>
+<li><code>responseTime</code> (Boolean): Enable <code>x-response-time</code> to HTTP response header. Defaults to <code>true</code>.</li>
+<li><code>ssl</code> (Boolean|Object): Enable SSL. Defaults to <code>false</code>. Here are available props for object config:<ul>
+<li><code>enable</code> (Boolean): Enable <code>ssl</code>. Defaults to <code>true</code>.</li>
+<li><code>port</code> (Number): HTTPS server port.</li>
+<li><code>key</code> (String): Key file path.</li>
+<li><code>cert</code> (String): Cert file path.</li>
+</ul>
+</li>
+<li><code>static</code> (Boolean|String|Object): Defining static directory. Setting <code>false</code> to disable this feature. Defaults to <code>static</code>.</li>
+<li><code>watch</code> (Boolean|Object): Enable watch mode. Defaults to <code>false</code>. Here are available props for object config:<ul>
+<li><code>enable</code> (Boolean): Enable <code>watch</code>. Defaults to <code>true</code>.</li>
+<li><code>dirs</code> (String|[String]): Defining watching directories.</li>
+<li><code>ignoreDotFiles</code> (Boolean): Ignore watching <code>.*</code> files. Defaults to <code>true</code>.</li>
+<li><code>ignoreNodeModulesDir</code> (Boolean): Ignore watching <code>node_modules</code> directory. Defaults to <code>true</code>.</li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="cli.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Command Line Interface">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Configuration","level":"1.3","depth":1,"previous":{"title":"Command Line Interface","level":"1.2","depth":1,"path":"cli.md","ref":"cli.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"configuration.md","mtime":"2017-08-05T16:48:44.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-05T16:57:14.699Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
