@@ -27,8 +27,8 @@
     "server:test": "babel-register test/proxyServer",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
     "docs:build": "gitbook build ./docs",
-    "docs:deploy": "git-directory-deploy --directory ./docs",
-    "docs": "run-s build:*"
+    "docs:deploy": "git-directory-deploy --directory ./docs/_book",
+    "docs": "run-s docs:*"
   },
   "author": "Cap32",
   "license": "MIT",
