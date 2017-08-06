@@ -2,7 +2,7 @@
 
 Claypot provides a Command Line Interface (CLI) to configure and interact with your servers or processes.
 
-Before using CLI, make sure you have [installed Claypot globally](/README.md#globally).
+Before using CLI, make sure you have [installed Claypot globally](/guides/installations.md#globally).
 
 You can run `claypot -h` for help in terminal.
 

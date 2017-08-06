@@ -5,7 +5,7 @@ One of the most important philosophies of Claypot is declarative programming. Yo
 The configuration file must export a `JSON` object.
 
 
-## File
+## Claypotfile
 
 By default, claypot will find up the closest `Claypotfile.js` as configuration from the root of project.
 
