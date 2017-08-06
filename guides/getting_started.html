@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Getting Started · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -12,20 +12,20 @@
         
         
     
-    <link rel="stylesheet" href="gitbook/style.css">
+    <link rel="stylesheet" href="../gitbook/style.css">
 
     
             
                 
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
                 
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
                 
             
                 
-                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
                 
             
         
@@ -53,10 +53,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    
+    <link rel="prev" href="installations.html" />
     
 
     </head>
@@ -85,9 +87,9 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="../">
             
-                <a href="./">
+                <a href="../">
             
                     
                     Introduction
@@ -112,9 +114,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="guides/installations.html">
+        <li class="chapter " data-level="1.2.1" data-path="installations.html">
             
-                <a href="guides/installations.html">
+                <a href="installations.html">
             
                     
                     Installations
@@ -125,9 +127,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="guides/getting_started.html">
+        <li class="chapter active" data-level="1.2.2" data-path="getting_started.html">
             
-                <a href="guides/getting_started.html">
+                <a href="getting_started.html">
             
                     
                     Getting Started
@@ -183,9 +185,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="api/cli.html">
+        <li class="chapter " data-level="1.3.1" data-path="../api/cli.html">
             
-                <a href="api/cli.html">
+                <a href="../api/cli.html">
             
                     
                     Command Line Interface
@@ -196,9 +198,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="api/node_js_api.html">
+        <li class="chapter " data-level="1.3.2" data-path="../api/node_js_api.html">
             
-                <a href="api/node_js_api.html">
+                <a href="../api/node_js_api.html">
             
                     
                     Node.js API
@@ -209,9 +211,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="api/configuration.html">
+        <li class="chapter " data-level="1.3.3" data-path="../api/configuration.html">
             
-                <a href="api/configuration.html">
+                <a href="../api/configuration.html">
             
                     
                     Configuration
@@ -341,7 +343,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href=".." >Getting Started</a>
     </h1>
 </div>
 
@@ -356,18 +358,21 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="claypot">Claypot</h1>
-<p>Claypot is an efficient, scalable server framework for Node.js.</p>
-<p><em>CLAYPOT IS UNDER DEVELOPING, PLEASE DON&apos;T USE IT IN PRODUCTION ENV</em></p>
-<h2 id="philosophy">Philosophy</h2>
-<ul>
-<li>Configuration based declarative programming.</li>
-<li>Easy to extend by plugins.</li>
-</ul>
-<h5 id="author">Author</h5>
-<p><a href="https://github.com/Cap32" target="_blank">Cap32</a></p>
-<h2 id="license">License</h2>
-<p>MIT</p>
+                                <h1 id="getting-started">Getting Started</h1>
+<h2 id="starting-a-server">Starting a server</h2>
+<p>After installed claypot, starting a claypot server could not be easier by running:</p>
+<pre><code class="lang-bash">claypot start
+</code></pre>
+<p>After run <code>claypot start</code> command, Claypot will start a server that serves directory <code>./static/</code> by default.</p>
+<p>Most projects will need a more complex setup, which is why Claypot supports a configuration file. This is much more efficient than having to type in a lot of commands in the terminal.</p>
+<p>If a <code>Claypotfile.js</code> is present, the <code>claypot start</code> command picks it up by default. For more usage, please checkout <a href="../api/configuration.html">configuration</a>.</p>
+<h2 id="claypotfile">Claypotfile</h2>
+<p>A <code>Claypotfile.js</code> file must export a <code>JSON</code> object. Here&apos;s an example:</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">module</span>.exports = {
+    name: <span class="hljs-string">&apos;MyApp&apos;</span>,
+    port: <span class="hljs-number">8080</span>,
+};
+</code></pre>
 
                                 
                                 </section>
@@ -395,6 +400,10 @@
 
             
                 
+                <a href="installations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Installations">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
                 
             
         
@@ -403,37 +412,37 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Guides","level":"1.2","depth":1,"ref":"","articles":[{"title":"Installations","level":"1.2.1","depth":2,"path":"guides/installations.md","ref":"guides/installations.md","articles":[]},{"title":"Getting Started","level":"1.2.2","depth":2,"path":"guides/getting_started.md","ref":"guides/getting_started.md","articles":[]},{"title":"List of Features (TODO)","level":"1.2.3","depth":2,"ref":"","articles":[]},{"title":"List of Plugins (TODO)","level":"1.2.4","depth":2,"ref":"","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-08-06T11:47:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-06T11:48:37.039Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Getting Started","level":"1.2.2","depth":2,"next":{"title":"List of Features (TODO)","level":"1.2.3","depth":2,"ref":"","articles":[]},"previous":{"title":"Installations","level":"1.2.1","depth":2,"path":"guides/installations.md","ref":"guides/installations.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"guides/getting_started.md","mtime":"2017-08-06T11:15:10.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-06T11:48:37.039Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
 
         
-    <script src="gitbook/gitbook.js"></script>
-    <script src="gitbook/theme.js"></script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
     
         
-        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
-    
-        
-        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
         
     
         
-        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
         
     
         
-        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
         
     
         
-        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
         
     
         
-        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
         
     
 
