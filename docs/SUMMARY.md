@@ -8,7 +8,7 @@
 
 * API Reference
     - [Command Line Interface](api/cli.md)
-    - [Node Module API](api/node_module_api.md)
+    - [Node.js API](api/node_js_api.md)
     - [Configuration](api/configuration.md)
 
 * Advanced (TODO)
