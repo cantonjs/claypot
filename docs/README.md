@@ -11,7 +11,7 @@ Claypot is an efficient, scalable server framework for Node.js.
 - Easy to extend by plugins.
 
 
-##### Author
+## Author
 
 [Cap32](https://github.com/Cap32)
 
