@@ -11,7 +11,7 @@ export default (app) => app.use(async (ctx, next) => {
 
 	await next();
 
-	if (ctx.respond) {
+	if (ctx.respond !== false) {
 		const { key, value } = getResponseTime();
 		ctx.set(key, value);
 	}
