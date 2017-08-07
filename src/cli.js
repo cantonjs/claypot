@@ -84,6 +84,14 @@ yargs
 						desc: 'Server port',
 						type: 'number',
 					},
+					plugins: {
+						desc: 'Defining plugins',
+						type: 'array',
+					},
+					helmet: {
+						desc: 'Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.',
+						type: 'bool',
+					},
 					maxRestarts: {
 						desc: 'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
 						type: 'number',

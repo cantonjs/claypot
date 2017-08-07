@@ -2,36 +2,49 @@
 import { resolve } from 'path';
 import { execSync } from 'child_process';
 import Kapok from 'kapok-js';
+import { uniqueId } from 'lodash';
 
-const kapoks = [];
+const kapoks = {};
 
 export const command = resolve('bin/claypot');
 
-export const start = (args, options, name = 'claypot') => {
+export const start = (args = [], options = {}) => {
+	const {
+		name = uniqueId('claypot_'),
+		execOptions = {},
+	} = options;
+
 	const kapok = new Kapok(
 		command,
-		['--execCommand=babel-node', ...args, '--name', name],
-		options,
+		[
+			'--execCommand=babel-node',
+			'--no-configWalk',
+			...args,
+			`--name=${name}`,
+		],
+		{
+			cwd: resolve('test'),
+			...execOptions,
+		},
 	);
-	kapoks.push({ name, kapok });
+	kapoks[name] = kapok;
 	return kapok;
 };
 
 export const stop = async () => {
-	try {
-		const promises = [];
-
-		while (kapoks.length) {
-			const { kapok, name } = kapoks.shift();
-			promises.push(new Promise((resolve) => {
+	await Promise.all(Object.keys(kapoks).map((name) => {
+		return new Promise((resolve) => {
+			const kapok = kapoks[name];
+			try {
 				execSync(`${command} stop ${name} -f`);
 				kapok.exit(resolve);
-			}));
-		}
-
-		return Promise.all(promises);
-	}
-	catch (err) {}
+			}
+			catch (err) {
+				process.stdout.write('stop err');
+			}
+			Reflect.deleteProperty(kapoks, name);
+		});
+	}));
 };
 
 process.on('SIGINT', stop);
