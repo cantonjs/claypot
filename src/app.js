@@ -6,7 +6,7 @@ import useMiddlewares from './utils/useMiddlewares';
 import { initAppConfig } from './config';
 import { setLoggers, createLogger } from 'pot-logger';
 import mount from 'koa-mount';
-import { initPlugins, applyInitServer } from './utils/plugins';
+import Plugins from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import initDbs from './dbs';
 import { once } from 'lodash';
@@ -19,7 +19,8 @@ const logger = createLogger('server', 'yellow');
 		const config = initAppConfig(process.env.CLAYPOT_CONFIG);
 
 		setLoggers(config);
-		initPlugins(config);
+
+		Plugins.init(config);
 
 		const { port, root, ssl } = config;
 
@@ -29,16 +30,19 @@ const logger = createLogger('server', 'yellow');
 
 		app.mount = (...args) => app.use(mount(...args));
 
-		await applyInitServer(app);
+		await Plugins.sequence('initServer', app);
 
 		useMiddlewares(app);
+
+		Plugins.sync('serverWillStart', app);
 
 		const handleError = (server) => {
 			server.on('error', logger.error);
 		};
 
-		const handleReady = once(() => {
+		const handleReady = once(async () => {
 			logger.info(chalk.green('ready'));
+			Plugins.sync('serverDidStart', app);
 		});
 
 		logger.trace('HTTP port', chalk.magenta(port));

@@ -1,7 +1,7 @@
 
 import { initCache } from '../cache';
 import { initModels } from '../models';
-import { applyRegisterDatabase } from '../utils/plugins';
+import Plugins from '../utils/plugins';
 import { createLogger } from 'pot-logger';
 import { isFunction } from 'lodash';
 
@@ -17,7 +17,7 @@ const register = function register(key, config = {}) {
 export default async function init(appConfig) {
 	const { dbs: dbsConfig } = appConfig;
 
-	await applyRegisterDatabase(register);
+	await Plugins.parallel('registerDatabase', register);
 
 	Object.keys(dbsConfig).forEach((key) => {
 
