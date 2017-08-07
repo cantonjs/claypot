@@ -47,7 +47,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 		watch: false,
 	};
 
-	Object.assign(config, defaultOptions, userConfig);
+	defaults(config, userConfig, defaultOptions);
 
 	const { ssl, watch, outputHost } = config;
 

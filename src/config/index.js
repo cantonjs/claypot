@@ -25,10 +25,10 @@ export async function initCliConfig(argv) {
 		...restArgs,
 	} = argv;
 
-	let cliConfig = {};
+	let claypotFileConfig = {};
 
 	try {
-		cliConfig = await importConfigFile(
+		claypotFileConfig = await importConfigFile(
 			configFile || defaultConfigFile,
 			configWalk,
 		);
@@ -39,8 +39,11 @@ export async function initCliConfig(argv) {
 
 	stripArgs(restArgs);
 
+	applyDefaults(config, defaults(restArgs, claypotFileConfig), isProd);
+	validate(config);
+
 	return {
-		...defaults(restArgs, initConfig(cliConfig)),
+		...config,
 		force,
 	};
 }
