@@ -2,7 +2,7 @@
 import config from '../config';
 import { createLogger } from 'pot-logger';
 import importFile from 'import-file';
-import { resolve } from 'path';
+import { resolve, normalize } from 'path';
 import { isBoolean, isUndefined } from 'lodash';
 import chalk from 'chalk';
 
@@ -55,7 +55,7 @@ const perform = function perform(app, middlewares) {
 		})
 		.forEach(({ options, name }) => {
 			try {
-				const use = importFile(name, {
+				const use = importFile(`./${normalize(name)}`, {
 					cwd: config.baseDir,
 					resolvers: [resolve(__dirname, '../middlewares')],
 					useLoader: false,

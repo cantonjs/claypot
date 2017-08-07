@@ -60,6 +60,7 @@ function init(config) {
 				logger.error(err);
 			}
 		})
+		.filter(Boolean)
 	;
 }
 
