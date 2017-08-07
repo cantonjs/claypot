@@ -10,7 +10,7 @@ export const command = resolve('bin/claypot');
 export const start = (args, options, name = 'claypot') => {
 	const kapok = new Kapok(
 		command,
-		['--execCommand=babel-register', ...args, '--name', name],
+		['--execCommand=babel-node', ...args, '--name', name],
 		options,
 	);
 	kapoks.push({ name, kapok });
@@ -33,12 +33,6 @@ export const stop = async () => {
 	}
 	catch (err) {}
 };
-
-export function delay(t = 1000) {
-	return new Promise((resolve) => {
-		setTimeout(resolve, t);
-	});
-}
 
 process.on('SIGINT', stop);
 process.on('SIGTERM', stop);
