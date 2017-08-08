@@ -92,6 +92,10 @@ yargs
 						desc: 'Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.',
 						type: 'bool',
 					},
+					historyAPIFallback: {
+						desc: 'Enable history api fallback',
+						type: 'bool',
+					},
 					maxRestarts: {
 						desc: 'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
 						type: 'number',

@@ -3675,9 +3675,9 @@ jssha@^2.0.2:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/jssha/download/jssha-2.3.0.tgz#bb375f545c59f3ffda7c1e80fd0b3c0867586ab8"
 
-kapok-js@^0.6.0:
-  version "0.6.0"
-  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.6.0.tgz#bf08afeb1a928b628c746130e3a815134a0df4e7"
+kapok-js@^0.7.0:
+  version "0.7.0"
+  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.7.0.tgz#c13fd0fd9d577349d01a32390ecd952c676601c3"
   dependencies:
     call-me-maybe "^1.0.1"
     chalk "^2.1.0"
@@ -3896,7 +3896,7 @@ lockfile@~1.0.1, lockfile@~1.0.3:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/lockfile/download/lockfile-1.0.3.tgz#2638fc39a0331e9cac1a04b71799931c9c50df79"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.14.2, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.14.2, lodash@^4.17.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3951,7 +3951,7 @@ lodash.without@~4.4.0:
   version "4.4.0"
   resolved "http://registry.npm.taobao.org/lodash.without/download/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
 
-lodash@4.17.4, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
+lodash@4.17.4, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4224,11 +4224,11 @@ ms@2.0.0, ms@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-mute-stream@0.0.5, mute-stream@~0.0.4:
+mute-stream@0.0.5:
   version "0.0.5"
   resolved "http://registry.npm.taobao.org/mute-stream/download/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
-mute-stream@0.0.6:
+mute-stream@0.0.6, mute-stream@~0.0.4:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/mute-stream/download/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 

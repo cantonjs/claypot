@@ -11,9 +11,9 @@ const middlewareLogger = createLogger('middleware', 'green');
 const middlewaresWhiteList = [
 	'responseTime',
 	'httpLogger',
+	'compress',
 	'httpError',
 	'helmet',
-	'compress',
 	'favicon',
 	'clayInjection',
 	'plugins',
