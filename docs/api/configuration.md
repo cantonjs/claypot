@@ -51,7 +51,7 @@ You can use a custom file name by adding `--configFile` option to `claypot start
 - `plugins` ([Object]): Defining plugins.
 - `port` (Number): Defining the port of server. Defaults to an available port.
 - `production` (Boolean): Enable `production` mode. Defaults to `false`.
-- `proxy` (Object): Defining HTTP proxies. e.g. `{ '/my/path/': 'http://anti.proxy.com/' }`.
+- `proxy` (Object): Defining HTTP proxies. e.g. `{ '/my/path/': 'http://anti.proxy.com/' }`. See [HTTP Proxy](/guides/http_proxy.md) for detail.
 - `responseTime` (Boolean): Enable `x-response-time` to HTTP response header. Defaults to `true`.
 - `ssl` (Boolean|Object): Enable SSL. Defaults to `false`. Here are available props for object config:
     + `enable` (Boolean): Enable `ssl`. Defaults to `true`.

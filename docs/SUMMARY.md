@@ -5,6 +5,7 @@
 * Guides
     - [Installations](guides/installations.md)
     - [Getting Started](guides/getting_started.md)
+    - [HTTP Proxy](guides/http_proxy.md)
     - List of Features (TODO)
     - List of Plugins (TODO)
 
