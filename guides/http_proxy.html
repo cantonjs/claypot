@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Installations · GitBook</title>
+        <title>HTTP Proxy · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="getting_started.html" />
     
+    <link rel="prev" href="getting_started.html" />
     
 
     </head>
@@ -114,7 +114,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="installations.html">
+        <li class="chapter " data-level="1.2.1" data-path="installations.html">
             
                 <a href="installations.html">
             
@@ -140,7 +140,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="http_proxy.html">
+        <li class="chapter active" data-level="1.2.3" data-path="http_proxy.html">
             
                 <a href="http_proxy.html">
             
@@ -356,7 +356,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Installations</a>
+        <a href=".." >HTTP Proxy</a>
     </h1>
 </div>
 
@@ -371,23 +371,40 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="installations">Installations</h1>
-<p>Before we begin, make sure you have a version <code>&gt;= 7.6</code> of <a href="https://nodejs.org/" target="_blank">Node.js</a> installed.</p>
-<h2 id="locally">Locally</h2>
-<p>Installing locally is what we recommend for most projects. This makes it easier to upgrade projects individually when breaking changes are introduced.</p>
-<h6 id="using-npm">Using npm</h6>
-<pre><code class="lang-bash">$ npm i claypot
+                                <h1 id="http-proxy">HTTP Proxy</h1>
+<p>Claypot has a built-in HTTP proxy system which built on top of <a href="https://github.com/nodejitsu/node-http-proxy" target="_blank">node-http-proxy</a>.</p>
+<h2 id="defining-http-proxy">Defining HTTP proxy</h2>
+<p>The easiest way to define HTTP proxy is setting a key/value object to <code>proxy</code> field in <code>Claypotfile</code>.</p>
+<p>The <code>key</code> is the root of URL path our HTTP proxy server. The <code>value</code> is the configuration of the proxy. Defining an URL <code>string</code> to <code>value</code> stands for the target of original server.</p>
+<h6 id="example">Example</h6>
+<p>Claypotfile.js</p>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.export = {
+    proxy: {
+        <span class="hljs-string">&apos;/proxy/a&apos;</span>: <span class="hljs-string">&apos;http://127.0.0.1:3001&apos;</span>,
+        <span class="hljs-string">&apos;/proxy/b&apos;</span>: <span class="hljs-string">&apos;http://127.0.0.1:3002/foo/bar&apos;</span>,
+    },
+};
 </code></pre>
-<h6 id="using-yarn">Using yarn</h6>
-<pre><code class="lang-bash">$ yarn add claypot
-</code></pre>
-<h3 id="globally">Globally</h3>
-<p>Claypot also provides a powerful Command Line Interface (CLI) for Claypot monitors managment. Installing globally is also we recommend for using CLI.</p>
-<h6 id="using-npm">Using npm</h6>
-<pre><code class="lang-bash">$ npm i -g claypot
-</code></pre>
-<h6 id="using-yarn">Using yarn</h6>
-<pre><code class="lang-bash">$ yarn global add claypot
+<h2 id="advanced">Advanced</h2>
+<p>HTTP proxy configuration value can also be an <code>object</code>. All <a href="https://github.com/nodejitsu/node-http-proxy#options" target="_blank">node-http-proxy options</a> are available.</p>
+<p>In addition, proxy configuration also supports these options:</p>
+<ul>
+<li><code>query</code> (Object): Force assigning additional query fields to the original server.</li>
+<li><code>contentType</code> (String): Force transforming <code>Content-Type</code>. Supports &quot;application/json&quot; and &quot;application/x-www-form-urlencoded&quot;.</li>
+</ul>
+<h6 id="example">Example</h6>
+<p>Claypotfile.js</p>
+<pre><code class="lang-js"><span class="hljs-built_in">module</span>.export = {
+    proxy: {
+        <span class="hljs-string">&apos;/proxy/a&apos;</span>: {
+            target: <span class="hljs-string">&apos;http://127.0.0.1:3001&apos;</span>,
+            query: {
+                <span class="hljs-string">&apos;accessToken&apos;</span>: <span class="hljs-string">&apos;asdf:ghjkl&apos;</span>,
+            },
+            contentType: <span class="hljs-string">&apos;application/x-www-form-urlencoded&apos;</span>,
+        },
+    },
+};
 </code></pre>
 
                                 
@@ -416,10 +433,10 @@
 
             
                 
-                
-                <a href="getting_started.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Getting Started">
-                    <i class="fa fa-angle-right"></i>
+                <a href="getting_started.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Getting Started">
+                    <i class="fa fa-angle-left"></i>
                 </a>
+                
                 
             
         
@@ -428,7 +445,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Installations","level":"1.2.1","depth":2,"next":{"title":"Getting Started","level":"1.2.2","depth":2,"path":"guides/getting_started.md","ref":"guides/getting_started.md","articles":[]},"previous":{"title":"Guides","level":"1.2","depth":1,"ref":"","articles":[{"title":"Installations","level":"1.2.1","depth":2,"path":"guides/installations.md","ref":"guides/installations.md","articles":[]},{"title":"Getting Started","level":"1.2.2","depth":2,"path":"guides/getting_started.md","ref":"guides/getting_started.md","articles":[]},{"title":"HTTP Proxy","level":"1.2.3","depth":2,"path":"guides/http_proxy.md","ref":"guides/http_proxy.md","articles":[]},{"title":"List of Features (TODO)","level":"1.2.4","depth":2,"ref":"","articles":[]},{"title":"List of Plugins (TODO)","level":"1.2.5","depth":2,"ref":"","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"guides/installations.md","mtime":"2017-08-07T02:53:52.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-10T10:51:16.092Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"HTTP Proxy","level":"1.2.3","depth":2,"next":{"title":"List of Features (TODO)","level":"1.2.4","depth":2,"ref":"","articles":[]},"previous":{"title":"Getting Started","level":"1.2.2","depth":2,"path":"guides/getting_started.md","ref":"guides/getting_started.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"guides/http_proxy.md","mtime":"2017-08-10T10:50:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-10T10:51:16.092Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
