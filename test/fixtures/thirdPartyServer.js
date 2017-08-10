@@ -3,24 +3,23 @@ import http from 'http';
 import url from 'url';
 import bodyParser from 'co-body';
 import qs from 'qs';
+import delay from 'delay';
+import pify from 'pify';
+import yargs from 'yargs';
 
-const delay = (t = 1000) => new Promise((resolve) => setTimeout(resolve, +t));
-
-export const server = http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
 	const { method, headers, url: reqURL } = req;
 	const { query: queryString, pathname } = url.parse(reqURL);
 	const query = qs.parse(queryString);
 
-	console.log('url', reqURL);
-
 	const end = (data, statusCode = 200) => {
-		setTimeout(() => {
-			res.writeHead(statusCode, { 'Content-Type': 'application/json' });
-			res.end(JSON.stringify(data));
-		}, 1000);
+		res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+		res.end(JSON.stringify(data));
 	};
 
 	const routes = {
+		'GET /hello/': () => end({ hello: 'hello' }),
+		'GET /world/': () => end({ world: 'world' }),
 		'GET /ok': () => end({ method }),
 		'POST /ok': () => end({ method }),
 		'PUT /ok': () => end({ method }),
@@ -28,7 +27,7 @@ export const server = http.createServer((req, res) => {
 		'DELETE /ok': () => end({ method }),
 		'GET /query': () => end(query),
 		'POST /json': () => bodyParser.json(req).then(end),
-		'POST /test/form': () => bodyParser.form(req).then(end),
+		'POST /form': () => bodyParser.form(req).then(end),
 		'GET /headers': () => end(headers),
 		'GET /delay': () => delay(query.delay)
 			.then(() => end({ delay: query.delay || 2000 })),
@@ -52,9 +51,14 @@ export const server = http.createServer((req, res) => {
 
 });
 
-server.listen(3004, (err) => {
-	if (err) { throw err; }
+export function startThirdPartyServer(port = 3004) {
+	return pify(::server.listen)(port);
+}
 
-	const { port } = server.address();
-	console.log(`http://127.0.0.1:${port}`);
-});
+export function stopThirdPartyServer() {
+	return pify(::server.close)();
+}
+
+if (yargs.argv._[0] === 'start') {
+	startThirdPartyServer();
+}

@@ -88,6 +88,9 @@ yargs
 						desc: 'Defining plugins',
 						type: 'array',
 					},
+					proxy: {
+						desc: 'Defining proxies',
+					},
 					helmet: {
 						desc: 'Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.',
 						type: 'bool',

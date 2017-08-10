@@ -89,10 +89,11 @@
     "gitbook-cli": "^2.3.2",
     "is-reachable": "^2.3.2",
     "jest": "^20.0.4",
-    "kapok-js": "^0.7.0",
+    "kapok-js": "^0.8.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^1.7.1",
     "npm-run-all": "^4.0.2",
+    "pify": "^3.0.0",
     "qs": "^6.3.0",
     "rimraf": "^2.5.4"
   },

@@ -3675,9 +3675,9 @@ jssha@^2.0.2:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/jssha/download/jssha-2.3.0.tgz#bb375f545c59f3ffda7c1e80fd0b3c0867586ab8"
 
-kapok-js@^0.7.0:
-  version "0.7.0"
-  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.7.0.tgz#c13fd0fd9d577349d01a32390ecd952c676601c3"
+kapok-js@^0.8.0:
+  version "0.8.0"
+  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.8.0.tgz#835f2e23d673a7ad8002fd409347b4edf7531cef"
   dependencies:
     call-me-maybe "^1.0.1"
     chalk "^2.1.0"
@@ -5056,6 +5056,10 @@ pidusage@^1.1.0:
 pify@^2.0.0, pify@^2.2.0, pify@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/pify/download/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
+
+pify@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/pify/download/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
 
 pinkie-promise@^2.0.0:
   version "2.0.1"
