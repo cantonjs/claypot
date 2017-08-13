@@ -18,9 +18,9 @@ MIT
 <br />
 <br />
 <br />
-<h2 align="center">
+<h3 align="center">
   <a href="https://github.com/cantonjs">We ❤️ Open Source</a>
-</h2>
+</h3>
 <br />
 <br />
 <br />
