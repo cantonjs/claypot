@@ -13,3 +13,15 @@ Please checkout [Documents](https://cantonjs.github.io/claypot/)
 ## License
 
 MIT
+
+<br />
+<br />
+<br />
+<br />
+<h2 align="center">
+  <a href="https://github.com/cantonjs">We ❤️ Open Source</a>
+</h2>
+<br />
+<br />
+<br />
+<br />
