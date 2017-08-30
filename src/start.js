@@ -9,7 +9,6 @@ import logger from 'pot-logger';
 const startClaypot = async (config) => {
 	await startPot({
 		...config,
-		root: config.cwd,
 		workspace,
 		configToEnv: 'CLAYPOT_CONFIG',
 		entry: resolve(__dirname, 'app.js'),

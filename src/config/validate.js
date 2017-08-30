@@ -85,6 +85,10 @@ const propTypes = {
 	]),
 };
 
+const reverseDerpecated = (config) => {
+	config.root = config.root || config.baseDir;
+};
+
 export default function validate(config) {
 	const unknownOptions = {};
 
@@ -120,4 +124,6 @@ export default function validate(config) {
 			...args,
 		],
 	);
+
+	reverseDerpecated(config);
 }

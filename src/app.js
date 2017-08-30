@@ -22,7 +22,7 @@ const logger = createLogger('server', 'yellow');
 
 		Plugins.init(config);
 
-		const { port, root, ssl } = config;
+		const { port, baseDir, ssl } = config;
 
 		await initDbs(config);
 
@@ -49,7 +49,7 @@ const logger = createLogger('server', 'yellow');
 
 		if (ssl && ssl.enable !== false) {
 			const { port: httpsPort, key, cert } = ssl;
-			const options = getCertOption(root, key, cert);
+			const options = getCertOption(baseDir, key, cert);
 			handleError(
 				http.createServer(app.callback()).listen(port, handleReady)
 			);
