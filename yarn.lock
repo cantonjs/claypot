@@ -1232,7 +1232,7 @@ color-name@^1.1.1:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/color-name/download/color-name-1.1.2.tgz#5c8ab72b64bd2215d617ae9559ebb148475cf98d"
 
-colors@*, colors@1.0.3:
+colors@1.0.3:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/colors/download/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
@@ -1269,7 +1269,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "http://registry.npm.taobao.org/concat-map/download/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@^1.4.6, concat-stream@^1.4.7, concat-stream@^1.4.8, concat-stream@^1.5.0, concat-stream@^1.5.2:
+concat-stream@^1.4.6, concat-stream@^1.4.7, concat-stream@^1.5.0, concat-stream@^1.5.2:
   version "1.5.2"
   resolved "http://registry.npm.taobao.org/concat-stream/download/concat-stream-1.5.2.tgz#708978624d856af41a5a741defdd261da752c266"
   dependencies:
@@ -1977,9 +1977,9 @@ event-emitter@~0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-event-pubsub@4.2.3:
-  version "4.2.3"
-  resolved "http://registry.npm.taobao.org/event-pubsub/download/event-pubsub-4.2.3.tgz#0d3142f47ac7e0da38cdc38402d97e2510bc5ecc"
+event-pubsub@4.3.0:
+  version "4.3.0"
+  resolved "http://registry.npm.taobao.org/event-pubsub/download/event-pubsub-4.3.0.tgz#f68d816bc29f1ec02c539dc58c8dd40ce72cb36e"
 
 event-stream@~0.5:
   version "0.5.3"
@@ -2443,6 +2443,13 @@ get-port@^3.0.0, get-port@^3.1.0:
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "http://registry.npm.taobao.org/get-stdin/download/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
+
+get-stream@^2.1.0:
+  version "2.3.1"
+  resolved "http://registry.npm.taobao.org/get-stream/download/get-stream-2.3.1.tgz#5f38f93f346009666ee0150a054167f91bdd95de"
+  dependencies:
+    object-assign "^4.0.1"
+    pinkie-promise "^2.0.0"
 
 get-stream@^3.0.0:
   version "3.0.0"
@@ -3564,11 +3571,11 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-js-message@>=1.0.5:
+js-message@1.0.5:
   version "1.0.5"
   resolved "http://registry.npm.taobao.org/js-message/download/js-message-1.0.5.tgz#2300d24b1af08e89dd095bc1a4c9c9cfcb892d15"
 
-js-queue@>=2.0.0:
+js-queue@2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/js-queue/download/js-queue-2.0.0.tgz#362213cf860f468f0125fc6c96abc1742531f948"
   dependencies:
@@ -3896,7 +3903,7 @@ lockfile@~1.0.1, lockfile@~1.0.3:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/lockfile/download/lockfile-1.0.3.tgz#2638fc39a0331e9cac1a04b71799931c9c50df79"
 
-lodash, lodash@4, lodash@^4.0.0, lodash@^4.14.2, lodash@^4.17.2, lodash@^4.2.0:
+lodash, lodash@4, lodash@^4.0.0, lodash@^4.14.2, lodash@^4.2.0:
   version "4.17.2"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3951,7 +3958,7 @@ lodash.without@~4.4.0:
   version "4.4.0"
   resolved "http://registry.npm.taobao.org/lodash.without/download/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
 
-lodash@4.17.4, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.4, lodash@^4.3.0:
+lodash@4.17.4, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.4"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4224,11 +4231,11 @@ ms@2.0.0, ms@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-mute-stream@0.0.5:
+mute-stream@0.0.5, mute-stream@~0.0.4:
   version "0.0.5"
   resolved "http://registry.npm.taobao.org/mute-stream/download/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
-mute-stream@0.0.6, mute-stream@~0.0.4:
+mute-stream@0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/mute-stream/download/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
@@ -4257,12 +4264,12 @@ ndjson@^1.4.0:
     split2 "^2.1.0"
     through2 "^2.0.3"
 
-neat-csv@^1.0.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/neat-csv/download/neat-csv-1.1.0.tgz#357a412f84b55b21160259945def3a70be30301c"
+neat-csv@^2.1.0:
+  version "2.1.0"
+  resolved "http://registry.npm.taobao.org/neat-csv/download/neat-csv-2.1.0.tgz#06f58360c4c3b955bd467ddc85ae4511a3907a4c"
   dependencies:
-    concat-stream "^1.4.8"
     csv-parser "^1.6.0"
+    get-stream "^2.1.0"
     into-stream "^2.0.0"
 
 negotiator@0.6.1:
@@ -4314,14 +4321,13 @@ node-int64@^0.4.0:
   version "0.4.0"
   resolved "http://registry.npm.taobao.org/node-int64/download/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
-node-ipc@^8.9.2:
-  version "8.10.3"
-  resolved "http://registry.npm.taobao.org/node-ipc/download/node-ipc-8.10.3.tgz#223bd431ad7fb2e40c5434f8a5e4558be2568fbd"
+node-ipc@^9.1.0:
+  version "9.1.1"
+  resolved "http://registry.npm.taobao.org/node-ipc/download/node-ipc-9.1.1.tgz#4e245ed6938e65100e595ebc5dc34b16e8dd5d69"
   dependencies:
-    colors "*"
-    event-pubsub "4.2.3"
-    js-message ">=1.0.5"
-    js-queue ">=2.0.0"
+    event-pubsub "4.3.0"
+    js-message "1.0.5"
+    js-queue "2.0.0"
 
 node-notifier@^5.0.2:
   version "5.1.2"
@@ -5095,9 +5101,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.32:
-  version "0.0.0-beta.32"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.32.tgz#e8e6a4c3e23a0d39e588e16cbaeaaa62df32cb6e"
+pot-js@^0.0.0-beta.38:
+  version "0.0.0-beta.38"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.38.tgz#3f35c389f5d53e37ec6527de933ad1c184d84ed1"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
@@ -5110,10 +5116,11 @@ pot-js@^0.0.0-beta.32:
     inquirer "^2.0.0"
     lodash "^4.17.2"
     log-update "^2.1.0"
-    node-ipc "^8.9.2"
+    node-ipc "^9.1.0"
     pidusage "^1.1.0"
     pot-logger "^0.1.0"
-    process-exists "^2.1.0"
+    process-exists "^3.0.0"
+    ps-list "^4.0.0"
     ps-tree "0.0.3"
     respawn "^2.5.0"
     serialize-javascript "^1.3.0"
@@ -5151,11 +5158,11 @@ private@^0.1.6:
   version "0.1.6"
   resolved "http://registry.npm.taobao.org/private/download/private-0.1.6.tgz#55c6a976d0f9bafb9924851350fe47b9b5fbb7c1"
 
-process-exists@^2.1.0:
-  version "2.1.0"
-  resolved "http://registry.npm.taobao.org/process-exists/download/process-exists-2.1.0.tgz#718c612887e787d54fac109bf4e67b18013746b8"
+process-exists@^3.0.0:
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/process-exists/download/process-exists-3.0.0.tgz#75cf6b47a12721c9b4c06880e091da95717ded81"
   dependencies:
-    ps-list "^3.0.0"
+    ps-list "^4.0.0"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
@@ -5222,13 +5229,12 @@ prr@~0.0.0:
   version "0.0.0"
   resolved "http://registry.npm.taobao.org/prr/download/prr-0.0.0.tgz#1a84b85908325501411853d0081ee3fa86e2926a"
 
-ps-list@^3.0.0:
-  version "3.1.0"
-  resolved "http://registry.npm.taobao.org/ps-list/download/ps-list-3.1.0.tgz#07d53822ee6724bbf687687b27a9aa22bfdbbeb4"
+ps-list@^4.0.0:
+  version "4.0.0"
+  resolved "http://registry.npm.taobao.org/ps-list/download/ps-list-4.0.0.tgz#57c8b3d38161ee8977811cd32a5dc52237fdb299"
   dependencies:
-    pify "^2.2.0"
-    pinkie-promise "^2.0.0"
-    tasklist "^2.0.0"
+    pify "^3.0.0"
+    tasklist "^3.1.0"
 
 ps-tree@0.0.3:
   version "0.0.3"
@@ -6286,13 +6292,12 @@ tar@^2.0.0, tar@~2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-tasklist@^2.0.0:
-  version "2.1.0"
-  resolved "http://registry.npm.taobao.org/tasklist/download/tasklist-2.1.0.tgz#53382e962e090adaf4c67d255057a97eec616e54"
+tasklist@^3.1.0:
+  version "3.1.0"
+  resolved "http://registry.npm.taobao.org/tasklist/download/tasklist-3.1.0.tgz#873a98a4e45cbdecfa2c2ee18865353057e63696"
   dependencies:
-    neat-csv "^1.0.0"
+    neat-csv "^2.1.0"
     pify "^2.2.0"
-    pinkie-promise "^2.0.0"
     sec "^1.0.0"
 
 term-size@^1.2.0:
