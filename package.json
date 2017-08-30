@@ -21,7 +21,7 @@
     "docs": "run-s docs:*",
     "docs:build": "gitbook build ./docs",
     "docs:deploy": "git-directory-deploy --directory ./docs/_book",
-    "preversion": "yarn build",
+    "preversion": "yarn test && yarn build",
     "test": "cross-env CLAYPOT_DEV=true jest --runInBand",
     "watch:build": "yarn build -- -w",
     "watch:docs": "gitbook serve ./docs"
