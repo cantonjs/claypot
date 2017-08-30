@@ -62,6 +62,9 @@ export default function applyDefaults(config, userConfig, isProd) {
 
 	if (watch) {
 		config.watch = isObject(watch) ? watch : {};
+		if (isUndefined(config.watch.enable)) {
+			config.watch.enable = true;
+		}
 	}
 
 	if (outputHost) {
