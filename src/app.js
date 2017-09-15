@@ -4,21 +4,24 @@ import https from 'https';
 import Koa from 'koa';
 import useMiddlewares from './utils/useMiddlewares';
 import { initAppConfig } from './config';
-import { setLoggers, createLogger } from 'pot-logger';
+import { setLoggers, createLogger, logger } from 'pot-logger';
 import mount from 'koa-mount';
 import Plugins from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import initDbs from './dbs';
 import { once } from 'lodash';
 import chalk from 'chalk';
+import { name, version } from '../package.json';
 
-const logger = createLogger('server', 'yellow');
+const serverLogger = createLogger('server', 'yellow');
 
 (async function main() {
 	try {
 		const config = initAppConfig(process.env.CLAYPOT_CONFIG);
 
 		setLoggers(config);
+
+		logger.debug(`${name} version: v${version}`);
 
 		Plugins.init(config);
 
@@ -37,15 +40,15 @@ const logger = createLogger('server', 'yellow');
 		Plugins.sync('serverWillStart', app);
 
 		const handleError = (server) => {
-			server.on('error', logger.error);
+			server.on('error', serverLogger.error);
 		};
 
 		const handleReady = once(async () => {
-			logger.info(chalk.green('ready'));
+			serverLogger.info(chalk.green('ready'));
 			Plugins.sync('serverDidStart', app);
 		});
 
-		logger.trace('HTTP port', chalk.magenta(port));
+		serverLogger.trace('HTTP port', chalk.magenta(port));
 
 		if (ssl && ssl.enable !== false) {
 			const { port: httpsPort, key, cert } = ssl;
@@ -58,13 +61,13 @@ const logger = createLogger('server', 'yellow');
 					.createServer(options, app.callback())
 					.listen(httpsPort, handleReady)
 			);
-			logger.trace('HTTPS port', chalk.magenta(httpsPort));
+			serverLogger.trace('HTTPS port', chalk.magenta(httpsPort));
 		}
 		else {
 			handleError(app.listen(port, handleReady));
 		}
 	}
 	catch (err) {
-		logger.fatal(`failed to start server:`, err);
+		serverLogger.fatal(`failed to start server:`, err);
 	}
 }());
