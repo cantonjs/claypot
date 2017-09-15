@@ -8,8 +8,8 @@ import { defaults } from 'lodash';
 
 const config = {};
 
-export const isProd = process.env === 'production';
-export const isDev = !isProd;
+export const isDev = process.env.NODE_ENV === 'development';
+export const isProd = !isDev;
 
 export const defaultConfigFile = 'Claypotfile.js';
 
@@ -39,7 +39,9 @@ export async function initCliConfig(argv) {
 
 	stripArgs(restArgs);
 
-	applyDefaults(config, defaults(restArgs, claypotFileConfig), isProd);
+	const { production } = restArgs;
+	const isProduction = production === undefined ? isProd : production;
+	applyDefaults(config, defaults(restArgs, claypotFileConfig), isProduction);
 	validate(config);
 
 	return {
