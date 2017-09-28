@@ -5101,9 +5101,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.38:
-  version "0.0.0-beta.38"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.38.tgz#3f35c389f5d53e37ec6527de933ad1c184d84ed1"
+pot-js@^0.0.0-beta.39:
+  version "0.0.0-beta.39"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.39.tgz#055ef241226bf4044674aae7750e60d8506aedd6"
   dependencies:
     chalk "^1.1.3"
     chokidar "^1.6.1"
