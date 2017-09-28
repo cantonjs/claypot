@@ -29,6 +29,7 @@ You can use a custom file name by adding `--configFile` option to `claypot start
 - `favicon` (Boolean|String): Defining favicon. Setting `false` to disable this feature. Setting a path string to set a custom favicon file. Defaults to `true`.
 - `helmet` (Boolean|Object): Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.
 - `historyAPIFallback` (Boolean|Object): Enable history api fallback. Useful for SPA. Defaults to `false`.
+- `host` (String): Server host.
 - `httpError` (Boolean|Object): Enable server error handling. Setting a object for custom config. Defaults to `true`.
 - `httpLogger` (Boolean): Enable HTTP access logger. Defaults to `true`.
 - `inspect` (Boolean|String|Object): Enable [node inspector](https://nodejs.org/api/cli.html#cli_inspect_host_port). Defaults to `false`.
