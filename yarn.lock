@@ -4860,9 +4860,9 @@ output-file-sync@^1.1.0:
     mkdirp "^0.5.1"
     object-assign "^4.1.0"
 
-output-host@^3.0.1:
-  version "3.0.1"
-  resolved "http://registry.npm.taobao.org/output-host/download/output-host-3.0.1.tgz#a5962c22a90c882434df6e2c0da2a746467a0803"
+output-host@^3.1.1:
+  version "3.1.1"
+  resolved "http://registry.npm.taobao.org/output-host/download/output-host-3.1.1.tgz#a0aed9d8c727f722f850b89127103d7ec4a7d63f"
   dependencies:
     chalk "^1.1.1"
     chrome-launcher "^0.3.2"

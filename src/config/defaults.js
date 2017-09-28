@@ -26,6 +26,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 		favicon: true,
 		helmet: isProd,
 		historyAPIFallback: false,
+		host: '',
 		httpError: true,
 		httpLogger: true,
 		inspect: false,
@@ -70,12 +71,14 @@ export default function applyDefaults(config, userConfig, isProd) {
 	if (outputHost) {
 		config.outputHost = isObject(outputHost) ? outputHost : {};
 		const enabledSSL = ssl && ssl.enable;
-		defaults(config.outputHost, {
+		const defaultOutputHostConfig = {
 			enable: true,
 			name: config.name,
 			port: enabledSSL ? ssl.port : config.port,
 			protocol: enabledSSL ? 'https' : 'http',
-		});
+		};
+		if (config.host) { defaultOutputHostConfig.host = config.host; }
+		defaults(config.outputHost, defaultOutputHostConfig);
 	}
 
 	return config;

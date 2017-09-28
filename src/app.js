@@ -25,7 +25,7 @@ const serverLogger = createLogger('server', 'yellow');
 
 		Plugins.init(config);
 
-		const { port, baseDir, ssl } = config;
+		const { host, port, baseDir, ssl } = config;
 
 		await initDbs(config);
 
@@ -48,23 +48,28 @@ const serverLogger = createLogger('server', 'yellow');
 			Plugins.sync('serverDidStart', app);
 		});
 
+		const createListenArgs = (port) => {
+			return [port, host, handleReady].filter(Boolean);
+		};
+
+		host && serverLogger.trace('HTTP host', chalk.magenta(host));
 		serverLogger.trace('HTTP port', chalk.magenta(port));
 
 		if (ssl && ssl.enable !== false) {
 			const { port: httpsPort, key, cert } = ssl;
 			const options = getCertOption(baseDir, key, cert);
 			handleError(
-				http.createServer(app.callback()).listen(port, handleReady)
+				http.createServer(app.callback()).listen(...createListenArgs(port))
 			);
 			handleError(
 				https
 					.createServer(options, app.callback())
-					.listen(httpsPort, handleReady)
+					.listen(...createListenArgs(httpsPort))
 			);
 			serverLogger.trace('HTTPS port', chalk.magenta(httpsPort));
 		}
 		else {
-			handleError(app.listen(port, handleReady));
+			handleError(app.listen(...createListenArgs(port)));
 		}
 	}
 	catch (err) {

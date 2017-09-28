@@ -23,6 +23,7 @@ const propTypes = {
 	favicon: oneOfType([bool, string]),
 	helmet: oneOfType([bool, object]),
 	historyAPIFallback: oneOfType([bool, object]),
+	host: string,
 	httpError: oneOfType([bool, object]),
 	httpLogger: bool,
 	inspect: oneOfType([bool, string, number]),
