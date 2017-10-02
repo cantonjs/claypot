@@ -39,8 +39,14 @@ export async function initCliConfig(argv) {
 
 	stripArgs(restArgs);
 
-	const { production } = restArgs;
-	const isProduction = production === undefined ? isProd : production;
+	const isProduction = !!(
+		restArgs.production !== undefined ? restArgs.production :
+			(claypotFileConfig.production !== undefined ?
+				claypotFileConfig.production : isProd
+			)
+		)
+	;
+
 	applyDefaults(config, defaults(restArgs, claypotFileConfig), isProduction);
 	validate(config);
 

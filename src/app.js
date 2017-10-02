@@ -18,14 +18,14 @@ const serverLogger = createLogger('server', 'yellow');
 (async function main() {
 	try {
 		const config = initAppConfig(process.env.CLAYPOT_CONFIG);
+		const { host, port, baseDir, ssl, production } = config;
 
 		setLoggers(config);
 
 		logger.debug(`${name} version: v${version}`);
+		logger.trace('production:', production);
 
 		Plugins.init(config);
-
-		const { host, port, baseDir, ssl } = config;
 
 		await initDbs(config);
 
