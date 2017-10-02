@@ -14,7 +14,7 @@
     "lib"
   ],
   "scripts": {
-    "start": "yarn test -- --watchAll",
+    "start": "yarn test --watchAll",
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
@@ -23,7 +23,7 @@
     "docs:deploy": "git-directory-deploy --directory ./docs/_book",
     "preversion": "yarn test && yarn build",
     "test": "cross-env CLAYPOT_DEV=true jest --runInBand",
-    "watch:build": "yarn build -- -w",
+    "watch:build": "yarn build -w",
     "watch:docs": "gitbook serve ./docs"
   },
   "author": "Cap32",
@@ -65,7 +65,7 @@
     "babel-cli": "^6.11.4",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.2.3",
-    "babel-jest": "^20.0.3",
+    "babel-jest": "^21.2.0",
     "babel-plugin-transform-es2015-destructuring": "^6.19.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-es2015-parameters": "^6.18.0",
@@ -88,7 +88,7 @@
     "git-directory-deploy": "^1.5.1",
     "gitbook-cli": "^2.3.2",
     "is-reachable": "^2.3.2",
-    "jest": "^20.0.4",
+    "jest": "^21.2.1",
     "kapok-js": "^0.8.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^1.7.1",
