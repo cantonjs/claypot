@@ -2,6 +2,7 @@
 import { start, stop } from './utils';
 import getPort from 'get-port';
 import fetch from 'node-fetch';
+import { version } from '../package.json';
 
 afterEach(stop);
 
@@ -30,8 +31,11 @@ describe('start server', () => {
 			},
 		})
 			.assertUntil(/started/)
-			.assert(/Local URL/)
-			.assert(/External URL/)
+			.assert(new RegExp(version))
+			.assert(/0 model created/)
+			.assert(/static directory/)
+			// .assert(/Local URL/)
+			// .assert(/External URL/)
 			.assertUntil(/ready/, {
 				async action() {
 					await fetch(`http://localhost:${port}`);
