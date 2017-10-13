@@ -105,6 +105,15 @@ ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+ajv@^5.2.3:
+  version "5.2.3"
+  resolved "http://registry.npm.taobao.org/ajv/download/ajv-5.2.3.tgz#c06f598778c44c6b161abafe3466b81ad1814ed2"
+  dependencies:
+    co "^4.6.0"
+    fast-deep-equal "^1.0.0"
+    json-schema-traverse "^0.3.0"
+    json-stable-stringify "^1.0.1"
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/align-text/download/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
@@ -1395,6 +1404,13 @@ cross-env@^4.0.0:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
 
+cross-spawn-async@^2.1.1:
+  version "2.2.5"
+  resolved "http://registry.npm.taobao.org/cross-spawn-async/download/cross-spawn-async-2.2.5.tgz#845ff0c0834a3ded9d160daca6d390906bb288cc"
+  dependencies:
+    lru-cache "^4.0.0"
+    which "^1.2.8"
+
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "http://registry.npm.taobao.org/cross-spawn/download/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -2009,6 +2025,14 @@ exec-sh@^0.2.0:
   dependencies:
     merge "^1.1.3"
 
+execa@^0.1.1:
+  version "0.1.1"
+  resolved "http://registry.npm.taobao.org/execa/download/execa-0.1.1.tgz#b09c2a9309bc0ef0501479472db3180f8d4c3edd"
+  dependencies:
+    cross-spawn-async "^2.1.1"
+    object-assign "^4.0.1"
+    strip-eof "^1.0.0"
+
 execa@^0.6.0:
   version "0.6.3"
   resolved "http://registry.npm.taobao.org/execa/download/execa-0.6.3.tgz#57b69a594f081759c69e5370f0d17b9cb11658fe"
@@ -2024,6 +2048,18 @@ execa@^0.6.0:
 execa@^0.7.0:
   version "0.7.0"
   resolved "http://registry.npm.taobao.org/execa/download/execa-0.7.0.tgz#944becd34cc41ee32a63a9faf27ad5a65fc59777"
+  dependencies:
+    cross-spawn "^5.0.1"
+    get-stream "^3.0.0"
+    is-stream "^1.1.0"
+    npm-run-path "^2.0.0"
+    p-finally "^1.0.0"
+    signal-exit "^3.0.0"
+    strip-eof "^1.0.0"
+
+execa@^0.8.0:
+  version "0.8.0"
+  resolved "http://registry.npm.taobao.org/execa/download/execa-0.8.0.tgz#d8d76bbc1b55217ed190fd6dd49d3c774ecfc8da"
   dependencies:
     cross-spawn "^5.0.1"
     get-stream "^3.0.0"
@@ -2074,6 +2110,10 @@ extglob@^0.3.1:
 extsprintf@1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/extsprintf/download/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
+
+fast-deep-equal@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/fast-deep-equal/download/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
 fast-levenshtein@~2.0.4:
   version "2.0.6"
@@ -2199,6 +2239,15 @@ firefox-location@^1.0.0:
 first-match@0.0.1:
   version "0.0.1"
   resolved "http://registry.npm.taobao.org/first-match/download/first-match-0.0.1.tgz#a60ec642700f0f437234ebb7ec3f382476e542fd"
+
+fkill@^5.1.0:
+  version "5.1.0"
+  resolved "http://registry.npm.taobao.org/fkill/download/fkill-5.1.0.tgz#d07c20a6bee698b02ae727fdcad61fbcdec198b8"
+  dependencies:
+    aggregate-error "^1.0.0"
+    arrify "^1.0.0"
+    execa "^0.8.0"
+    taskkill "^2.0.0"
 
 flat-cache@^1.2.1:
   version "1.2.2"
@@ -3634,6 +3683,10 @@ json-parse-helpfulerror@^1.0.2, json-parse-helpfulerror@^1.0.3:
   dependencies:
     jju "^1.1.0"
 
+json-schema-traverse@^0.3.0:
+  version "0.3.1"
+  resolved "http://registry.npm.taobao.org/json-schema-traverse/download/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "http://registry.npm.taobao.org/json-schema/download/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
@@ -3987,6 +4040,23 @@ log4js@^2.3.2:
     redis "^2.7.1"
     slack-node "~0.2.0"
 
+log4js@^2.3.4:
+  version "2.3.5"
+  resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.3.5.tgz#36a3db5ed5c684632fdb6724f0c753be30f2f886"
+  dependencies:
+    date-format "^1.1.0"
+    debug "^2.6.8"
+    semver "^5.3.0"
+    streamroller "^0.5.2"
+  optionalDependencies:
+    axios "^0.15.3"
+    hipchat-notifier "^1.1.0"
+    loggly "^1.1.0"
+    mailgun-js "^0.7.0"
+    nodemailer "^2.5.0"
+    redis "^2.7.1"
+    slack-node "~0.2.0"
+
 loggly@^1.1.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/loggly/download/loggly-1.1.1.tgz#0a0fc1d3fa3a5ec44fdc7b897beba2a4695cebee"
@@ -4023,19 +4093,19 @@ lru-cache@4.0.0:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
 
+lru-cache@^4.0.0, lru-cache@^4.1.1, lru-cache@~4.1.1:
+  version "4.1.1"
+  resolved "http://registry.npm.taobao.org/lru-cache/download/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
+  dependencies:
+    pseudomap "^1.0.2"
+    yallist "^2.1.2"
+
 lru-cache@^4.0.1, lru-cache@~4.0.1:
   version "4.0.2"
   resolved "http://registry.npm.taobao.org/lru-cache/download/lru-cache-4.0.2.tgz#1d17679c069cda5d040991a09dbc2c0db377e55e"
   dependencies:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
-
-lru-cache@^4.1.1, lru-cache@~4.1.1:
-  version "4.1.1"
-  resolved "http://registry.npm.taobao.org/lru-cache/download/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
-  dependencies:
-    pseudomap "^1.0.2"
-    yallist "^2.1.2"
 
 lru-cache@~2.6.5:
   version "2.6.5"
@@ -5101,14 +5171,16 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.39:
-  version "0.0.0-beta.39"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.39.tgz#055ef241226bf4044674aae7750e60d8506aedd6"
+pot-js@^0.0.0-beta.43:
+  version "0.0.0-beta.43"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.43.tgz#3a64c678916b7283d64808b7f5dd360c98d091f8"
   dependencies:
+    ajv "^5.2.3"
     chalk "^1.1.3"
     chokidar "^1.6.1"
     cli-table "^0.3.1"
     find-port-sync "^1.0.0"
+    fkill "^5.1.0"
     fs-extra "^3.0.1"
     globby "^6.1.0"
     home-or-tmp "^2.0.0"
@@ -5118,12 +5190,13 @@ pot-js@^0.0.0-beta.39:
     log-update "^2.1.0"
     node-ipc "^9.1.0"
     pidusage "^1.1.0"
-    pot-logger "^0.1.0"
+    pot-logger "^0.2.1"
     process-exists "^3.0.0"
     ps-list "^4.0.0"
     ps-tree "0.0.3"
     respawn "^2.5.0"
     serialize-javascript "^1.3.0"
+    signal-exit "^3.0.2"
     slice-file "^1.0.0"
     xtend "~2.1.1"
     yargs "^6.5.0"
@@ -5134,6 +5207,13 @@ pot-logger@^0.1.0:
   dependencies:
     chalk "^2.0.1"
     log4js "^2.3.2"
+
+pot-logger@^0.2.1:
+  version "0.2.1"
+  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.2.1.tgz#120b648026aebd5c1c5446c3ade44b7b58b1d07c"
+  dependencies:
+    chalk "^2.1.0"
+    log4js "^2.3.4"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -6124,6 +6204,15 @@ streamroller@^0.5.1:
     mkdirp "^0.5.1"
     readable-stream "^2.3.0"
 
+streamroller@^0.5.2:
+  version "0.5.2"
+  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.5.2.tgz#2bfe650c25b6a90ab25515a90bb5b9b94e398f0f"
+  dependencies:
+    date-format "^1.1.0"
+    debug "^2.6.8"
+    mkdirp "^0.5.1"
+    readable-stream "^2.3.0"
+
 string-length@^1.0.1:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/string-length/download/string-length-1.0.1.tgz#56970fb1c38558e9e70b728bf3de269ac45adfac"
@@ -6291,6 +6380,13 @@ tar@^2.0.0, tar@~2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
+
+taskkill@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/taskkill/download/taskkill-2.0.0.tgz#a354305702a964357033027aa949eaed5331b784"
+  dependencies:
+    arrify "^1.0.0"
+    execa "^0.1.1"
 
 tasklist@^3.1.0:
   version "3.1.0"
@@ -6673,6 +6769,12 @@ which-module@^1.0.0:
 which@1, which@^1.0.5, which@^1.2.12, which@^1.2.9, which@~1.2.11, which@~1.2.14:
   version "1.2.14"
   resolved "http://registry.npm.taobao.org/which/download/which-1.2.14.tgz#9a87c4378f03e827cecaf1acdf56c736c01c14e5"
+  dependencies:
+    isexe "^2.0.0"
+
+which@^1.2.8:
+  version "1.3.0"
+  resolved "http://registry.npm.taobao.org/which/download/which-1.3.0.tgz#ff04bdfc010ee547d780bec38e1ac1c2777d253a"
   dependencies:
     isexe "^2.0.0"
 
