@@ -5520,9 +5520,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.44:
-  version "0.0.0-beta.44"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.44.tgz#c129b9fd269602a6edb005d76839fcbebdcd630a"
+pot-js@^0.0.0-beta.45:
+  version "0.0.0-beta.45"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.45.tgz#a34e3fe53338dcb6da6de818f351d727f34c891d"
   dependencies:
     ajv "^5.2.3"
     chalk "^1.1.3"
