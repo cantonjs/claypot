@@ -31,7 +31,7 @@ describe('start server', () => {
 			},
 		})
 			.assertUntil(/started/)
-			.assert(new RegExp(version))
+			.assertUntil(new RegExp(version))
 			.assert(/0 model created/)
 			.assert(/static directory/)
 			// .assert(/Local URL/)
