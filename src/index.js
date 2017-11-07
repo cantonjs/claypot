@@ -10,9 +10,8 @@ export logger, {
 	overrideConsole, resetConsole, overrideConsoleInRuntime,
 } from 'pot-logger';
 export config, { isDev, isProd } from './config';
-export connectDbs from './dbs/connect';
-export cache, { cacheStores } from './cache';
-export models from './models';
+export cache, { cacheStores } from './dbs/cache';
+export models, { getModels, getModelKeys } from './dbs/models';
 
 export function createApp() {
 	return new Koa();

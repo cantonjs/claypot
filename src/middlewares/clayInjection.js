@@ -1,6 +1,6 @@
 
-import { getModels } from '../models';
-import { getCache, getCacheStores } from '../cache';
+import { getModels } from '../dbs/models';
+import { getCache, getCacheStores } from '../dbs/cache';
 
 export default (app) => app
 	.use(async (ctx, next) => {

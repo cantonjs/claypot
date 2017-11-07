@@ -1,6 +1,5 @@
-
-import { initCache } from '../cache';
-import { initModels } from '../models';
+import { initCache } from './cache';
+import { initModels } from './models';
 import Plugins from '../utils/plugins';
 import { createLogger } from 'pot-logger';
 import { isFunction } from 'lodash';
@@ -10,8 +9,8 @@ const dbs = {};
 const cacheCreators = [];
 const modelCreators = [];
 
-const register = function register(key, config = {}) {
-	dbs[key] = config;
+const register = function register(storeKey, config = {}) {
+	dbs[storeKey] = config;
 };
 
 export default async function init(appConfig) {
@@ -19,17 +18,17 @@ export default async function init(appConfig) {
 
 	await Plugins.parallel('registerDatabase', register);
 
-	Object.keys(dbsConfig).forEach((key) => {
+	Object.keys(dbsConfig).forEach((dbKey) => {
 
 		const {
 			store,
 			models = {},
 			cache,
 			...options,
-		} = dbsConfig[key];
+		} = dbsConfig[dbKey];
 
 		if (!store) {
-			logger.error(`database "${key}" requires "${store}" field`);
+			logger.error(`database "${dbKey}" requires "${store}" field`);
 			return;
 		}
 
@@ -60,7 +59,7 @@ export default async function init(appConfig) {
 				const { isDefault, ...other } = cache;
 				const method = isDefault ? 'unshift' : 'push';
 				cacheCreators[method]({
-					key,
+					dbKey,
 					createCache,
 					options: { ...options, ...other },
 				});
@@ -69,7 +68,7 @@ export default async function init(appConfig) {
 
 		if (isFunction(createModels)) {
 			modelCreators.push({
-				key,
+				dbKey,
 				createModels,
 				options: models,
 			});
