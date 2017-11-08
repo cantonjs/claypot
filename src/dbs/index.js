@@ -70,7 +70,7 @@ export default async function init(appConfig) {
 			modelCreators.push({
 				dbKey,
 				createModels,
-				options: models,
+				options: { ...options, ...models },
 			});
 		}
 	});
