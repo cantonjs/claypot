@@ -11,6 +11,7 @@ import qs from 'querystring';
 let thirdPartyServerPort;
 
 beforeEach(async () => {
+	jest.setTimeout(10000);
 	thirdPartyServerPort = await getPort();
 	await startThirdPartyServer(thirdPartyServerPort);
 });
