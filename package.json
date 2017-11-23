@@ -52,6 +52,7 @@
     "koa-static": "^4.0.1",
     "koa-weixin-jssdk": "^2.0.0",
     "lodash": "^4.17.2",
+    "ms": "^2.0.0",
     "output-host": "^3.1.1",
     "pot-js": "^0.0.0-beta.46",
     "pot-logger": "^0.3.0",

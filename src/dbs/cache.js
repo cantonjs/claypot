@@ -1,8 +1,9 @@
 
 import cacheManager from 'cache-manager';
-import { noop } from 'lodash';
+import { noop, isString } from 'lodash';
 import { createLogger } from 'pot-logger';
 import createProxyObject from '../utils/createProxyObject';
+import ms from 'ms';
 
 const logger = createLogger('cache', 'magentaBright');
 const stores = {};
@@ -10,6 +11,9 @@ let cache;
 
 export function initCache(creators) {
 	creators.forEach(({ dbKey, createCache, options }, index) => {
+		if (options && isString(options.ttl)) {
+			options.ttl = ~~(ms(options.ttl) / 1000);
+		}
 		const creater = createCache(options);
 		const cacheStore = cacheManager.caching(creater);
 		if (!index) { cache = cacheStore; }
