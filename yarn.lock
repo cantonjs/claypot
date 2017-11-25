@@ -4051,14 +4051,16 @@ jssha@^2.0.2:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/jssha/download/jssha-2.3.0.tgz#bb375f545c59f3ffda7c1e80fd0b3c0867586ab8"
 
-kapok-js@^0.8.0:
-  version "0.8.0"
-  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.8.0.tgz#835f2e23d673a7ad8002fd409347b4edf7531cef"
+kapok-js@^0.10.1:
+  version "0.10.1"
+  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.10.1.tgz#1debb318f7ed0f04352bda850d83f240b432e0f8"
   dependencies:
     call-me-maybe "^1.0.1"
     chalk "^2.1.0"
     figures "^2.0.0"
+    fkill "^5.1.0"
     lodash "^4.17.4"
+    signal-exit "^3.0.2"
     strip-ansi "^3.0.1"
 
 keygrip@~1.0.1:
@@ -5499,9 +5501,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.46:
-  version "0.0.0-beta.46"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.46.tgz#d75024f93cf13922ca2ff3a86632e487a7dac3cc"
+pot-js@^0.0.0-beta.47:
+  version "0.0.0-beta.47"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.47.tgz#12ef9918dec0e7bda8ad0bb310edecb2b0f4facf"
   dependencies:
     ajv "^5.2.3"
     chalk "^1.1.3"

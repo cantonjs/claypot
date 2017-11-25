@@ -23,11 +23,9 @@ describe('start server', () => {
 	test('dev server start', async () => {
 		const port = await getPort();
 		return start(['start', '--port', port], {
-			execOptions: {
-				env: {
-					...process.env,
-					NODE_ENV: 'development',
-				},
+			env: {
+				...process.env,
+				NODE_ENV: 'development',
 			},
 		})
 			.assertUntil(/started/)
