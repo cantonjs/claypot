@@ -3,6 +3,8 @@ import { start, stop } from './utils';
 import getPort from 'get-port';
 import fetch from 'node-fetch';
 
+beforeEach(() => { jest.setTimeout(10000); });
+
 afterEach(stop);
 
 describe('built-in middlewares', () => {

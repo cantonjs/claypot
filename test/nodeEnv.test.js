@@ -4,6 +4,8 @@ import getPort from 'get-port';
 import fetch from 'node-fetch';
 import { version } from '../package.json';
 
+beforeEach(() => { jest.setTimeout(10000); });
+
 afterEach(stop);
 
 describe('start server', () => {
