@@ -4,7 +4,7 @@ import getPort from 'get-port';
 import fetch from 'node-fetch';
 import { version } from '../package.json';
 
-beforeEach(() => { jest.setTimeout(10000); });
+beforeEach(() => { jest.setTimeout(20000); });
 
 afterEach(stop);
 
