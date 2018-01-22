@@ -1,107 +1,69 @@
-import importModules from '../utils/importModules';
 import { join } from 'path';
-import { forEach, isFunction, lowerFirst, lowerCase, upperFirst } from 'lodash';
 import { createLogger } from 'pot-logger';
+import Plugins from '../utils/plugins';
+import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
+import { lowerFirst, upperFirst } from 'lodash';
 
 const logger = createLogger('model', 'blueBright');
 const models = {};
-const modules = new Map();
-const keys = new Map();
-const uniqueKeys = new Set();
+const Models = new Map();
+
+const resolveModels = function resolveModels(baseDir, modelsDir) {
+	const dir = join(baseDir, modelsDir);
+	const vanillaModules = importModules(dir);
+
+	Object.keys(vanillaModules).forEach((key) => {
+		let Model = vanillaModules[key];
+		Model = Model.default || Model;
+
+		const { name, keyName } = Model;
+
+		const uniqueKey = lowerFirst(keyName || name || key);
+		Models.set(uniqueKey, Model);
+	});
+
+	return Models;
+};
+
+const createModels = function createModels() {
+	for (const [uniqueKey, Model] of Models) {
+		Object.keys(Model).forEach((key) => {
+			const method = Model[key];
+			const prop = key.startsWith('$') ? key : `$${key}`;
+			Model.prototype[prop] = method;
+		});
+		const value = new Model();
+
+		if (!models[uniqueKey]) {
+			Object.defineProperty(models, uniqueKey, { value, enumerable: true });
+		}
+
+		const uppperKey = upperFirst(uniqueKey);
+		if (uppperKey !== uniqueKey && !models[uppperKey]) {
+			Object.defineProperty(models, uppperKey, { value });
+		}
+
+		logger.trace(`"${uniqueKey}" created`);
+	}
+	const { size } = Models;
+	logger.debug(`${size} model${size > 1 ? 's' : ''} created`);
+};
 
 export async function initModels(dbs, appConfig) {
 	const { models: modelsDir, baseDir } = appConfig;
-	const vanillaModules = importModules(join(baseDir, modelsDir));
 
-	forEach(vanillaModules, (module, key) => {
-		module = module.default || module;
-
-		const { name, keyName } = module;
-
-		const uniqueKey = keyName || name || key;
-		modules.set(uniqueKey, module);
-		uniqueKeys.add(uniqueKey);
-
-		const lowerFirstKey = lowerFirst(key);
-		const lowerCaseKey = lowerCase(key);
-		const upperFirstKey = upperFirst(key);
-		if (!keys.has(key)) {
-			keys.set(key, uniqueKey);
-		}
-		if (!keys.has(lowerFirstKey)) {
-			keys.set(lowerFirstKey, uniqueKey);
-		}
-		if (!keys.has(lowerCaseKey)) {
-			keys.set(lowerCaseKey, uniqueKey);
-		}
-		if (!keys.has(upperFirstKey)) {
-			keys.set(upperFirstKey, uniqueKey);
-		}
-
-		if (name) {
-			const lowerFirstName = lowerFirst(name);
-			const lowerCaseName = lowerCase(name);
-			const upperFirstName = upperFirst(name);
-			if (!keys.has(name)) {
-				keys.set(name, uniqueKey);
-			}
-			if (!keys.has(lowerFirstName)) {
-				keys.set(lowerFirstName, uniqueKey);
-			}
-			if (!keys.has(lowerCaseName)) {
-				keys.set(lowerCaseName, uniqueKey);
-			}
-			if (!keys.has(upperFirstName)) {
-				keys.set(upperFirstName, uniqueKey);
-			}
-		}
-	});
-
-	const extendModel = (Model, key, extension) => {
-		if (!Model) {
-			return;
-		}
-		const prop = `$${key}`;
-		Model[prop] = extension;
-		if (isFunction(Model)) {
-			Model.prototype[prop] = extension;
-		}
-		return Model;
-	};
-
-	const modelKeys = Array.from(keys.keys());
-
-	dbs.forEach(({ dbKey, createModels, options }) => {
-		const extensions = createModels(modelKeys, dbKey, options);
-		forEach(extensions, (extension, key) => {
-			const uniqueKey = keys.get(key);
-			extendModel(modules.get(uniqueKey), dbKey, extension);
-		});
-	});
-
-	uniqueKeys.forEach((uniqueKey) => {
-		const Model = modules.get(uniqueKey);
-		if (Model) {
-			models[uniqueKey] = isFunction(Model) ? new Model() : Model;
-			logger.trace(`"${uniqueKey}" created`);
-		}
-	});
-
-	logger.debug(
-		`${uniqueKeys.size} model${uniqueKeys.size > 1 ? 's' : ''} created`,
-	);
-
-	modules.clear();
-	keys.clear();
+	resolveModels(baseDir, modelsDir);
+	await Plugins.sync('models', Models);
+	createModels();
 }
 
 export function getModelKeys() {
-	return uniqueKeys;
+	return [...Models.keys()];
 }
 
 export function getModels() {
 	return models;
 }
 
-export default createProxyObject(models, 'Models');
+export default createProxyObject(models, 'Models', { ignoreCase: true });
