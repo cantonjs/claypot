@@ -35,18 +35,6 @@ describe('built-in middlewares', () => {
 		expect(/^\d+ms/.test(responseTime)).toBe(true);
 	});
 
-	// test('should `httpLogger` work', async () => {
-	// 	const port = await getPort();
-	// 	return start(['start', '--port', port])
-	// 		.assertUntil(/ready/, {
-	// 			async action() {
-	// 				await fetch(`http://localhost:${port}/test`);
-	// 			},
-	// 		})
-	// 		.assert(/GET \/test/)
-	// 		.done();
-	// });
-
 	test('should `static` work', async () => {
 		server = await startPure({ ...baseConfig, static: 'fixtures/static' });
 		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
