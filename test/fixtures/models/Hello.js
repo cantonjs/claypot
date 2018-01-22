@@ -1,6 +1,6 @@
 export default class Hello {
 	say() {
-		return this.$wtf.getData();
+		return this.$test.foo();
 	}
 
 	test() {

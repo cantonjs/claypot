@@ -22,7 +22,7 @@ describe('models', () => {
 
 	test('get models', async () => {
 		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
-		expect(Object.keys(server.models).length).toBe(1);
+		expect(Object.keys(server.models)).toEqual(['Hello']);
 	});
 
 	test('run model method', async () => {
@@ -35,8 +35,9 @@ describe('models', () => {
 			...baseConfig,
 			models: 'fixtures/models',
 			plugins: ['fixtures/plugins/ExtendsModels'],
-			dbs: { test: { store: 'test' } },
+			dbs: { test: { store: 'fakeDb' } },
 		});
-		expect(Object.keys(server.models.Hello.$test)).toEqual(['ext']);
+		expect(Object.keys(server.models.Hello.$test)).toEqual(['foo']);
+		expect(server.models.Hello.$test.foo()).toBe('hello');
 	});
 });

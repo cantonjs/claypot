@@ -1,10 +1,10 @@
 export default class ExtendsModels {
 	registerDatabase(register) {
-		register('test', {
+		register('fakeDb', {
 			createModels(names) {
 				return names.reduce((models, name) => {
 					models[name] = {
-						ext() {
+						foo() {
 							return name;
 						},
 					};
