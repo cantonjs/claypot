@@ -19,13 +19,7 @@ export default async function init(appConfig) {
 	await Plugins.parallel('registerDatabase', register);
 
 	Object.keys(dbsConfig).forEach((dbKey) => {
-
-		const {
-			store,
-			models = {},
-			cache,
-			...options,
-		} = dbsConfig[dbKey];
+		const { store, models = {}, cache, ...options } = dbsConfig[dbKey];
 
 		if (!store) {
 			logger.error(`database "${dbKey}" requires "${store}" field`);

@@ -1,17 +1,18 @@
-
 import { isDev } from '../config';
 import { createLogger } from 'pot-logger';
 
 const logger = createLogger('http', (ref) => {
-	return !ref.daemon ? ref.defaultConsoleAppender : {
-		type: 'dateFile',
-		filename: 'access',
-		pattern: '-dd.log',
-		layout: {
-			type: 'pattern',
-			pattern: '[%d{ISO8601}] %m',
-		},
-	};
+	return !ref.daemon ?
+		ref.defaultConsoleAppender :
+		{
+			type: 'dateFile',
+			filename: 'access',
+			pattern: '-dd.log',
+			layout: {
+				type: 'pattern',
+				pattern: '[%d{ISO8601}] %m',
+			},
+		};
 });
 
 export default (app) => {
@@ -35,7 +36,7 @@ export default (app) => {
 
 		/* eslint-disable max-len */
 		logger.info(
-			`${method} ${url} ${status} ${HTTPVersion} ${responseTime} ${referer} "${userAgent}" ${remoteAddress}`
+			`${method} ${url} ${status} ${HTTPVersion} ${responseTime} ${referer} "${userAgent}" ${remoteAddress}`,
 		);
 	});
 };

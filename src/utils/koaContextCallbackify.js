@@ -1,4 +1,3 @@
-
 import { noop } from 'lodash';
 
 const _callbackified = Symbol('callbackified');
@@ -6,7 +5,9 @@ const _callbackified = Symbol('callbackified');
 const returnNoop = () => noop;
 
 export default function koaContextCallbackify(ctx) {
-	if (ctx[_callbackified]) { return ctx; }
+	if (ctx[_callbackified]) {
+		return ctx;
+	}
 
 	ctx[_callbackified] = true;
 	ctx.respond = false;

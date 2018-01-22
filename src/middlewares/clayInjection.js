@@ -1,9 +1,8 @@
-
 import { getModels } from '../dbs/models';
 import { getCache, getCacheStores } from '../dbs/cache';
 
-export default (app) => app
-	.use(async (ctx, next) => {
+export default (app) =>
+	app.use(async (ctx, next) => {
 		const clay = {};
 
 		clay.cache = getCache(); // inject cache
@@ -12,5 +11,4 @@ export default (app) => app
 
 		ctx.clay = clay;
 		await next();
-	})
-;
+	});

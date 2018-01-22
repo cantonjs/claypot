@@ -1,4 +1,3 @@
-
 import findPortSync from 'find-port-sync';
 import { basename, resolve } from 'path';
 import { isObject, isUndefined, defaults } from 'lodash';
@@ -55,7 +54,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 	config.baseDir = resolve(config.cwd, config.baseDir);
 
 	if (ssl) {
-		config.ssl = defaults((isObject(ssl) ? ssl : {}), {
+		config.ssl = defaults(isObject(ssl) ? ssl : {}, {
 			enable: true,
 			port: port + 1,
 		});
@@ -77,7 +76,9 @@ export default function applyDefaults(config, userConfig, isProd) {
 			port: enabledSSL ? ssl.port : config.port,
 			protocol: enabledSSL ? 'https' : 'http',
 		};
-		if (config.host) { defaultOutputHostConfig.host = config.host; }
+		if (config.host) {
+			defaultOutputHostConfig.host = config.host;
+		}
 		defaults(config.outputHost, defaultOutputHostConfig);
 	}
 

@@ -1,4 +1,3 @@
-
 import applyDefaults from './defaults';
 import importConfigFile from './importConfigFile';
 import validate from './validate';
@@ -20,10 +19,7 @@ export function initConfig(userConfig) {
 }
 
 export async function initCliConfig(argv) {
-	const {
-		force, configFile, configWalk,
-		...restArgs,
-	} = argv;
+	const { force, configFile, configWalk, ...restArgs } = argv;
 
 	let claypotFileConfig = {};
 
@@ -39,13 +35,11 @@ export async function initCliConfig(argv) {
 
 	stripArgs(restArgs);
 
-	const isProduction = !!(
-		restArgs.production !== undefined ? restArgs.production :
-			(claypotFileConfig.production !== undefined ?
-				claypotFileConfig.production : isProd
-			)
-		)
-	;
+	const isProduction = !!(restArgs.production !== undefined ?
+		restArgs.production :
+		claypotFileConfig.production !== undefined ?
+			claypotFileConfig.production :
+			isProd);
 
 	applyDefaults(config, defaults(restArgs, claypotFileConfig), isProduction);
 	validate(config);

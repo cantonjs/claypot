@@ -1,4 +1,3 @@
-
 // TODO: deprecated
 
 import weixinJSSDK from 'koa-weixin-jssdk';
@@ -28,7 +27,7 @@ export default class WechatJSSDK {
 					return ticketResp;
 				}
 				const json = await Ask.request(
-					`${ticketURL}?access_token=${fetchToken}`
+					`${ticketURL}?access_token=${fetchToken}`,
 				);
 				await cache.set(WX_TICKET_CACHE_KEY, json, json.expires_in / 1000);
 				return json;

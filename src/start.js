@@ -1,4 +1,3 @@
-
 import { start as startPot } from 'pot-js';
 import { resolve } from 'path';
 import { initConfig, initCliConfig } from './config';

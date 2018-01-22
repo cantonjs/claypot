@@ -1,4 +1,3 @@
-
 import koaStatic from 'koa-static';
 import config, { isProd } from '../config';
 import { isString } from 'lodash';
@@ -24,4 +23,4 @@ export default function serveStatic(app, options) {
 		gzip: isProd,
 		...other,
 	});
-};
+}

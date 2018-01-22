@@ -1,4 +1,3 @@
-
 export default function createMiddlewarePlugin(middleware) {
 	return class MiddlewarePlugin {
 		constructor(options) {

@@ -1,10 +1,6 @@
-
 import importModules from 'import-modules';
 import { join } from 'path';
-import {
-	forEach, isFunction,
-	lowerFirst, lowerCase, upperFirst,
-} from 'lodash';
+import { forEach, isFunction, lowerFirst, lowerCase, upperFirst } from 'lodash';
 import { createLogger } from 'pot-logger';
 import createProxyObject from '../utils/createProxyObject';
 
@@ -30,27 +26,47 @@ export async function initModels(dbs, appConfig) {
 		const lowerFirstKey = lowerFirst(key);
 		const lowerCaseKey = lowerCase(key);
 		const upperFirstKey = upperFirst(key);
-		if (!keys.has(key)) { keys.set(key, uniqueKey); }
-		if (!keys.has(lowerFirstKey)) { keys.set(lowerFirstKey, uniqueKey); }
-		if (!keys.has(lowerCaseKey)) { keys.set(lowerCaseKey, uniqueKey); }
-		if (!keys.has(upperFirstKey)) { keys.set(upperFirstKey, uniqueKey); }
+		if (!keys.has(key)) {
+			keys.set(key, uniqueKey);
+		}
+		if (!keys.has(lowerFirstKey)) {
+			keys.set(lowerFirstKey, uniqueKey);
+		}
+		if (!keys.has(lowerCaseKey)) {
+			keys.set(lowerCaseKey, uniqueKey);
+		}
+		if (!keys.has(upperFirstKey)) {
+			keys.set(upperFirstKey, uniqueKey);
+		}
 
 		if (name) {
 			const lowerFirstName = lowerFirst(name);
 			const lowerCaseName = lowerCase(name);
 			const upperFirstName = upperFirst(name);
-			if (!keys.has(name)) { keys.set(name, uniqueKey); }
-			if (!keys.has(lowerFirstName)) { keys.set(lowerFirstName, uniqueKey); }
-			if (!keys.has(lowerCaseName)) { keys.set(lowerCaseName, uniqueKey); }
-			if (!keys.has(upperFirstName)) { keys.set(upperFirstName, uniqueKey); }
+			if (!keys.has(name)) {
+				keys.set(name, uniqueKey);
+			}
+			if (!keys.has(lowerFirstName)) {
+				keys.set(lowerFirstName, uniqueKey);
+			}
+			if (!keys.has(lowerCaseName)) {
+				keys.set(lowerCaseName, uniqueKey);
+			}
+			if (!keys.has(upperFirstName)) {
+				keys.set(upperFirstName, uniqueKey);
+			}
 		}
 	});
 
 	const extendModel = (Model, key, extension) => {
-		if (!Model) { return; }
+		if (!Model) {
+			return;
+		}
 		const prop = `$${key}`;
 		Model[prop] = extension;
-		if (isFunction(Model)) { Model.prototype[prop] = extension; }
+		if (isFunction(Model)) {
+			Model.prototype[prop] = extension;
+		}
 		return Model;
 	};
 

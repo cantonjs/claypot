@@ -1,4 +1,3 @@
-
 import http from 'http';
 import https from 'https';
 import Koa from 'koa';
@@ -15,7 +14,7 @@ import { name, version } from '../package.json';
 
 const serverLogger = createLogger('server', 'yellow');
 
-(async function main() {
+const startClaypotApp = async function startClaypotApp() {
 	try {
 		const config = initAppConfig(process.env.CLAYPOT_CONFIG);
 		const { host, port, baseDir, ssl, production } = config;
@@ -59,12 +58,12 @@ const serverLogger = createLogger('server', 'yellow');
 			const { port: httpsPort, key, cert } = ssl;
 			const options = getCertOption(baseDir, key, cert);
 			handleError(
-				http.createServer(app.callback()).listen(...createListenArgs(port))
+				http.createServer(app.callback()).listen(...createListenArgs(port)),
 			);
 			handleError(
 				https
 					.createServer(options, app.callback())
-					.listen(...createListenArgs(httpsPort))
+					.listen(...createListenArgs(httpsPort)),
 			);
 			serverLogger.trace('HTTPS port', chalk.magenta(httpsPort));
 		}
@@ -73,6 +72,12 @@ const serverLogger = createLogger('server', 'yellow');
 		}
 	}
 	catch (err) {
-		serverLogger.fatal(`failed to start server:`, err);
+		serverLogger.fatal('failed to start server:', err);
 	}
-}());
+};
+
+if (process.env.CLAYPOT_NAKED !== 'YES') {
+	startClaypotApp();
+}
+
+export default startClaypotApp;

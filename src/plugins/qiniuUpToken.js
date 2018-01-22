@@ -1,4 +1,3 @@
-
 import Koa from 'koa';
 import qiniu from 'qiniu';
 

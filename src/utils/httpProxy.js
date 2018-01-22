@@ -1,4 +1,3 @@
-
 import EventEmitter from 'events';
 import httpProxy from 'http-proxy';
 import { isFunction, isString, isNumber, isObject } from 'lodash';
@@ -28,17 +27,21 @@ const MayHasBodyMethods = ['POST', 'PUT', 'PATCH', 'DELETE'];
 const _originalUrl = Symbol('originalUrl');
 
 export default (options = {}, handleProxyContext) => {
-	if (isString(options)) { options = { target: options }; }
+	if (isString(options)) {
+		options = { target: options };
+	}
 
 	const {
 		enable = true,
 		pathname,
 		query: queryModifier,
 		contentType,
-		...opts,
+		...opts
 	} = options;
 
-	if (!enable) { return; }
+	if (!enable) {
+		return;
+	}
 
 	const { ssl, target, forward } = opts;
 
@@ -57,12 +60,20 @@ export default (options = {}, handleProxyContext) => {
 	);
 
 	let host;
-	if (isString(dest)) { host = url.parse(dest).host; }
-	else { host = dest.host; }
+	if (isString(dest)) {
+		host = url.parse(dest).host;
+	}
+	else {
+		host = dest.host;
+	}
 
 	let protocol = dest.protocol;
-	if (isString(dest)) { protocol = url.parse(dest).protocol; }
-	if (!protocol) { protocol = 'http'; }
+	if (isString(dest)) {
+		protocol = url.parse(dest).protocol;
+	}
+	if (!protocol) {
+		protocol = 'http';
+	}
 
 	const done = (proxyContext, req, res) => {
 		if (!res.headersSent && res._getResponseTime) {
@@ -70,7 +81,9 @@ export default (options = {}, handleProxyContext) => {
 			res.setHeader(key, value);
 		}
 
-		if (proxyContext.done) { proxyContext.done(); }
+		if (proxyContext.done) {
+			proxyContext.done();
+		}
 		requests.delete(res);
 	};
 
@@ -141,7 +154,9 @@ export default (options = {}, handleProxyContext) => {
 
 	const modifyQuery = (ctx) => {
 		ctx.req[_originalUrl] = ctx.originalUrl;
-		if (!queryModifier) { return; }
+		if (!queryModifier) {
+			return;
+		}
 
 		const urlObject = url.parse(ctx.req.url);
 		let query = qs.parse(urlObject.query);
@@ -160,23 +175,33 @@ export default (options = {}, handleProxyContext) => {
 			}
 		}
 
-		if (isObject(query)) { query = qs.stringify(query); }
+		if (isObject(query)) {
+			query = qs.stringify(query);
+		}
 
 		Reflect.deleteProperty(urlObject, 'search');
 		Reflect.deleteProperty(urlObject, 'query');
 		urlObject.query = query;
-		if (query) { urlObject.search = `?${query}`; }
+		if (query) {
+			urlObject.search = `?${query}`;
+		}
 
 		ctx.req.url = url.format(urlObject);
 	};
 
 	const maybeTransformBody = async (ctx) => {
-		if (!isFormContent && !isJsonContent) { return; }
+		if (!isFormContent && !isJsonContent) {
+			return;
+		}
 
 		const originContentType = ctx.get('Content-Type');
-		if (contentType === originContentType) { return; }
+		if (contentType === originContentType) {
+			return;
+		}
 
-		if (!MayHasBodyMethods.includes(ctx.method.toUpperCase())) { return; }
+		if (!MayHasBodyMethods.includes(ctx.method.toUpperCase())) {
+			return;
+		}
 
 		let body = await getBody(ctx.req);
 
@@ -191,7 +216,6 @@ export default (options = {}, handleProxyContext) => {
 	};
 
 	const proxyMiddleware = async (ctx) => {
-
 		await maybeTransformBody(ctx);
 
 		modifyQuery(ctx);

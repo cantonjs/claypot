@@ -1,4 +1,3 @@
-
 import { list as listPot } from 'pot-js';
 import workspace from './utils/workspace';
 
@@ -7,7 +6,14 @@ export default async function list(options = {}) {
 		...options,
 		workspace,
 		head: [
-			'Name', 'Status', 'Crashes', 'Memory', 'CPU', 'Started', 'Port', 'Pid',
+			'Name',
+			'Status',
+			'Crashes',
+			'Memory',
+			'CPU',
+			'Started',
+			'Port',
+			'Pid',
 		],
 		setTable(info) {
 			return [

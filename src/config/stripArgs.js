@@ -1,10 +1,4 @@
-
-const blackList = [
-	'$0',
-	'dev',
-	'help',
-	'version',
-];
+const blackList = ['$0', 'dev', 'help', 'version'];
 
 export default function stripArgs(args) {
 	Object.keys(args).forEach((key) => {

@@ -1,4 +1,3 @@
-
 import config from '../config';
 import { createLogger } from 'pot-logger';
 import importFile from 'import-file';
@@ -34,9 +33,12 @@ const perform = function perform(app, middlewares) {
 			}
 
 			let options = isBoolean(value) ? {} : value;
-			if (options === 'true') { options = {}; }
+			if (options === 'true') {
+				options = {};
+			}
 
-			if ((Array.isArray(options) && !options.length) ||
+			if (
+				(Array.isArray(options) && !options.length) ||
 				(!isUndefined(options.enable) && !options.enable)
 			) {
 				returnValue.isEnabled = false;
@@ -65,13 +67,14 @@ const perform = function perform(app, middlewares) {
 			catch (err) {
 				middlewareLogger.error(err);
 			}
-		})
-	;
+		});
 };
 
 export default function useMiddlewares(app) {
 	let middlewares = [];
-	if (Array.isArray(config.middlewares)) { middlewares = config.middlewares; }
+	if (Array.isArray(config.middlewares)) {
+		middlewares = config.middlewares;
+	}
 	else {
 		middlewares = middlewaresWhiteList.map((name) => ({
 			name,

@@ -1,4 +1,3 @@
-
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
@@ -12,8 +11,7 @@ function init(config) {
 		logger.trace(`"${PluginModule.name}" found`);
 	};
 
-	plugins = config
-		.plugins
+	plugins = config.plugins
 		.map((plugin) => {
 			if (!plugin) {
 				return { enable: false };
@@ -60,13 +58,10 @@ function init(config) {
 				logger.error(err);
 			}
 		})
-		.filter(Boolean)
-	;
+		.filter(Boolean);
 }
 
-const findCurrentPlugins = (phase) =>
-	plugins.filter((plugin) => plugin[phase])
-;
+const findCurrentPlugins = (phase) => plugins.filter((plugin) => plugin[phase]);
 
 const traceApplied = (plugin, phase) => {
 	logger.trace(`"${plugin.constructor.name}" phase "${phase}" applied.`);
@@ -87,9 +82,11 @@ export default {
 		}
 	},
 	async parallel(phase, ...args) {
-		return Promise.all(findCurrentPlugins(phase).map(async (plugin) => {
-			await plugin[phase](...args);
-			traceApplied(plugin, phase);
-		}));
+		return Promise.all(
+			findCurrentPlugins(phase).map(async (plugin) => {
+				await plugin[phase](...args);
+				traceApplied(plugin, phase);
+			}),
+		);
 	},
 };

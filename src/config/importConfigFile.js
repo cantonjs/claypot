@@ -1,4 +1,3 @@
-
 import importFile from 'import-file';
 import { isAbsolute } from 'path';
 

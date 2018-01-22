@@ -1,4 +1,3 @@
-
 import Plugins from '../utils/plugins';
 import httpProxy from '../utils/httpProxy';
 

@@ -1,9 +1,17 @@
-
 import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
 import { isString } from 'lodash';
 import { deprecatedProp as deprecated } from '../utils/deprecated';
 import {
-	string, number, bool, object, func, array, arrayOf, oneOfType, oneOf, shape,
+	string,
+	number,
+	bool,
+	object,
+	func,
+	array,
+	arrayOf,
+	oneOfType,
+	oneOf,
+	shape,
 	checkPropTypes,
 } from 'prop-types';
 
@@ -46,11 +54,7 @@ const propTypes = {
 	plugins: arrayOf(
 		oneOfType([
 			shape({
-				module: oneOfType([
-					string,
-					object,
-					func,
-				]).isRequired,
+				module: oneOfType([string, object, func]).isRequired,
 				options: object,
 				enable: bool,
 			}),
@@ -76,10 +80,7 @@ const propTypes = {
 		bool,
 		shape({
 			enable: bool,
-			dirs: oneOfType([
-				string,
-				arrayOf(string),
-			]),
+			dirs: oneOfType([string, arrayOf(string)]),
 			ignoreDotFiles: bool,
 			ignoreNodeModulesDir: bool,
 		}),
@@ -103,11 +104,7 @@ export default function validate(config) {
 		);
 		if (!config.daemon) {
 			logger.warn('i.e.\n');
-			console.warn(
-				'"configs":',
-				JSON.stringify(unknownOptions, null, 2),
-				'\n'
-			);
+			console.warn('"configs":', JSON.stringify(unknownOptions, null, 2), '\n');
 		}
 	}
 
@@ -117,7 +114,7 @@ export default function validate(config) {
 		},
 		logger,
 		([msg, ...args]) => [
-			(isString(msg) ? msg.replace('Warning: ', '') : msg),
+			isString(msg) ? msg.replace('Warning: ', '') : msg,
 			...args,
 		],
 	);

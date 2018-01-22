@@ -1,4 +1,3 @@
-
 import yargs from 'yargs';
 import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
@@ -43,9 +42,17 @@ yargs
 					},
 					l: {
 						alias: 'logLevel',
-						desc: 'Defining log level. Defaults to "INFO" in `production` mode, "DEBUG" in `development` mode',
+						desc:
+							'Defining log level. Defaults to "INFO" in `production` mode, "DEBUG" in `development` mode',
 						choices: [
-							'ALL', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL', 'OFF',
+							'ALL',
+							'TRACE',
+							'DEBUG',
+							'INFO',
+							'WARN',
+							'ERROR',
+							'FATAL',
+							'OFF',
 						],
 					},
 					w: {
@@ -69,7 +76,8 @@ yargs
 						type: 'bool',
 					},
 					baseDir: {
-						desc: 'The base directory for resolving modules or directories. Defaults to the current working directory',
+						desc:
+							'The base directory for resolving modules or directories. Defaults to the current working directory',
 						type: 'string',
 					},
 					cwd: {
@@ -92,7 +100,8 @@ yargs
 						desc: 'Defining proxies',
 					},
 					helmet: {
-						desc: 'Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.',
+						desc:
+							'Enable helmet for safety. Defaults to `true` in `production` mode, `false` in `development` mode.',
 						type: 'bool',
 					},
 					historyAPIFallback: {
@@ -100,7 +109,8 @@ yargs
 						type: 'bool',
 					},
 					maxRestarts: {
-						desc: 'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
+						desc:
+							'Defining max restarts if crashed. Defaults to `-1` (`-1` equals to `Infinity`) in `production` mode, `0` in `development` mode',
 						type: 'number',
 					},
 					inspect: {
@@ -108,12 +118,11 @@ yargs
 						type: 'string',
 					},
 					outputHost: {
-						desc: 'Output host info for development. Defaults to `true` in `development` mode',
+						desc:
+							'Output host info for development. Defaults to `true` in `development` mode',
 						type: 'bool',
 					},
-				})
-				.argv
-			;
+				}).argv;
 		},
 		async handler(argv) {
 			cliStart(argv).catch(logger.error);
@@ -131,9 +140,7 @@ yargs
 						desc: 'Stop without confirming',
 						type: 'bool',
 					},
-				})
-				.argv
-			;
+				}).argv;
 		},
 		handler(argv) {
 			stop(argv).catch(logger.error);
@@ -170,9 +177,7 @@ yargs
 						type: 'number',
 						default: 200,
 					},
-				})
-				.argv
-			;
+				}).argv;
 		},
 		handler(argv) {
 			log(argv).catch(logger.error);
@@ -189,6 +194,4 @@ yargs
 	.alias('h', 'help')
 	.help()
 	.version(version)
-	.epilogue(gradient.mind('Powered by cantonjs'))
-	.argv
-;
+	.epilogue(gradient.mind('Powered by cantonjs')).argv;

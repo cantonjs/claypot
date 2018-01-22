@@ -1,4 +1,3 @@
-
 import fav from 'koa-favicon';
 import config from '../config';
 import { resolve } from 'path';
@@ -9,7 +8,7 @@ const defaults = '../../assets/favicon.ico';
 export default (app) => {
 	const { favicon, baseDir } = config;
 	const icon = isString(favicon) ?
-		resolve(baseDir, favicon) : resolve(__dirname, defaults)
-	;
+		resolve(baseDir, favicon) :
+		resolve(__dirname, defaults);
 	return app.use(fav(icon));
 };

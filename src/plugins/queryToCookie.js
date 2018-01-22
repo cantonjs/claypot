@@ -1,4 +1,3 @@
-
 // TODO: deprecated
 
 import url from 'url';
@@ -12,26 +11,19 @@ export default class QueryToCookie {
 
 	middleware(parent) {
 		const options = this._options;
-		const {
-			keys = [
-				'access_token',
-			],
-		} = options;
+		const { keys = ['access_token'] } = options;
 
 		const middleware = async (ctx, next) => {
-			const {
-				request: { query, originalUrl },
-				cookies,
-			} = ctx;
+			const { request: { query, originalUrl }, cookies } = ctx;
 
-			const { matchedKeys, map } = keys
-				.filter((key) => query[key])
-				.reduce((result, key) => {
+			const { matchedKeys, map } = keys.filter((key) => query[key]).reduce(
+				(result, key) => {
 					result.map = { ...result.map, [key]: query[key] };
 					result.matchedKeys.push(key);
 					return result;
-				}, { map: {}, matchedKeys: [] })
-			;
+				},
+				{ map: {}, matchedKeys: [] },
+			);
 
 			if (!matchedKeys.length) {
 				return next();

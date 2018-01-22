@@ -1,4 +1,3 @@
-
 import { stop as stopPot } from 'pot-js';
 import workspace from './utils/workspace';
 

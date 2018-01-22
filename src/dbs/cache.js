@@ -1,4 +1,3 @@
-
 import cacheManager from 'cache-manager';
 import { noop, isString } from 'lodash';
 import { createLogger } from 'pot-logger';
@@ -16,7 +15,9 @@ export function initCache(creators) {
 		}
 		const creater = createCache(options);
 		const cacheStore = cacheManager.caching(creater);
-		if (!index) { cache = cacheStore; }
+		if (!index) {
+			cache = cacheStore;
+		}
 		stores[dbKey] = cacheStore;
 		logger.trace(`"${dbKey}" created`);
 	});
@@ -24,20 +25,23 @@ export function initCache(creators) {
 
 export function getCache() {
 	return cache;
-};
+}
 
 export function getCacheStores() {
 	return stores;
 }
 
-export default new Proxy({}, {
-	get(target, key) {
-		if (!cache) {
-			logger.error('cache is NOT ready');
-			return noop;
-		}
-		return cache[key];
-	}
-});
+export default new Proxy(
+	{},
+	{
+		get(target, key) {
+			if (!cache) {
+				logger.error('cache is NOT ready');
+				return noop;
+			}
+			return cache[key];
+		},
+	},
+);
 
 export const cacheStores = createProxyObject(stores, 'CacheStores');
