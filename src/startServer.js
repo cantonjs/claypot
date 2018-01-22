@@ -20,6 +20,8 @@ export default async function startServer(config) {
 
 	Plugins.init(config);
 
+	await Plugins.sequence('bootstrap', config);
+
 	await initDbs(config);
 
 	const app = new Koa();
