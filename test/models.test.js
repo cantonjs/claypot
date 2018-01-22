@@ -22,12 +22,22 @@ describe('models', () => {
 
 	test('get models', async () => {
 		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
-		expect(Object.keys(server.models)).toEqual(['Hello']);
+		expect(Object.keys(server.models)).toEqual(['hello']);
 	});
 
 	test('run model method', async () => {
 		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
-		expect(server.models.Hello.test()).toBe(true);
+		expect(server.models.hello.test()).toBe(true);
+	});
+
+	test('get model by upper first', async () => {
+		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
+		expect(server.models.Hello).toBe(server.models.hello);
+	});
+
+	test('run model method', async () => {
+		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
+		expect(server.models.hello.test()).toBe(true);
 	});
 
 	test('extends model', async () => {
@@ -35,9 +45,7 @@ describe('models', () => {
 			...baseConfig,
 			models: 'fixtures/models',
 			plugins: ['fixtures/plugins/ExtendsModels'],
-			dbs: { test: { store: 'fakeDb' } },
 		});
-		expect(Object.keys(server.models.Hello.$test)).toEqual(['foo']);
-		expect(server.models.Hello.$test.foo()).toBe('hello');
+		expect(server.models.hello.$test.foo()).toBe('hello');
 	});
 });
