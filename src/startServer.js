@@ -6,7 +6,7 @@ import { setLoggers, logger } from 'pot-logger';
 import mount from 'koa-mount';
 import Plugins from './utils/plugins';
 import getCertOption from './utils/getCertOption';
-import listenToServer from './utils/listenToServer';
+import { listenToServer, closeServer } from './utils/listenToServer';
 import initDbs from './dbs';
 import { name, version } from '../package.json';
 
@@ -32,26 +32,21 @@ export default async function startServer(config) {
 
 	Plugins.sync('serverWillStart', app);
 
-	const servers = [];
+	const servers = [http.createServer(app.callback())];
+	const listens = [listenToServer(servers[0], port, host)];
 
 	if (ssl && ssl.enable !== false) {
 		const { port: httpsPort, key, cert } = ssl;
 		const options = getCertOption(baseDir, key, cert);
-
-		servers.push({ app: http.createServer(app.callback()), port });
-		servers.push({
-			app: https.createServer(options, app.callback()),
-			port: httpsPort,
-		});
-	}
-	else {
-		servers.push({ app, port });
+		const httpsServer = https.createServer(options, app.callback());
+		servers.push(httpsServer);
+		listens.push(listenToServer(httpsServer, httpsPort, host));
 	}
 
-	await Promise.all(
-		servers.map(({ app, port }) => listenToServer(app, port, host)),
-	);
+	await Promise.all(listens);
 	Plugins.sync('serverDidStart', app);
+
+	app.close = () => Promise.all(servers.map(closeServer));
 
 	return app;
 }

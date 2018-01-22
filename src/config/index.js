@@ -12,10 +12,10 @@ export const isProd = !isDev;
 
 export const defaultConfigFile = 'Claypotfile.js';
 
-export function initConfig(userConfig) {
-	applyDefaults(config, userConfig, isProd);
-	validate(config);
-	return config;
+export function initConfig(userConfig, target = config) {
+	applyDefaults(target, userConfig, isProd);
+	validate(target);
+	return target;
 }
 
 export async function initCliConfig(argv) {
@@ -52,6 +52,11 @@ export async function initCliConfig(argv) {
 
 export function initProcessConfig(configString) {
 	return Object.assign(config, JSON.parse(configString));
+}
+
+export function resetConfig() {
+	Object.keys(config).forEach((key) => Reflect.deleteProperty(config, key));
+	return config;
 }
 
 export default config;
