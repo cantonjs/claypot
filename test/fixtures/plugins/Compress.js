@@ -1,4 +1,3 @@
-
 import crypto from 'crypto';
 
 export default class HttpError {

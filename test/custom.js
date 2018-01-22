@@ -1,4 +1,3 @@
-
 import { createLogger } from '../src';
 
 export default class CustomServer {
@@ -13,11 +12,11 @@ export default class CustomServer {
 					models[name] = {
 						getData() {
 							return name;
-						}
+						},
 					};
 					return models;
 				}, {});
-			}
+			},
 		});
 	}
 

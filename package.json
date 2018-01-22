@@ -18,7 +18,7 @@
     "prebuild": "rimraf lib",
     "build": "babel src -d lib",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
-    "format": "prettier-eslint --write \"src/**/*.js\"",
+    "format": "prettier-eslint --write \"+(src|test)/**/*.js\"",
     "docs": "run-s docs:*",
     "docs:build": "gitbook build ./docs",
     "docs:deploy": "git-directory-deploy --directory ./docs/_book",

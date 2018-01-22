@@ -1,4 +1,3 @@
-
 import { start, stop } from './utils';
 import {
 	startThirdPartyServer,
@@ -26,8 +25,10 @@ describe('proxy middleware', () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./', `http://localhost:${thirdPartyServerPort}`,
+			'--port',
+			port,
+			'--proxy./',
+			`http://localhost:${thirdPartyServerPort}`,
 		];
 
 		await start(command)
@@ -37,18 +38,19 @@ describe('proxy middleware', () => {
 					const res = await fetch(`http://localhost:${port}/hello/`);
 					const json = await res.json();
 					expect(json).toEqual({ hello: 'hello' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
 
 	test('proxy server with a pathname', async () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./', `http://localhost:${thirdPartyServerPort}/hello`,
+			'--port',
+			port,
+			'--proxy./',
+			`http://localhost:${thirdPartyServerPort}/hello`,
 		];
 
 		await start(command)
@@ -58,19 +60,21 @@ describe('proxy middleware', () => {
 					const res = await fetch(`http://localhost:${port}`);
 					const json = await res.json();
 					expect(json).toEqual({ hello: 'hello' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
 
 	test('add multiple proxy servers', async () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./a', `http://localhost:${thirdPartyServerPort}/hello`,
-			'--proxy./b', `http://localhost:${thirdPartyServerPort}/world`,
+			'--port',
+			port,
+			'--proxy./a',
+			`http://localhost:${thirdPartyServerPort}/hello`,
+			'--proxy./b',
+			`http://localhost:${thirdPartyServerPort}/world`,
 		];
 
 		await start(command)
@@ -83,19 +87,21 @@ describe('proxy middleware', () => {
 					const resB = await fetch(`http://localhost:${port}/b`);
 					const jsonB = await resB.json();
 					expect(jsonB).toEqual({ world: 'world' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
 
 	test('proxy server with adding queries', async () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./.target', `http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.query.hello', 'world',
+			'--port',
+			port,
+			'--proxy./.target',
+			`http://localhost:${thirdPartyServerPort}`,
+			'--proxy./.query.hello',
+			'world',
 		];
 
 		await start(command)
@@ -105,19 +111,21 @@ describe('proxy middleware', () => {
 					const res = await fetch(`http://localhost:${port}/query`);
 					const json = await res.json();
 					expect(json).toEqual({ hello: 'world' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
 
 	test('proxy server with application/x-www-form-urlencoded', async () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./.target', `http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.contentType', 'application/x-www-form-urlencoded',
+			'--port',
+			port,
+			'--proxy./.target',
+			`http://localhost:${thirdPartyServerPort}`,
+			'--proxy./.contentType',
+			'application/x-www-form-urlencoded',
 		];
 
 		await start(command)
@@ -130,19 +138,21 @@ describe('proxy middleware', () => {
 					});
 					const json = await res.json();
 					expect(json).toEqual({ hello: 'world' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
 
 	test('proxy server with application/json', async () => {
 		const port = await getPort();
 		const command = [
 			'start',
-			'--port', port,
-			'--proxy./.target', `http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.contentType', 'application/json',
+			'--port',
+			port,
+			'--proxy./.target',
+			`http://localhost:${thirdPartyServerPort}`,
+			'--proxy./.contentType',
+			'application/json',
 		];
 
 		await start(command)
@@ -155,10 +165,8 @@ describe('proxy middleware', () => {
 					});
 					const json = await res.json();
 					expect(json).toEqual({ hello: 'world' });
-				}
+				},
 			})
-			.done()
-		;
+			.done();
 	});
-
 });

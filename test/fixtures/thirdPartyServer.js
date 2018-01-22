@@ -1,4 +1,3 @@
-
 import http from 'http';
 import url from 'url';
 import bodyParser from 'co-body';
@@ -29,12 +28,14 @@ const server = http.createServer((req, res) => {
 		'POST /json': () => bodyParser.json(req).then(end),
 		'POST /form': () => bodyParser.form(req).then(end),
 		'GET /headers': () => end(headers),
-		'GET /delay': () => delay(query.delay)
-			.then(() => end({ delay: query.delay || 2000 })),
+		'GET /delay': () =>
+			delay(query.delay).then(() => end({ delay: query.delay || 2000 })),
 		'GET /foo/bar': () => end(query),
 		'GET /bad': () => end({ message: 'you bad' }, 400),
 		'GET /bad/bad': () => end({ message: 'you bad bad' }, 500),
-		'GET /bad/bad/bad': () => { throw new Error('oh shit'); },
+		'GET /bad/bad/bad': () => {
+			throw new Error('oh shit');
+		},
 	};
 
 	const route = `${method} ${pathname}`;
@@ -48,7 +49,6 @@ const server = http.createServer((req, res) => {
 	else {
 		end(null, 404);
 	}
-
 });
 
 export function startThirdPartyServer(port = 3004) {
