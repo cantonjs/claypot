@@ -1,4 +1,4 @@
-import importModules from 'import-modules';
+import importModules from '../utils/importModules';
 import { join } from 'path';
 import { forEach, isFunction, lowerFirst, lowerCase, upperFirst } from 'lodash';
 import { createLogger } from 'pot-logger';
@@ -81,7 +81,7 @@ export async function initModels(dbs, appConfig) {
 	});
 
 	uniqueKeys.forEach((uniqueKey) => {
-		const Model = extendModel(modules.get(uniqueKey), 'models', models);
+		const Model = modules.get(uniqueKey);
 		if (Model) {
 			models[uniqueKey] = isFunction(Model) ? new Model() : Model;
 			logger.trace(`"${uniqueKey}" created`);

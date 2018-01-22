@@ -1,5 +1,5 @@
-import { initCache } from './cache';
-import { initModels } from './models';
+import { initCache, getCache } from './cache';
+import { initModels, getModels } from './models';
 import Plugins from '../utils/plugins';
 import { createLogger } from 'pot-logger';
 import { isFunction } from 'lodash';
@@ -87,3 +87,5 @@ export default async function init(appConfig) {
 
 	return dbs;
 }
+
+export { getCache, getModels };

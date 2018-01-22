@@ -7,7 +7,7 @@ import mount from 'koa-mount';
 import Plugins from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import { listenToServer, closeServer } from './utils/listenToServer';
-import initDbs from './dbs';
+import initDbs, { getCache, getModels } from './dbs';
 import { name, version } from '../package.json';
 
 export default async function startServer(config) {
@@ -46,6 +46,8 @@ export default async function startServer(config) {
 	await Promise.all(listens);
 	Plugins.sync('serverDidStart', app);
 
+	app.cache = getCache();
+	app.models = getModels();
 	app.close = () => Promise.all(servers.map(closeServer));
 
 	return app;
