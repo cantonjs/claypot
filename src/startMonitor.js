@@ -5,12 +5,12 @@ import workspace from './utils/workspace';
 import outputHost from 'output-host';
 import logger from 'pot-logger';
 
-const startClaypot = async (config) => {
+const startClaypotMonitor = async (config) => {
 	await startPot({
 		...config,
 		workspace,
 		configToEnv: 'CLAYPOT_CONFIG',
-		entry: resolve(__dirname, 'app.js'),
+		entry: resolve(__dirname, 'server.js'),
 	});
 
 	if (config.outputHost && config.outputHost.enable) {
@@ -21,11 +21,11 @@ const startClaypot = async (config) => {
 	}
 };
 
-export async function cliStart(argv) {
+export async function cliStartMonitor(argv) {
 	const cliConfig = await initCliConfig(argv);
-	await startClaypot(cliConfig);
+	await startClaypotMonitor(cliConfig);
 }
 
 export default async function start(config) {
-	await startClaypot(initConfig(config));
+	await startClaypotMonitor(initConfig(config));
 }

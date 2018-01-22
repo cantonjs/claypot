@@ -3,7 +3,7 @@ import { name, version } from '../package.json';
 import { upperCase } from 'lodash';
 import logger from 'pot-logger';
 import { defaultConfigFile } from './config';
-import { cliStart } from './start';
+import { cliStartMonitor } from './startMonitor';
 import stop from './stop';
 import list from './list';
 import log from './log';
@@ -125,7 +125,7 @@ yargs
 				}).argv;
 		},
 		async handler(argv) {
-			cliStart(argv).catch(logger.error);
+			cliStartMonitor(argv).catch(logger.error);
 		},
 	})
 	.command({

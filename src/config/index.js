@@ -50,7 +50,7 @@ export async function initCliConfig(argv) {
 	};
 }
 
-export function initAppConfig(configString) {
+export function initProcessConfig(configString) {
 	return Object.assign(config, JSON.parse(configString));
 }
 
