@@ -1,4 +1,4 @@
-import { start, stop } from './utils';
+import { startPure } from '../src';
 import {
 	startThirdPartyServer,
 	stopThirdPartyServer,
@@ -6,167 +6,116 @@ import {
 import getPort from 'get-port';
 import fetch from 'node-fetch';
 import qs from 'querystring';
-
-let thirdPartyServerPort;
-
-beforeEach(async () => {
-	jest.setTimeout(10000);
-	thirdPartyServerPort = await getPort();
-	await startThirdPartyServer(thirdPartyServerPort);
-});
-
-afterEach(async () => {
-	await stopThirdPartyServer();
-	await stop();
-});
+import { resolve } from 'path';
 
 describe('proxy middleware', () => {
-	test('proxy server with root path', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./',
-			`http://localhost:${thirdPartyServerPort}`,
-		];
+	let server;
+	let baseConfig = {};
+	let thirdPartyServerPort;
 
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/hello/`);
-					const json = await res.json();
-					expect(json).toEqual({ hello: 'hello' });
-				},
-			})
-			.done();
+	beforeEach(async () => {
+		thirdPartyServerPort = await getPort();
+		await startThirdPartyServer(thirdPartyServerPort);
+		baseConfig = {
+			port: await getPort(),
+			cwd: resolve('test'),
+		};
+	});
+
+	afterEach(async () => {
+		await stopThirdPartyServer();
+		if (server) {
+			await server.close();
+		}
+		server = null;
+	});
+
+	test('proxy server with root path', async () => {
+		server = await startPure({
+			...baseConfig,
+			proxy: { '/': `http://localhost:${thirdPartyServerPort}` },
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/hello/`);
+		const json = await res.json();
+		expect(json).toEqual({ hello: 'hello' });
 	});
 
 	test('proxy server with a pathname', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./',
-			`http://localhost:${thirdPartyServerPort}/hello`,
-		];
-
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}`);
-					const json = await res.json();
-					expect(json).toEqual({ hello: 'hello' });
-				},
-			})
-			.done();
+		server = await startPure({
+			...baseConfig,
+			proxy: { '/': `http://localhost:${thirdPartyServerPort}/hello` },
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}`);
+		const json = await res.json();
+		expect(json).toEqual({ hello: 'hello' });
 	});
 
 	test('add multiple proxy servers', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./a',
-			`http://localhost:${thirdPartyServerPort}/hello`,
-			'--proxy./b',
-			`http://localhost:${thirdPartyServerPort}/world`,
-		];
-
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const resA = await fetch(`http://localhost:${port}/a`);
-					const jsonA = await resA.json();
-					expect(jsonA).toEqual({ hello: 'hello' });
-					const resB = await fetch(`http://localhost:${port}/b`);
-					const jsonB = await resB.json();
-					expect(jsonB).toEqual({ world: 'world' });
-				},
-			})
-			.done();
+		server = await startPure({
+			...baseConfig,
+			proxy: {
+				'/a': `http://localhost:${thirdPartyServerPort}/hello`,
+				'/b': `http://localhost:${thirdPartyServerPort}/world`,
+			},
+		});
+		const resA = await fetch(`http://localhost:${baseConfig.port}/a`);
+		const jsonA = await resA.json();
+		expect(jsonA).toEqual({ hello: 'hello' });
+		const resB = await fetch(`http://localhost:${baseConfig.port}/b`);
+		const jsonB = await resB.json();
+		expect(jsonB).toEqual({ world: 'world' });
 	});
 
 	test('proxy server with adding queries', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./.target',
-			`http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.query.hello',
-			'world',
-		];
-
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/query`);
-					const json = await res.json();
-					expect(json).toEqual({ hello: 'world' });
+		server = await startPure({
+			...baseConfig,
+			proxy: {
+				'/': {
+					target: `http://localhost:${thirdPartyServerPort}`,
+					query: {
+						hello: 'world',
+					},
 				},
-			})
-			.done();
+			},
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/query`);
+		const json = await res.json();
+		expect(json).toEqual({ hello: 'world' });
 	});
 
 	test('proxy server with application/x-www-form-urlencoded', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./.target',
-			`http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.contentType',
-			'application/x-www-form-urlencoded',
-		];
-
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/form`, {
-						method: 'POST',
-						body: JSON.stringify({ hello: 'world' }),
-					});
-					const json = await res.json();
-					expect(json).toEqual({ hello: 'world' });
+		server = await startPure({
+			...baseConfig,
+			proxy: {
+				'/': {
+					target: `http://localhost:${thirdPartyServerPort}`,
+					contentType: 'application/x-www-form-urlencoded',
 				},
-			})
-			.done();
+			},
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/form`, {
+			method: 'POST',
+			body: JSON.stringify({ hello: 'world' }),
+		});
+		const json = await res.json();
+		expect(json).toEqual({ hello: 'world' });
 	});
 
 	test('proxy server with application/json', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--proxy./.target',
-			`http://localhost:${thirdPartyServerPort}`,
-			'--proxy./.contentType',
-			'application/json',
-		];
-
-		await start(command)
-			.assertUntil(/started/)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/json`, {
-						method: 'POST',
-						body: qs.stringify({ hello: 'world' }),
-					});
-					const json = await res.json();
-					expect(json).toEqual({ hello: 'world' });
+		server = await startPure({
+			...baseConfig,
+			proxy: {
+				'/': {
+					target: `http://localhost:${thirdPartyServerPort}`,
+					contentType: 'application/json',
 				},
-			})
-			.done();
+			},
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/json`, {
+			method: 'POST',
+			body: qs.stringify({ hello: 'world' }),
+		});
+		const json = await res.json();
+		expect(json).toEqual({ hello: 'world' });
 	});
 });

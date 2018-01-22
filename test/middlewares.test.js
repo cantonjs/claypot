@@ -1,152 +1,103 @@
-import { start, stop } from './utils';
+import { startPure } from '../src';
+import { resolve } from 'path';
 import getPort from 'get-port';
 import fetch from 'node-fetch';
 
-beforeEach(() => {
-	jest.setTimeout(10000);
-});
-
-afterEach(stop);
-
 describe('built-in middlewares', () => {
+	let server;
+	let baseConfig = {};
+
+	beforeEach(async () => {
+		baseConfig = {
+			port: await getPort(),
+			cwd: resolve('test'),
+		};
+	});
+
+	afterEach(async () => {
+		if (server) {
+			await server.close();
+		}
+		server = null;
+	});
+
 	test('should `notFound` work', async () => {
-		const port = await getPort();
-		return start(['start', '--port', port])
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}`);
-					expect(res.ok).toBe(false);
-					expect(res.status).toBe(404);
-				},
-			})
-			.done();
+		server = await startPure(baseConfig);
+		const res = await fetch(`http://localhost:${baseConfig.port}`);
+		expect(res.ok).toBe(false);
+		expect(res.status).toBe(404);
 	});
 
 	test('should `responseTime` work', async () => {
-		const port = await getPort();
-		return start(['start', '--port', port])
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}`);
-					const responseTime = res.headers.get('X-Response-Time');
-					expect(/^\d+ms/.test(responseTime)).toBe(true);
-				},
-			})
-			.done();
+		server = await startPure(baseConfig);
+		const res = await fetch(`http://localhost:${baseConfig.port}`);
+		const responseTime = res.headers.get('X-Response-Time');
+		expect(/^\d+ms/.test(responseTime)).toBe(true);
 	});
 
-	test('should `httpLogger` work', async () => {
-		const port = await getPort();
-		return start(['start', '--port', port])
-			.assertUntil(/ready/, {
-				async action() {
-					await fetch(`http://localhost:${port}/test`);
-				},
-			})
-			.assert(/GET \/test/)
-			.done();
-	});
+	// test('should `httpLogger` work', async () => {
+	// 	const port = await getPort();
+	// 	return start(['start', '--port', port])
+	// 		.assertUntil(/ready/, {
+	// 			async action() {
+	// 				await fetch(`http://localhost:${port}/test`);
+	// 			},
+	// 		})
+	// 		.assert(/GET \/test/)
+	// 		.done();
+	// });
 
 	test('should `static` work', async () => {
-		const port = await getPort();
-		const command = ['start', '--port', port, '--static=fixtures/static'];
-		return start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/hello.html`);
-					expect(res.ok).toBe(true);
-				},
-			})
-			.done();
+		server = await startPure({ ...baseConfig, static: 'fixtures/static' });
+		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
+		expect(res.ok).toBe(true);
 	});
 
 	test('should `compress` work', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--compress',
-			'--static=fixtures/static',
-		];
-		return start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const { headers } = await fetch(
-						`http://localhost:${port}/hello.html`,
-					);
-					expect(headers.get('Content-Encoding')).toBe('gzip');
-					expect(headers.get('Transfer-Encoding')).toBe('chunked');
-				},
-			})
-			.done();
+		server = await startPure({
+			...baseConfig,
+			compress: true,
+			static: 'fixtures/static',
+		});
+		const { headers } = await fetch(
+			`http://localhost:${baseConfig.port}/hello.html`,
+		);
+		expect(headers.get('Content-Encoding')).toBe('gzip');
+		expect(headers.get('Transfer-Encoding')).toBe('chunked');
 	});
 
 	test('should `httpError` work', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--plugins',
-			'./fixtures/plugins/HttpError',
-		];
-		return start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/test`);
-					const contentType = res.headers.get('Content-Type');
-					expect(contentType).toBe('text/html; charset=utf-8');
-					expect(res.status).toBe(500);
-				},
-			})
-			.done();
+		server = await startPure({
+			...baseConfig,
+			plugins: ['./fixtures/plugins/HttpError'],
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/test`);
+		const contentType = res.headers.get('Content-Type');
+		expect(contentType).toBe('text/html; charset=utf-8');
+		expect(res.status).toBe(500);
 	});
 
 	test('should `helmet` work', async () => {
-		const port = await getPort();
-		const command = ['start', '--port', port, '--helmet'];
-		await start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const { headers } = await fetch(`http://localhost:${port}`);
-					expect(headers.get('X-Frame-Options')).toBe('SAMEORIGIN');
-					expect(headers.get('X-Powered-By')).toBe('PHP 5.4.0');
-					expect(headers.get('X-XSS-Protection')).toBe('1; mode=block');
-				},
-			})
-			.done();
+		server = await startPure({ ...baseConfig, helmet: true });
+		const { headers } = await fetch(`http://localhost:${baseConfig.port}`);
+		expect(headers.get('X-Frame-Options')).toBe('SAMEORIGIN');
+		expect(headers.get('X-Powered-By')).toBe('PHP 5.4.0');
+		expect(headers.get('X-XSS-Protection')).toBe('1; mode=block');
 	});
 
 	test('should `favicon` work', async () => {
-		const port = await getPort();
-		const command = ['start', '--port', port];
-		await start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/favicon.ico`);
-					expect(res.ok).toBe(true);
-				},
-			})
-			.done();
+		server = await startPure({ ...baseConfig, helmet: true });
+		const res = await fetch(`http://localhost:${baseConfig.port}/favicon.ico`);
+		expect(res.ok).toBe(true);
 	});
 
 	test('should `historyAPIFallback` work', async () => {
-		const port = await getPort();
-		const command = [
-			'start',
-			'--port',
-			port,
-			'--static=fixtures/history',
-			'--historyAPIFallback',
-		];
-		return start(command)
-			.assertUntil(/ready/, {
-				async action() {
-					const res = await fetch(`http://localhost:${port}/world`);
-					expect(res.ok).toBe(true);
-				},
-			})
-			.done();
+		server = await startPure({
+			...baseConfig,
+			static: 'fixtures/history',
+			historyAPIFallback: true,
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/world`);
+		expect(res.ok).toBe(true);
 	});
 });
