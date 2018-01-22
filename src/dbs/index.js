@@ -22,7 +22,7 @@ export default async function init(appConfig) {
 		const { store, models = {}, cache, ...options } = dbsConfig[dbKey];
 
 		if (!store) {
-			logger.error(`database "${dbKey}" requires "${store}" field`);
+			logger.error(`database "${dbKey}" requires "store" field`);
 			return;
 		}
 
