@@ -46,14 +46,22 @@ export default async function startServer(config) {
 	modelsMap.clear();
 	Plugins.sync('didCreateModels', modelsMap);
 
+	const use = app.use.bind(app);
+	const middlewares = [];
 	app.mount = (...args) => app.use(mount(...args));
+	app.use = (...args) => {
+		middlewares.push(...args);
+		return app;
+	};
 	app.close = () => Promise.all(servers.map(closeServer));
 
 	await Plugins.sequence('initServer', app);
 	await Plugins.sequence('willStartServer', app);
 
-	await Plugins.sequence('willApplyMiddlewares', app);
+	await Plugins.sequence('willRegisterMiddlewares', app);
 	useMiddlewares(app);
+	await Plugins.sequence('willApplyMiddlewares', middlewares, app);
+	middlewares.forEach(use);
 	Plugins.sync('didApplyMiddlewares', app);
 
 	const servers = [http.createServer(app.callback())];

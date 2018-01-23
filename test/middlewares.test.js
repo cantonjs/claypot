@@ -74,7 +74,7 @@ describe('built-in middlewares', () => {
 	});
 
 	test('should `favicon` work', async () => {
-		server = await startPure({ ...baseConfig, helmet: true });
+		server = await startPure(baseConfig);
 		const res = await fetch(`http://localhost:${baseConfig.port}/favicon.ico`);
 		expect(res.ok).toBe(true);
 	});
