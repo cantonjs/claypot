@@ -8,6 +8,7 @@ export log from './log';
 export config, { isDev, isProd } from './config';
 export cache, { cacheStores } from './dbs/cache';
 export models, { getModels, getModelKeys } from './dbs/models';
+export importModules from './utils/importModules';
 
 export logger, {
 setLoggers,
