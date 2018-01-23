@@ -18,9 +18,11 @@ export default function serveStatic(app, options) {
 
 	logger.debug('static directory', staticDir);
 
-	return app.use(koaStatic(staticDir), {
-		maxAge: isProd ? maxAge : 0,
-		gzip: isProd,
-		...other,
-	});
+	return app.use(
+		koaStatic(staticDir, {
+			maxAge: isProd ? maxAge : 0,
+			gzip: isProd,
+			...other,
+		}),
+	);
 }
