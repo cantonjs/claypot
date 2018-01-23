@@ -20,10 +20,10 @@ describe('plugins', () => {
 		server = null;
 	});
 
-	test('bootstrap hook', async () => {
+	test('initialize hook', async () => {
 		server = await startPure({
 			...baseConfig,
-			plugins: ['fixtures/plugins/Bootstrap'],
+			plugins: ['fixtures/plugins/Initialize'],
 		});
 		expect(server.foo).toEqual('bar');
 	});

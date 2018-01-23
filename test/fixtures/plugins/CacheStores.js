@@ -1,5 +1,5 @@
 export default class CacheStores {
-	cacheStores(stores) {
+	willCreateCacheStores(stores) {
 		for (const [key, options] of stores) {
 			if (key === 'foo') {
 				options.store = 'memory';

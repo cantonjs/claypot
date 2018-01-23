@@ -1,5 +1,5 @@
 export default class Databases {
-	databases(dbs, app) {
+	willConnectDatabases(dbs, app) {
 		app.dbsKeys = [...dbs.keys()];
 	}
 }

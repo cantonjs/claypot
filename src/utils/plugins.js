@@ -63,8 +63,14 @@ function init(config) {
 
 const findCurrentPlugins = (phase) => plugins.filter((plugin) => plugin[phase]);
 
+const deprecatedPhases = ['initServer', 'registerDatabase'];
+
 const traceApplied = (plugin, phase) => {
-	logger.trace(`"${plugin.constructor.name}" phase "${phase}" applied.`);
+	const pluginName = plugin.constructor.name;
+	if (deprecatedPhases.includes(phase)) {
+		logger.warn(`Phase "${phase}" in "${pluginName}" has been deprecated.`);
+	}
+	logger.trace(`"${pluginName}" phase "${phase}" applied.`);
 };
 
 export default {

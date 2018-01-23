@@ -24,33 +24,37 @@ export default async function startServer(config) {
 
 	const app = new Koa();
 
-	await Plugins.sequence('bootstrap', app);
+	await Plugins.parallel('initialize', app);
 
 	const dbsMap = resolveDatabases(config);
-	await Plugins.sequence('databases', dbsMap, app);
+	await Plugins.sequence('willConnectDatabases', dbsMap, app);
 	dbsMap.clear();
+	Plugins.sync('didConnectDatabases', dbsMap, app);
 
 	const cacheStoresMap = resolveCacheStore(config);
-	await Plugins.sequence('cacheStores', cacheStoresMap, app);
+	await Plugins.sequence('willCreateCacheStores', cacheStoresMap, app);
 	const { cacheStores, cache } = createCacheStores(cacheStoresMap);
 	app.cache = cache;
 	app.cacheStores = cacheStores;
 	cacheStoresMap.clear();
+	Plugins.sync('didCreateCacheStores', cacheStoresMap, app);
 
 	const modelsMap = resolveModels(config);
-	await Plugins.sequence('models', modelsMap);
+	await Plugins.sequence('willCreateModels', modelsMap);
 	const models = createModels(modelsMap, app);
 	app.models = models;
 	modelsMap.clear();
+	Plugins.sync('didCreateModels', modelsMap);
 
 	app.mount = (...args) => app.use(mount(...args));
 	app.close = () => Promise.all(servers.map(closeServer));
 
 	await Plugins.sequence('initServer', app);
+	await Plugins.sequence('willStartServer', app);
 
+	await Plugins.sequence('willApplyMiddlewares', app);
 	useMiddlewares(app);
-
-	Plugins.sync('serverWillStart', app);
+	Plugins.sync('didApplyMiddlewares', app);
 
 	const servers = [http.createServer(app.callback())];
 	const listens = [listenToServer(servers[0], port, host)];
@@ -64,7 +68,7 @@ export default async function startServer(config) {
 	}
 
 	await Promise.all(listens);
-	Plugins.sync('serverDidStart', app);
+	Plugins.sync('didStartServer', app);
 
 	return app;
 }

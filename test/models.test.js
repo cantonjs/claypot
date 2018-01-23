@@ -39,13 +39,4 @@ describe('models', () => {
 		server = await startPure({ ...baseConfig, models: 'fixtures/models' });
 		expect(server.models.hello.test()).toBe(true);
 	});
-
-	test('extends model', async () => {
-		server = await startPure({
-			...baseConfig,
-			models: 'fixtures/models',
-			plugins: ['fixtures/plugins/ExtendsModels'],
-		});
-		expect(server.models.hello.$test.foo()).toBe('hello');
-	});
 });
