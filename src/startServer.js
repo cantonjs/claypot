@@ -27,7 +27,7 @@ export default async function startServer(config) {
 	await Plugins.sequence('bootstrap', app);
 
 	const dbsMap = resolveDatabases(config);
-	await Plugins.sequence('dbs', dbsMap, app);
+	await Plugins.sequence('databases', dbsMap, app);
 	dbsMap.clear();
 
 	const cacheStoresMap = resolveCacheStore(config);

@@ -5,14 +5,17 @@ import createProxyObject from '../utils/createProxyObject';
 import ms from 'ms';
 
 const logger = createLogger('cache', 'magentaBright');
-const cacheStores = {};
+let cacheStores = {};
 let cache;
-
-let defaultCacheKey = null;
+let defaultCacheKey;
 
 export function resolveCacheStore(appConfig) {
 	const { dbs } = appConfig;
 	const cacheStoresMap = new Map();
+
+	cacheStores = {};
+	cache = null;
+	defaultCacheKey = null;
 
 	Object.keys(dbs).forEach((key) => {
 		const db = dbs[key];
@@ -47,6 +50,10 @@ export function resolveCacheStore(appConfig) {
 
 export function createCacheStores(cacheStoresMap) {
 	for (const [key, descriptor] of cacheStoresMap) {
+		if (!descriptor.store) {
+			logger.warn(`"${key}" has NOT "store"`);
+			continue;
+		}
 		const cacheStore = cacheManager.caching(descriptor);
 		cacheStores[key] = cacheStore;
 		logger.trace(`"${key}" created`);
