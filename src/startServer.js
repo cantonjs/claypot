@@ -20,13 +20,19 @@ export default async function startServer(config) {
 
 	Plugins.init(config);
 
-	await Plugins.sequence('bootstrap', config);
+	const fragment = {};
+
+	await Plugins.sequence('bootstrap', fragment);
 
 	await initDbs(config);
 
 	const app = new Koa();
 
+	Object.assign(app, fragment);
 	app.mount = (...args) => app.use(mount(...args));
+	app.cache = getCache();
+	app.models = getModels();
+	app.close = () => Promise.all(servers.map(closeServer));
 
 	await Plugins.sequence('initServer', app);
 
@@ -47,10 +53,6 @@ export default async function startServer(config) {
 
 	await Promise.all(listens);
 	Plugins.sync('serverDidStart', app);
-
-	app.cache = getCache();
-	app.models = getModels();
-	app.close = () => Promise.all(servers.map(closeServer));
 
 	return app;
 }
