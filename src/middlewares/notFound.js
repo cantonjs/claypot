@@ -1,5 +1,5 @@
 export default (app) =>
-	app.use(async (ctx, next) => {
+	app.use(async function notFount(ctx, next) {
 		await next();
 
 		const body = ctx.body;

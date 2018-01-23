@@ -1,5 +1,5 @@
 export default (app) =>
-	app.use(async (ctx, next) => {
+	app.use(async function responseTime(ctx, next) {
 		const start = Date.now();
 
 		const getResponseTime = () => ({

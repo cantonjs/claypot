@@ -2,7 +2,7 @@ import { getModels } from '../dbs/models';
 import { getCache, getCacheStores } from '../dbs/cache';
 
 export default (app) =>
-	app.use(async (ctx, next) => {
+	app.use(async function claypotInjection(ctx, next) {
 		const clay = {};
 
 		clay.cache = getCache(); // inject cache

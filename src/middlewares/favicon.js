@@ -10,5 +10,7 @@ export default (app) => {
 	const icon = isString(favicon) ?
 		resolve(baseDir, favicon) :
 		resolve(__dirname, defaults);
-	return app.use(fav(icon));
+	const faviconFn = fav(icon);
+	faviconFn.displayName = 'favicon';
+	return app.use(faviconFn);
 };

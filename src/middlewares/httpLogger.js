@@ -16,7 +16,7 @@ const logger = createLogger('http', (ref) => {
 });
 
 export default (app) => {
-	return app.use(async (ctx, next) => {
+	return app.use(async function httpLogger(ctx, next) {
 		const start = Date.now();
 
 		await next();
