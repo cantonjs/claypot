@@ -56,8 +56,9 @@ const perform = function perform(app, middlewares) {
 			return isEnabled;
 		})
 		.forEach(({ options, name }) => {
+			const module = `./${normalize(name)}`;
 			try {
-				const use = importFile(`./${normalize(name)}`, {
+				const use = importFile(module, {
 					cwd: config.baseDir,
 					resolvers: [resolve(__dirname, '../middlewares')],
 					useLoader: false,
@@ -65,6 +66,7 @@ const perform = function perform(app, middlewares) {
 				use(app, options);
 			}
 			catch (err) {
+				err.message += ` in "${module}" middleware`;
 				middlewareLogger.error(err);
 			}
 		});

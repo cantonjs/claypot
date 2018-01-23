@@ -55,6 +55,7 @@ function init(config) {
 				return new PluginModule(options, config);
 			}
 			catch (err) {
+				err.message += ` in "${module}" plugin`;
 				logger.error(err);
 			}
 		})
