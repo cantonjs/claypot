@@ -1,15 +1,14 @@
 import { join } from 'path';
 import { createLogger } from 'pot-logger';
-import Plugins from '../utils/plugins';
 import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
 import { lowerFirst, upperFirst } from 'lodash';
 
 const logger = createLogger('model', 'blueBright');
 const models = {};
-const Models = new Map();
+const modelsMap = new Map();
 
-const resolveModels = function resolveModels(baseDir, modelsDir) {
+export function resolveModels({ baseDir, models: modelsDir }) {
 	const dir = join(baseDir, modelsDir);
 	const vanillaModules = importModules(dir);
 
@@ -20,14 +19,14 @@ const resolveModels = function resolveModels(baseDir, modelsDir) {
 		const { name, keyName } = Model;
 
 		const uniqueKey = lowerFirst(keyName || name || key);
-		Models.set(uniqueKey, Model);
+		modelsMap.set(uniqueKey, Model);
 	});
 
-	return Models;
-};
+	return modelsMap;
+}
 
-const createModels = function createModels() {
-	for (const [uniqueKey, Model] of Models) {
+export function createModels(modelsMap) {
+	for (const [uniqueKey, Model] of modelsMap) {
 		Object.keys(Model).forEach((key) => {
 			const method = Model[key];
 			const prop = key.startsWith('$') ? key : `$${key}`;
@@ -46,24 +45,18 @@ const createModels = function createModels() {
 
 		logger.trace(`"${uniqueKey}" created`);
 	}
-	const { size } = Models;
+	const { size } = modelsMap;
 	logger.debug(`${size} model${size > 1 ? 's' : ''} created`);
-};
 
-export async function initModels(dbs, appConfig) {
-	const { models: modelsDir, baseDir } = appConfig;
-
-	resolveModels(baseDir, modelsDir);
-	await Plugins.sync('models', Models);
-	createModels();
+	return models;
 }
 
 export function getModelKeys() {
-	return [...Models.keys()];
+	return [...modelsMap.keys()];
 }
 
 export function getModels() {
 	return models;
 }
 
-export default createProxyObject(models, 'Models', { ignoreCase: true });
+export default createProxyObject(models, 'Models');

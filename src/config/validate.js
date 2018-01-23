@@ -24,7 +24,7 @@ const propTypes = {
 	configs: object,
 	cwd: string,
 	daemon: bool,
-	dbs: object,
+	dbs: oneOfType([array, object]),
 	env: object,
 	execArgs: oneOfType([string, arrayOf(string)]),
 	execCommand: string,

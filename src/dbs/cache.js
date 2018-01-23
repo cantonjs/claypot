@@ -5,22 +5,54 @@ import createProxyObject from '../utils/createProxyObject';
 import ms from 'ms';
 
 const logger = createLogger('cache', 'magentaBright');
-const stores = {};
+const cacheStores = {};
 let cache;
 
-export function initCache(creators) {
-	creators.forEach(({ dbKey, createCache, options }, index) => {
-		if (options && isString(options.ttl)) {
-			options.ttl = ~~(ms(options.ttl) / 1000);
+let defaultCacheKey = null;
+
+export function resolveCacheStore(appConfig) {
+	const { dbs } = appConfig;
+	const cacheStoresMap = new Map();
+
+	Object.keys(dbs).forEach((key) => {
+		const db = dbs[key];
+		if (db.cache) {
+			const { cache: options, ...other } = db;
+			const descriptor = {
+				...other,
+				...options,
+			};
+			if (isString(descriptor.ttl)) {
+				descriptor.ttl = ~~(ms(descriptor.ttl) / 1000);
+			}
+			if (!defaultCacheKey || options.default) {
+				defaultCacheKey = key;
+			}
+			cacheStoresMap.set(key, descriptor);
 		}
-		const creater = createCache(options);
-		const cacheStore = cacheManager.caching(creater);
-		if (!index) {
-			cache = cacheStore;
-		}
-		stores[dbKey] = cacheStore;
-		logger.trace(`"${dbKey}" created`);
 	});
+
+	if (!cacheStoresMap.size) {
+		const defaultKey = 'default';
+		cacheStoresMap.set(defaultKey, {
+			store: 'memory',
+			max: 100,
+			ttl: 60,
+		});
+		defaultCacheKey = defaultKey;
+	}
+
+	return cacheStoresMap;
+}
+
+export function createCacheStores(cacheStoresMap) {
+	for (const [key, descriptor] of cacheStoresMap) {
+		const cacheStore = cacheManager.caching(descriptor);
+		cacheStores[key] = cacheStore;
+		logger.trace(`"${key}" created`);
+	}
+	cache = cacheStores[defaultCacheKey];
+	return { cacheStores, cache };
 }
 
 export function getCache() {
@@ -28,7 +60,7 @@ export function getCache() {
 }
 
 export function getCacheStores() {
-	return stores;
+	return cacheStores;
 }
 
 export default new Proxy(
@@ -44,4 +76,4 @@ export default new Proxy(
 	},
 );
 
-export const cacheStores = createProxyObject(stores, 'CacheStores');
+export const CacheStores = createProxyObject(cacheStores, 'CacheStores');

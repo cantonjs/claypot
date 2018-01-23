@@ -7,7 +7,9 @@ import mount from 'koa-mount';
 import Plugins from './utils/plugins';
 import getCertOption from './utils/getCertOption';
 import { listenToServer, closeServer } from './utils/listenToServer';
-import initDbs, { getCache, getModels } from './dbs';
+import { resolveDatabases } from './dbs';
+import { resolveCacheStore, createCacheStores } from './dbs/cache';
+import { resolveModels, createModels } from './dbs/models';
 import { name, version } from '../package.json';
 
 export default async function startServer(config) {
@@ -20,18 +22,28 @@ export default async function startServer(config) {
 
 	Plugins.init(config);
 
-	const fragment = {};
-
-	await Plugins.sequence('bootstrap', fragment);
-
-	await initDbs(config);
-
 	const app = new Koa();
 
-	Object.assign(app, fragment);
+	await Plugins.sequence('bootstrap', app);
+
+	const dbsMap = resolveDatabases(config);
+	await Plugins.sequence('dbs', dbsMap, app);
+	dbsMap.clear();
+
+	const cacheStoresMap = resolveCacheStore(config);
+	await Plugins.sequence('cacheStores', cacheStoresMap, app);
+	const { cacheStores, cache } = createCacheStores(cacheStoresMap);
+	app.cache = cache;
+	app.cacheStores = cacheStores;
+	cacheStoresMap.clear();
+
+	const modelsMap = resolveModels(config);
+	await Plugins.sequence('models', modelsMap);
+	const models = createModels(modelsMap, app);
+	app.models = models;
+	modelsMap.clear();
+
 	app.mount = (...args) => app.use(mount(...args));
-	app.cache = getCache();
-	app.models = getModels();
 	app.close = () => Promise.all(servers.map(closeServer));
 
 	await Plugins.sequence('initServer', app);
