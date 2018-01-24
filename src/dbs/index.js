@@ -1,5 +1,12 @@
-import { toPairs } from 'lodash';
-
 export function resolveDatabases(appConfig) {
-	return new Map(toPairs(appConfig.dbs));
+	const { dbs } = appConfig;
+	const dbsMap = new Map();
+
+	Object.keys(dbs).forEach((key) => {
+		const { store, ...config } = dbs[key];
+		Reflect.deleteProperty(config, 'cache');
+		dbsMap.set(key, { store, config });
+	});
+
+	return dbsMap;
 }
