@@ -60,6 +60,7 @@ const propTypes = {
 			}),
 			string,
 			array,
+			func,
 		]),
 	),
 	port: number,
