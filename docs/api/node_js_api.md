@@ -19,6 +19,44 @@ export default class MyModel {
 
 ## API Reference
 
+#### start([opitons])
+
+```js
+import { start } from 'claypot';
+```
+
+Starting a Claypot server under process monitor.
+
+###### Arguments
+
+* `options` (Object): Please checkout [congiguration](/api/configuration.md)
+
+#### startPure([opitons])
+
+```js
+import { start } from 'claypot';
+```
+
+Starting a Claypot server without process monitor.
+
+###### Arguments
+
+* `options` (Object): Please checkout [congiguration](/api/configuration.md)
+
+#### stop([options])
+
+```js
+import { stop } from 'claypot';
+```
+
+Stopping a Claypot server.
+
+###### Arguments
+
+* `options` (Object):
+    * `name` (String): Defining which server you want to stop.
+    * `force` (Boolean): Force stopping without confirmation.
+
 #### config Object
 
 ```js
@@ -75,7 +113,7 @@ Get the default logger.
 
 Claypot provides a powerful log system powered by [pot-logger](https://github.com/cantonjs/pot-logger). A logger provides a set of log levels, such as `logger.debug()`, `logger.info()`, `logger.error()`, etc. Please checkout [pot-logger](https://github.com/cantonjs/pot-logger) for detail.
 
-#### createLogger(category[, appenderDescription])
+#### createLogger(category[, description])
 
 ```js
 import { createLogger } from 'claypot';
@@ -90,6 +128,14 @@ import { getLogger } from 'claypot';
 ```
 
 Get logger by category. If not found, it would return the default logger. Please checkout [pot-logger](https://github.com/cantonjs/pot-logger) for detail.
+
+#### ensureLogger(category[, description])
+
+```js
+import { getLogger } from 'claypot';
+```
+
+Get logger by category. If not found, create one. Please checkout [pot-logger](https://github.com/cantonjs/pot-logger) for detail.
 
 #### setLoggers(keyStringOrConfigObject[, value])
 
@@ -122,41 +168,3 @@ import { overrideConsoleInRuntime } from 'claypot';
 ```
 
 Override native console in startRun function runtime. Please checkout [pot-logger](https://github.com/cantonjs/pot-logger) for detail.
-
-#### start([opitons])
-
-```js
-import { start } from 'claypot';
-```
-
-Starting a Claypot server under process monitor.
-
-###### Arguments
-
-* `options` (Object): Please checkout [congiguration](/api/configuration.md)
-
-#### startPure([opitons])
-
-```js
-import { start } from 'claypot';
-```
-
-Starting a Claypot server without process monitor.
-
-###### Arguments
-
-* `options` (Object): Please checkout [congiguration](/api/configuration.md)
-
-#### stop([options])
-
-```js
-import { stop } from 'claypot';
-```
-
-Stopping a Claypot server.
-
-###### Arguments
-
-* `options` (Object):
-    * `name` (String): Defining which server you want to stop.
-    * `force` (Boolean): Force stopping without confirmation.
