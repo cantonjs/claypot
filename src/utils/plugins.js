@@ -33,14 +33,14 @@ function init(config) {
 		.map((plugin) => {
 			const { module, options = {} } = plugin;
 
-			if (isObject(module)) {
-				traceNewPlugin(module.constructor);
-				return plugin;
-			}
 			if (isFunction(module)) {
 				const PluginModule = module;
 				traceNewPlugin(PluginModule);
 				return new PluginModule(options);
+			}
+			if (isObject(module)) {
+				traceNewPlugin(module.constructor);
+				return plugin;
 			}
 
 			try {
