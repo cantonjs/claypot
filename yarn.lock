@@ -187,6 +187,16 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/amdefine/download/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+amqplib@^0.5.2:
+  version "0.5.2"
+  resolved "http://registry.npm.taobao.org/amqplib/download/amqplib-0.5.2.tgz#d2d7313c7ffaa4d10bcf1e6252de4591b6cc7b63"
+  dependencies:
+    bitsyntax "~0.0.4"
+    bluebird "^3.4.6"
+    buffer-more-ints "0.0.2"
+    readable-stream "1.x >=1.1.9"
+    safe-buffer "^5.0.1"
+
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/ansi-align/download/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
@@ -1236,6 +1246,12 @@ binary-extensions@^1.0.0:
   version "1.7.0"
   resolved "http://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.7.0.tgz#6c1610db163abfb34edfe42fa423343a1e01185d"
 
+bitsyntax@~0.0.4:
+  version "0.0.4"
+  resolved "http://registry.npm.taobao.org/bitsyntax/download/bitsyntax-0.0.4.tgz#eb10cc6f82b8c490e3e85698f07e83d46e0cba82"
+  dependencies:
+    buffer-more-ints "0.0.2"
+
 bl@^1.0.0, bl@~1.1.2:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/bl/download/bl-1.1.2.tgz#fdca871a99713aa00d19e3bbba41c44787a65398"
@@ -1251,6 +1267,10 @@ block-stream@*, block-stream@0.0.9:
 bluebird@^3.1.1, bluebird@^3.5.0, bluebird@~3.5.0:
   version "3.5.0"
   resolved "http://registry.npm.taobao.org/bluebird/download/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
+
+bluebird@^3.4.6:
+  version "3.5.1"
+  resolved "http://registry.npm.taobao.org/bluebird/download/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
 boolify@^1.0.0:
   version "1.0.1"
@@ -1318,6 +1338,10 @@ bser@^2.0.0:
 buffer-concat@0.0.1:
   version "0.0.1"
   resolved "http://registry.npm.taobao.org/buffer-concat/download/buffer-concat-0.0.1.tgz#43e1e3c77f3d22fb55bea6890a92d03778c4c10a"
+
+buffer-more-ints@0.0.2:
+  version "0.0.2"
+  resolved "http://registry.npm.taobao.org/buffer-more-ints/download/buffer-more-ints-0.0.2.tgz#26b3885d10fa13db7fc01aae3aab870199e0124c"
 
 buffer-shims@^1.0.0:
   version "1.0.0"
@@ -1456,7 +1480,7 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chalk@2.3.0, chalk@^2.0.0:
+chalk@2.3.0, chalk@^2.0.0, chalk@^2.3.0:
   version "2.3.0"
   resolved "http://registry.npm.taobao.org/chalk/download/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
@@ -1531,6 +1555,10 @@ ci-info@^1.0.0:
 circular-json@^0.3.1:
   version "0.3.3"
   resolved "http://registry.npm.taobao.org/circular-json/download/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
+
+circular-json@^0.5.1:
+  version "0.5.1"
+  resolved "http://registry.npm.taobao.org/circular-json/download/circular-json-0.5.1.tgz#b8942a09e535863dc21b04417a91971e1d9cd91f"
 
 clean-stack@^1.0.0:
   version "1.3.0"
@@ -1879,6 +1907,10 @@ data-uri-to-buffer@1:
 date-format@^1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/date-format/download/date-format-1.1.0.tgz#be7df68ec270fd9ec78482bd85be68c8fb8fbebc"
+
+date-format@^1.2.0:
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/date-format/download/date-format-1.2.0.tgz#615e828e233dd1ab9bb9ae0950e0ceccfa6ecad8"
 
 debug@*:
   version "2.3.3"
@@ -4528,6 +4560,25 @@ log4js@^2.3.4:
     redis "^2.7.1"
     slack-node "~0.2.0"
 
+log4js@^2.4.1:
+  version "2.5.2"
+  resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.5.2.tgz#234e9c688bc4aab3999bd4b149c85851a4e62faa"
+  dependencies:
+    circular-json "^0.5.1"
+    date-format "^1.2.0"
+    debug "^3.1.0"
+    semver "^5.3.0"
+    streamroller "^0.7.0"
+  optionalDependencies:
+    amqplib "^0.5.2"
+    axios "^0.15.3"
+    hipchat-notifier "^1.1.0"
+    loggly "^1.1.0"
+    mailgun-js "^0.7.0"
+    nodemailer "^2.5.0"
+    redis "^2.7.1"
+    slack-node "~0.2.0"
+
 loggly@^1.1.0:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/loggly/download/loggly-1.1.1.tgz#0a0fc1d3fa3a5ec44fdc7b897beba2a4695cebee"
@@ -5746,12 +5797,12 @@ pot-logger@^0.2.1:
     chalk "^2.1.0"
     log4js "^2.3.4"
 
-pot-logger@^0.3.0:
-  version "0.3.0"
-  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.3.0.tgz#b8652b7744029754a76b0e4d525053fc4b8952bf"
+pot-logger@^0.4.0:
+  version "0.4.0"
+  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.4.0.tgz#7fc120a7039303f4e3481b2848d7b4c9e5acbbec"
   dependencies:
-    chalk "^2.1.0"
-    log4js "^2.3.4"
+    chalk "^2.3.0"
+    log4js "^2.4.1"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -6125,7 +6176,7 @@ read@1, read@~1.0.1, read@~1.0.7:
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
-readable-stream@1.1.x, readable-stream@~1.1.10:
+readable-stream@1.1.x, "readable-stream@1.x >=1.1.9", readable-stream@~1.1.10:
   version "1.1.14"
   resolved "http://registry.npm.taobao.org/readable-stream/download/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   dependencies:
@@ -6866,6 +6917,15 @@ streamroller@^0.5.2:
   dependencies:
     date-format "^1.1.0"
     debug "^2.6.8"
+    mkdirp "^0.5.1"
+    readable-stream "^2.3.0"
+
+streamroller@^0.7.0:
+  version "0.7.0"
+  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.7.0.tgz#a1d1b7cf83d39afb0d63049a5acbf93493bdf64b"
+  dependencies:
+    date-format "^1.2.0"
+    debug "^3.1.0"
     mkdirp "^0.5.1"
     readable-stream "^2.3.0"
 
