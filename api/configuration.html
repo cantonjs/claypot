@@ -384,19 +384,19 @@
 <li><code>clayInjection</code> (Boolean): Inject <code>clay</code> object to middleware context. Defaults to <code>true</code>.</li>
 <li><code>compress</code> (Boolean|Object): Compress (gzip) static files. Defaults to <code>true</code> in <code>production</code> mode, <code>false</code> in <code>development</code> mode.</li>
 <li><code>configs</code> (Any): Custom data is recommended to set to here.</li>
-<li><code>cwd</code> (String): Defining the current working directory. Defaults to <code>process.cwd()</code>.</li>
-<li><code>daemon</code> (Boolean): Enable <code>daemon</code> mode. Notice: to kill <code>daemon</code> process, please run <code>claypot stop ${name}</code>. Defaults to <code>false</code>.</li>
+<li><code>cwd</code> (String): Defining the current working directory. Defaults to <code>process.cwd()</code>. Not available in <code>startPure</code> method.</li>
+<li><code>daemon</code> (Boolean): Enable <code>daemon</code> mode. Notice: to kill <code>daemon</code> process, please run <code>claypot stop ${name}</code>. Defaults to <code>false</code>. Not available in <code>startPure</code> method.</li>
 <li><code>dbs</code> (Object): Defining databases. There&apos;s no built-in database by default. You probably need to use some plugins if you to use some databases.</li>
-<li><code>env</code> (Object): Defining custom environments. Defaults to <code>process.env</code>.</li>
-<li><code>execArgs</code> (String|[String]): Executing arguments. Defaults to <code>[]</code>.</li>
-<li><code>execCommand</code> (String): Executing command. Defaults to <code>process.execPath</code>, which returns the absolute pathname of the executable that started the Node.js process i.e. <code>/usr/local/bin/node</code>.</li>
+<li><code>env</code> (Object): Defining custom environments. Defaults to <code>process.env</code>. Not available in <code>startPure</code> method.</li>
+<li><code>execArgs</code> (String|[String]): Executing arguments. Defaults to <code>[]</code>. Not available in <code>startPure</code> method.</li>
+<li><code>execCommand</code> (String): Executing command. Defaults to <code>process.execPath</code>, which returns the absolute pathname of the executable that started the Node.js process i.e. <code>/usr/local/bin/node</code>. Not available in <code>startPure</code> method.</li>
 <li><code>favicon</code> (Boolean|String): Defining favicon. Setting <code>false</code> to disable this feature. Setting a path string to set a custom favicon file. Defaults to <code>true</code>.</li>
 <li><code>helmet</code> (Boolean|Object): Enable helmet for safety. Defaults to <code>true</code> in <code>production</code> mode, <code>false</code> in <code>development</code> mode.</li>
 <li><code>historyAPIFallback</code> (Boolean|Object): Enable history api fallback. Useful for SPA. Defaults to <code>false</code>.</li>
 <li><code>host</code> (String): Server host.</li>
 <li><code>httpError</code> (Boolean|Object): Enable server error handling. Setting a object for custom config. Defaults to <code>true</code>.</li>
 <li><code>httpLogger</code> (Boolean): Enable HTTP access logger. Defaults to <code>true</code>.</li>
-<li><code>inspect</code> (Boolean|String|Object): Enable <a href="https://nodejs.org/api/cli.html#cli_inspect_host_port" target="_blank">node inspector</a>. Defaults to <code>false</code>.</li>
+<li><code>inspect</code> (Boolean|String|Object): Enable <a href="https://nodejs.org/api/cli.html#cli_inspect_host_port" target="_blank">node inspector</a>. Defaults to <code>false</code>. Not available in <code>startPure</code> method.</li>
 <li><code>logLevel</code> (String|Object): Defining log level. See <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail. Here are available levels:<ul>
 <li>ALL</li>
 <li>TRACE</li>
@@ -409,11 +409,11 @@
 </ul>
 </li>
 <li><code>logsDir</code> (String): Defining log files directory. If <code>daemon</code> mode actived, log messages will write to some <code>.log</code> files. Defaults to <code>.logs</code>.</li>
-<li><code>maxRestarts</code> (Number): Defining max restarts if crashed. Defaults to <code>-1</code> (<code>-1</code> equals to <code>Infinity</code>) in <code>production</code> mode, <code>0</code> in <code>development</code> mode.</li>
+<li><code>maxRestarts</code> (Number): Defining max restarts if crashed. Defaults to <code>-1</code> (<code>-1</code> equals to <code>Infinity</code>) in <code>production</code> mode, <code>0</code> in <code>development</code> mode. Not available in <code>startPure</code> method.</li>
 <li><code>models</code> (String): Defining models files directory. Defaults to <code>models</code>.</li>
 <li><code>name</code> (String): Defining server name. Defaults to the basename of <code>process.cwd()</code>.</li>
 <li><code>notFound</code> (Boolean): Enable 404 handling. Defaults to <code>true</code>.</li>
-<li><code>outputHost</code> (Boolean|Object): Output host info for development. Checkout <a href="https://github.com/die-welle/output-host" target="_blank">output-host</a> for detail. Defaults to <code>true</code> in <code>development</code> mode.</li>
+<li><code>outputHost</code> (Boolean|Object): Output host info for development. Checkout <a href="https://github.com/die-welle/output-host" target="_blank">output-host</a> for detail. Defaults to <code>true</code> in <code>development</code> mode. Not available in <code>startPure</code> method.</li>
 <li><code>overrideConsole</code> (Boolean): Enable overriding native <code>console</code>. Defaults to <code>false</code>.</li>
 <li><code>plugins</code> ([Object]): Defining plugins.</li>
 <li><code>port</code> (Number): Defining the port of server. Defaults to an available port.</li>
@@ -428,7 +428,7 @@
 </ul>
 </li>
 <li><code>static</code> (Boolean|String|Object): Defining static directory. Setting <code>false</code> to disable this feature. Defaults to <code>static</code>.</li>
-<li><code>watch</code> (Boolean|Object): Enable watch mode. Defaults to <code>false</code>. Here are available props for object config:<ul>
+<li><code>watch</code> (Boolean|Object): Enable watch mode. Defaults to <code>false</code>. Not available in <code>startPure</code> method. Here are available props for object config:<ul>
 <li><code>enable</code> (Boolean): Enable <code>watch</code>. Defaults to <code>true</code>.</li>
 <li><code>dirs</code> (String|[String]): Defining watching directories.</li>
 <li><code>ignoreDotFiles</code> (Boolean): Ignore watching <code>.*</code> files. Defaults to <code>true</code>.</li>
@@ -475,7 +475,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Configuration","level":"1.3.3","depth":2,"next":{"title":"Advanced (TODO)","level":"1.4","depth":1,"ref":"","articles":[{"title":"Plugin (TODO)","level":"1.4.1","depth":2,"ref":"","articles":[]},{"title":"Clay Injection (TODO)","level":"1.4.2","depth":2,"ref":"","articles":[]},{"title":"Models (TODO)","level":"1.4.3","depth":2,"ref":"","articles":[]},{"title":"Cache (TODO)","level":"1.4.4","depth":2,"ref":"","articles":[]}]},"previous":{"title":"Node.js API","level":"1.3.2","depth":2,"path":"api/node_js_api.md","ref":"api/node_js_api.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/configuration.md","mtime":"2017-09-28T06:11:05.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-09-28T06:14:12.350Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Configuration","level":"1.3.3","depth":2,"next":{"title":"Advanced (TODO)","level":"1.4","depth":1,"ref":"","articles":[{"title":"Plugin (TODO)","level":"1.4.1","depth":2,"ref":"","articles":[]},{"title":"Clay Injection (TODO)","level":"1.4.2","depth":2,"ref":"","articles":[]},{"title":"Models (TODO)","level":"1.4.3","depth":2,"ref":"","articles":[]},{"title":"Cache (TODO)","level":"1.4.4","depth":2,"ref":"","articles":[]}]},"previous":{"title":"Node.js API","level":"1.3.2","depth":2,"path":"api/node_js_api.md","ref":"api/node_js_api.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/configuration.md","mtime":"2018-01-24T08:45:46.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-01-24T08:52:53.854Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
