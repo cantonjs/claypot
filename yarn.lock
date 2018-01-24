@@ -1904,10 +1904,6 @@ data-uri-to-buffer@1:
   version "1.2.0"
   resolved "http://registry.npm.taobao.org/data-uri-to-buffer/download/data-uri-to-buffer-1.2.0.tgz#77163ea9c20d8641b4707e8f18abdf9a78f34835"
 
-date-format@^1.1.0:
-  version "1.1.0"
-  resolved "http://registry.npm.taobao.org/date-format/download/date-format-1.1.0.tgz#be7df68ec270fd9ec78482bd85be68c8fb8fbebc"
-
 date-format@^1.2.0:
   version "1.2.0"
   resolved "http://registry.npm.taobao.org/date-format/download/date-format-1.2.0.tgz#615e828e233dd1ab9bb9ae0950e0ceccfa6ecad8"
@@ -4543,23 +4539,6 @@ log-update@^2.1.0:
     cli-cursor "^2.0.0"
     wrap-ansi "^3.0.1"
 
-log4js@^2.3.4:
-  version "2.3.5"
-  resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.3.5.tgz#36a3db5ed5c684632fdb6724f0c753be30f2f886"
-  dependencies:
-    date-format "^1.1.0"
-    debug "^2.6.8"
-    semver "^5.3.0"
-    streamroller "^0.5.2"
-  optionalDependencies:
-    axios "^0.15.3"
-    hipchat-notifier "^1.1.0"
-    loggly "^1.1.0"
-    mailgun-js "^0.7.0"
-    nodemailer "^2.5.0"
-    redis "^2.7.1"
-    slack-node "~0.2.0"
-
 log4js@^2.4.1:
   version "2.5.2"
   resolved "http://registry.npm.taobao.org/log4js/download/log4js-2.5.2.tgz#234e9c688bc4aab3999bd4b149c85851a4e62faa"
@@ -5759,9 +5738,9 @@ port-numbers@^1.1.53:
   version "1.2.7"
   resolved "http://registry.npm.taobao.org/port-numbers/download/port-numbers-1.2.7.tgz#9b90fe86c109e8ca629403afcc5815b4f974f62a"
 
-pot-js@^0.0.0-beta.48:
-  version "0.0.0-beta.48"
-  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.48.tgz#4aaa0bb36cf3ab175a648dc3367343e302cb27ec"
+pot-js@^0.0.0-beta.49:
+  version "0.0.0-beta.49"
+  resolved "http://registry.npm.taobao.org/pot-js/download/pot-js-0.0.0-beta.49.tgz#93325a149b5a368cb144f17a4f2607d3f8252c01"
   dependencies:
     ajv "^5.2.3"
     chalk "^1.1.3"
@@ -5779,7 +5758,7 @@ pot-js@^0.0.0-beta.48:
     log-update "^2.1.0"
     node-ipc "^9.1.0"
     pidusage "^1.1.0"
-    pot-logger "^0.2.1"
+    pot-logger "^0.4.0"
     process-exists "^3.0.0"
     ps-list "^4.0.0"
     ps-tree "0.0.3"
@@ -5789,13 +5768,6 @@ pot-js@^0.0.0-beta.48:
     slice-file "^1.0.0"
     xtend "~2.1.1"
     yargs "^6.5.0"
-
-pot-logger@^0.2.1:
-  version "0.2.1"
-  resolved "http://registry.npm.taobao.org/pot-logger/download/pot-logger-0.2.1.tgz#120b648026aebd5c1c5446c3ade44b7b58b1d07c"
-  dependencies:
-    chalk "^2.1.0"
-    log4js "^2.3.4"
 
 pot-logger@^0.4.0:
   version "0.4.0"
@@ -6910,15 +6882,6 @@ stream-iterate@^1.1.0:
 stream-shift@^1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/stream-shift/download/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
-
-streamroller@^0.5.2:
-  version "0.5.2"
-  resolved "http://registry.npm.taobao.org/streamroller/download/streamroller-0.5.2.tgz#2bfe650c25b6a90ab25515a90bb5b9b94e398f0f"
-  dependencies:
-    date-format "^1.1.0"
-    debug "^2.6.8"
-    mkdirp "^0.5.1"
-    readable-stream "^2.3.0"
 
 streamroller@^0.7.0:
   version "0.7.0"
