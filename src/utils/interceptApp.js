@@ -14,7 +14,7 @@ export default function interceptApp(app, middlewares) {
 
 	app.mount = (path, ...args) => {
 		const middleware = mount(path, ...args);
-		middleware.displayName = `mount("${path}")`;
+		middleware.keyName = `mount("${path}")`;
 		return app.use(middleware);
 	};
 	app.use = (...args) => {

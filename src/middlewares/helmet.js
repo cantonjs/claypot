@@ -5,6 +5,6 @@ export default (app, { hidePoweredBy, ...options }) => {
 		helmet({ accessControlAllowOrigin: false, ...options }),
 		helmet.hidePoweredBy({ setTo: 'PHP 5.4.0', ...hidePoweredBy }),
 	];
-	middleware.displayName = 'helmet';
+	middleware.keyName = 'helmet';
 	app.use(middleware);
 };
