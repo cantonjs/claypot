@@ -33,6 +33,7 @@ describe('start server', () => {
 			})
 				.assertUntil(/started/)
 				.assertUntil(new RegExp(version))
+				.assert(/0 schema created/)
 				.assert(/0 model created/)
 				.assert(/static directory/)
 

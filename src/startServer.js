@@ -8,6 +8,7 @@ import { listenToServer, closeServer } from './utils/listenToServer';
 import { resolveDatabases } from './dbs';
 import { resolveCacheStore, createCacheStores } from './dbs/cache';
 import { resolveModels, createModels } from './dbs/models';
+import { resolveSchemas, createSchemas } from './dbs/schemas';
 import MiddlewareManager from './utils/MiddlewareManager';
 import { name, version } from '../package.json';
 
@@ -27,23 +28,30 @@ export default async function startServer(config) {
 
 	const dbsMap = resolveDatabases(config);
 	await Plugins.sequence('willConnectDatabases', dbsMap, app);
-	dbsMap.clear();
 	Plugins.sync('didConnectDatabases', dbsMap, app);
+	dbsMap.clear();
+
+	const schemasMap = resolveSchemas(config);
+	await Plugins.sequence('willCreateSchemas', schemasMap, app);
+	const schemas = createSchemas(schemasMap);
+	app.schemas = schemas;
+	Plugins.sync('didCreateSchemas', schemas, app);
+	schemasMap.clear();
 
 	const cacheStoresMap = resolveCacheStore(config);
 	await Plugins.sequence('willCreateCacheStores', cacheStoresMap, app);
 	const { cacheStores, cache } = createCacheStores(cacheStoresMap);
 	app.cache = cache;
 	app.cacheStores = cacheStores;
-	cacheStoresMap.clear();
 	Plugins.sync('didCreateCacheStores', cacheStoresMap, app);
+	cacheStoresMap.clear();
 
 	const modelsMap = resolveModels(config);
-	await Plugins.sequence('willCreateModels', modelsMap);
+	await Plugins.sequence('willCreateModels', modelsMap, schemas);
 	const models = createModels(modelsMap, app);
 	app.models = models;
+	Plugins.sync('didCreateModels', modelsMap, schemas, app);
 	modelsMap.clear();
-	Plugins.sync('didCreateModels', modelsMap);
 
 	const mManager = new MiddlewareManager(app);
 

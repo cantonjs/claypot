@@ -68,6 +68,7 @@ const propTypes = {
 	proxy: object,
 	responseTime: bool,
 	root: deprecated(string, 'please use "cwd" and "baseDir" instead'),
+	schemas: string,
 	ssl: oneOfType([
 		bool,
 		shape({

@@ -42,6 +42,7 @@ export default function applyDefaults(config, userConfig, isProd) {
 		production: isProd,
 		proxy: {},
 		responseTime: true,
+		schemas: 'schemas',
 		ssl: false,
 		static: 'static',
 		watch: false,
