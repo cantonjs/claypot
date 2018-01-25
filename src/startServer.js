@@ -1,15 +1,14 @@
 import http from 'http';
 import https from 'https';
 import Koa from 'koa';
-import useMiddlewares from './utils/useMiddlewares';
 import { setLoggers, logger } from 'pot-logger';
 import Plugins from './utils/plugins';
-import interceptApp from './utils/interceptApp';
 import getCertOption from './utils/getCertOption';
 import { listenToServer, closeServer } from './utils/listenToServer';
 import { resolveDatabases } from './dbs';
 import { resolveCacheStore, createCacheStores } from './dbs/cache';
 import { resolveModels, createModels } from './dbs/models';
+import MiddlewareManager from './utils/MiddlewareManager';
 import { name, version } from '../package.json';
 
 export default async function startServer(config) {
@@ -46,16 +45,14 @@ export default async function startServer(config) {
 	modelsMap.clear();
 	Plugins.sync('didCreateModels', modelsMap);
 
-	const middlewares = [];
-	interceptApp(app, middlewares);
+	const mManager = new MiddlewareManager(app);
 
 	await Plugins.sequence('initServer', app);
 	await Plugins.sequence('willStartServer', app);
 
-	useMiddlewares(app);
-
-	await Plugins.sequence('willApplyMiddlewares', middlewares, app);
-	middlewares.forEach(app.applyMiddlewares);
+	mManager.resolve();
+	await Plugins.sequence('willApplyMiddlewares', mManager.middlewares(), app);
+	mManager.apply();
 	Plugins.sync('didApplyMiddlewares', app);
 
 	const servers = [http.createServer(app.callback())];
