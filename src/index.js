@@ -9,6 +9,7 @@ export config, { isDev, isProd } from './config';
 export cache, { cacheStores } from './dbs/cache';
 export models, { getModels, getModelKeys } from './dbs/models';
 export schemas, { getSchemas } from './dbs/schemas';
+export { Schema, types } from './utils/Schema';
 
 export logger, {
 setLoggers,

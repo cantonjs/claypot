@@ -6684,6 +6684,10 @@ signal-exit@^3.0.2:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+skeeler@^0.1.0:
+  version "0.1.0"
+  resolved "http://registry.npm.taobao.org/skeeler/download/skeeler-0.1.0.tgz#6b060864f44073a21ceb2e913443a3b4e21a972f"
+
 slack-node@~0.2.0:
   version "0.2.0"
   resolved "http://registry.npm.taobao.org/slack-node/download/slack-node-0.2.0.tgz#de4b8dddaa8b793f61dbd2938104fdabf37dfa30"

@@ -29,9 +29,15 @@ export default function createProxyObject(source, debugName) {
 							dist[key] = value;
 							return true;
 						},
+						ownKeys(target) {
+							return Reflect.ownKeys(target);
+						},
 					},
 				);
 				return proxy;
+			},
+			ownKeys(target) {
+				return Reflect.ownKeys(target);
 			},
 		},
 	);

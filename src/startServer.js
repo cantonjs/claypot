@@ -31,10 +31,10 @@ export default async function startServer(config) {
 	Plugins.sync('didConnectDatabases', dbsMap, app);
 	dbsMap.clear();
 
-	await Plugins.sequence('willResolveSchemas', app);
+	await Plugins.parallel('willResolveSchemas', app);
 	const schemas = resolveSchemas(config);
 	app.schemas = schemas;
-	Plugins.sync('didCreateSchemas', schemas, app);
+	Plugins.sync('didResolvedSchemas', schemas, app);
 
 	const cacheStoresMap = resolveCacheStore(config);
 	await Plugins.sequence('willCreateCacheStores', cacheStoresMap, app);
