@@ -8,30 +8,21 @@ const logger = createLogger('schemas', 'cyanBright');
 const schemas = {};
 
 export function resolveSchemas({ baseDir, schemas: schemasDir }) {
-	const schemasMap = new Map();
 	const dir = join(baseDir, schemasDir);
 	const vanillaModules = importModules(dir);
+	let size = 0;
 
 	Object.keys(vanillaModules).forEach((key) => {
-		let creator = vanillaModules[key];
-		creator = creator.default || creator;
-		const name = lowerFirst(creator.keyName || creator.name || key);
-		logger.trace(`"${name}" resolved`);
-		schemasMap.set(name, creator);
-	});
-
-	return schemasMap;
-}
-
-export function createSchemas(schemasMap) {
-	for (const [name, creator] of schemasMap) {
-		const value = creator();
+		const value = vanillaModules[key];
+		const name = lowerFirst(value.keyName || key);
 		const uppperName = upperFirst(name);
+		logger.trace(`"${name}" resolved`);
 		Object.defineProperty(schemas, name, { value, enumerable: true });
 		Object.defineProperty(schemas, uppperName, { value });
-	}
-	const { size } = schemasMap;
-	logger.debug(`${size} schema${size > 1 ? 's' : ''} created`);
+		size++;
+	});
+
+	logger.debug(`${size} schema${size > 1 ? 's' : ''} resolved`);
 	return schemas;
 }
 
