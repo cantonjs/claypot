@@ -32,7 +32,7 @@ export default async function startServer(config) {
 	dbsMap.clear();
 
 	await Plugins.parallel('willResolveSchemas', app);
-	const schemas = resolveSchemas(config);
+	const schemas = resolveSchemas(config.schemas);
 	app.schemas = schemas;
 	Plugins.sync('didResolvedSchemas', schemas, app);
 
@@ -44,7 +44,7 @@ export default async function startServer(config) {
 	Plugins.sync('didCreateCacheStores', cacheStoresMap, app);
 	cacheStoresMap.clear();
 
-	const modelsMap = resolveModels(config);
+	const modelsMap = resolveModels(config.models);
 	await Plugins.sequence('willCreateModels', modelsMap, schemas);
 	const models = createModels(modelsMap, app);
 	app.models = models;

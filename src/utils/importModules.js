@@ -1,12 +1,12 @@
+import config from '../config';
 import { readdirSync } from 'fs';
 import path from 'path';
 
 // Prevent caching of this module so module.parent is always accurate
 const parentFile = module.parent.filename;
-const parentDir = path.dirname(parentFile);
 
 export default function importModules(dir, opts) {
-	dir = path.resolve(parentDir, dir || '');
+	dir = path.resolve(config.baseDir, dir || '');
 	opts = Object.assign({ camelize: true }, opts);
 
 	let files;

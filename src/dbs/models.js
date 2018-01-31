@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { createLogger } from 'pot-logger';
 import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
@@ -8,9 +7,8 @@ const logger = createLogger('model', 'blueBright');
 const models = {};
 const modelsMap = new Map();
 
-export function resolveModels({ baseDir, models: modelsDir }) {
-	const dir = join(baseDir, modelsDir);
-	const vanillaModules = importModules(dir);
+export function resolveModels(modelsDir) {
+	const vanillaModules = importModules(modelsDir);
 
 	Object.keys(vanillaModules).forEach((key) => {
 		let Model = vanillaModules[key];

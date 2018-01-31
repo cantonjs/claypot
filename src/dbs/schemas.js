@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { createLogger } from 'pot-logger';
 import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
@@ -7,9 +6,8 @@ import { lowerFirst, upperFirst } from 'lodash';
 const logger = createLogger('schemas', 'cyanBright');
 const schemas = {};
 
-export function resolveSchemas({ baseDir, schemas: schemasDir }) {
-	const dir = join(baseDir, schemasDir);
-	const vanillaModules = importModules(dir);
+export function resolveSchemas(schemasDir) {
+	const vanillaModules = importModules(schemasDir);
 	let size = 0;
 
 	Object.keys(vanillaModules).forEach((key) => {
