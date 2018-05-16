@@ -1,6 +1,6 @@
 # Claypot
 
-[![disclaimer](https://img.shields.io/badge/disclaimer-work%20on%20my%20machine-brightgreen.svg)](https://github.com/cantonjs/claypot)
+[![disclaimer](https://img.shields.io/badge/disclaimer-works%20on%20my%20machine-brightgreen.svg)](https://github.com/cantonjs/claypot)
 
 Claypot is an efficient, scalable server framework for Node.js.
 
