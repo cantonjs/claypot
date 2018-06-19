@@ -83,4 +83,4 @@ export default new Proxy(
 	},
 );
 
-export const cacheStores = createProxyObject(stores, 'CacheStores');
+export const cacheStores = createProxyObject(() => stores, 'CacheStores');

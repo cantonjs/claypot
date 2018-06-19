@@ -28,4 +28,4 @@ export function getSchemas() {
 	return schemas;
 }
 
-export default createProxyObject(schemas, 'Schema');
+export default createProxyObject(() => schemas, 'Schema');

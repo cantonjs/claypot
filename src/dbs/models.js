@@ -57,4 +57,4 @@ export function getModels() {
 	return models;
 }
 
-export default createProxyObject(models, 'Models');
+export default createProxyObject(() => models, 'Models');

@@ -1,19 +1,24 @@
 import logger from 'pot-logger';
-import { isUndefined } from 'lodash';
+import { isUndefined, isFunction } from 'lodash';
 
 export default function createProxyObject(source, debugName) {
 	const logError = function logError(name) {
 		logger.error(`${debugName} "${name}" is undefined`);
 	};
+
+	const ensureSource = () => (isFunction(source) ? source() : source);
+
 	return new Proxy(
 		{},
 		{
+			...Reflect,
 			get(_, name) {
 				const proxy = new Proxy(
 					{},
 					{
+						...Reflect,
 						get(_, key) {
-							const dist = source[name];
+							const dist = ensureSource()[name];
 							if (isUndefined(dist)) {
 								logError(name);
 								return {}; // avoid throw `undefined.sth()` like error
@@ -21,7 +26,7 @@ export default function createProxyObject(source, debugName) {
 							return dist[key];
 						},
 						set(_, key, value) {
-							const dist = source[name];
+							const dist = ensureSource()[name];
 							if (isUndefined(dist)) {
 								logError(name);
 								return false;
@@ -35,9 +40,6 @@ export default function createProxyObject(source, debugName) {
 					},
 				);
 				return proxy;
-			},
-			ownKeys(target) {
-				return Reflect.ownKeys(target);
 			},
 		},
 	);
