@@ -9,7 +9,8 @@ import { resolveDatabases } from './dbs';
 import { resolveCacheStore, createCacheStores } from './dbs/cache';
 import { resolveModels, createModels } from './dbs/models';
 import { resolveSchemas } from './dbs/schemas';
-import MiddlewareManager from './utils/MiddlewareManager';
+import Middlewares from './utils/Middlewares';
+import httpProxy from './utils/httpProxy';
 import { name, version } from '../package.json';
 
 export default async function startServer(config) {
@@ -51,14 +52,16 @@ export default async function startServer(config) {
 	Plugins.sync('didCreateModels', modelsMap, schemas, app);
 	modelsMap.clear();
 
-	const mManager = new MiddlewareManager(app);
+	const middlewares = new Middlewares(app);
 
 	await Plugins.sequence('initServer', app);
 	await Plugins.sequence('willStartServer', app);
 
-	mManager.resolve();
-	await Plugins.sequence('willApplyMiddlewares', mManager.middlewares(), app);
-	mManager.apply();
+	middlewares.resolve();
+	Plugins.sync('proxy', app, httpProxy, config);
+	Plugins.sync('middleware', app, config);
+	await Plugins.sequence('willApplyMiddlewares', middlewares.list(), app);
+	middlewares.apply();
 	Plugins.sync('didApplyMiddlewares', app);
 
 	const servers = [http.createServer(app.callback())];

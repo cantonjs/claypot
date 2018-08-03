@@ -2,7 +2,7 @@ import config from '../config';
 import { createLogger } from 'pot-logger';
 import importFile from 'import-file';
 import { resolve, normalize } from 'path';
-import { isBoolean, isUndefined } from 'lodash';
+import { isUndefined, flatten } from 'lodash';
 import chalk from 'chalk';
 import mount from 'koa-mount';
 
@@ -23,12 +23,14 @@ const middlewaresWhiteList = [
 	'notFound',
 ];
 
-export default class MiddlewareManager {
+export default class Middlewares {
 	constructor(app) {
-		this._middlewares = [];
+		this._list = [];
+		this._plugins = [];
 		this._app = app;
-		this._use = app.use.bind(app);
+		this._applyMiddleware = app.use.bind(app);
 
+		app.registerPlugins = () => this._list.push(this._plugins);
 		app.mount = (path, ...args) => {
 			const middleware = mount(path, ...args);
 			middleware.keyName = `mount("${path}")`;
@@ -43,29 +45,41 @@ export default class MiddlewareManager {
 					middlewareLogger.trace(`"${arg.keyName}" added`);
 				}
 			});
-			this._middlewares.push(...args);
+			this._list.push(...args);
+			return app;
+		};
+	}
+
+	toResolvePlugins() {
+		const app = this._app;
+		app.use = (...args) => {
+			args.forEach((arg) => {
+				if (arg) {
+					if (!arg.keyName) {
+						arg.keyName = arg.name || 'anonymous';
+					}
+					middlewareLogger.trace(`"${arg.keyName}" plugin middleware added`);
+				}
+			});
+			this._plugins.push(...args);
 			return app;
 		};
 	}
 
 	apply() {
-		const use = this._use;
-		const applyMiddleware = function applyMiddleware(middleware) {
-			if (Array.isArray(middleware)) {
-				middleware.forEach(applyMiddleware);
-			}
-			else {
-				use(middleware);
-			}
-		};
-		this._middlewares.forEach(applyMiddleware);
-		this._middlewares = [];
+		this._list.forEach(this._applyMiddleware);
+		this._list = [];
+		Reflect.deleteProperty(this, 'registerPlugins');
+		Reflect.deleteProperty(this, 'mount');
+		Reflect.deleteProperty(this, 'use');
 	}
 
-	middlewares() {
-		return this._middlewares;
+	list() {
+		this._list = flatten(this._list);
+		return this._list;
 	}
 
+	// resolve built-in middlewares
 	resolve() {
 		let modules = [];
 		if (Array.isArray(config.middlewares)) {
@@ -87,10 +101,7 @@ export default class MiddlewareManager {
 					return returnValue;
 				}
 
-				let options = isBoolean(value) ? {} : value;
-				if (options === 'true') {
-					options = {};
-				}
+				const options = value === true || value === 'true' ? {} : value;
 
 				if (
 					(Array.isArray(options) && !options.length) ||
@@ -124,5 +135,19 @@ export default class MiddlewareManager {
 					middlewareLogger.error(err);
 				}
 			});
+
+		const app = this._app;
+		app.use = (...args) => {
+			args.forEach((arg) => {
+				if (arg) {
+					if (!arg.keyName) {
+						arg.keyName = arg.name || 'anonymous';
+					}
+					middlewareLogger.trace(`"${arg.keyName}" plugin middleware added`);
+				}
+			});
+			this._plugins.push(...args);
+			return app;
+		};
 	}
 }
