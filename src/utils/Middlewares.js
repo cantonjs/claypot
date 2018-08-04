@@ -80,7 +80,7 @@ export default class Middlewares {
 	}
 
 	// resolve built-in middlewares
-	resolve() {
+	async resolve() {
 		let modules = [];
 		if (Array.isArray(config.middlewares)) {
 			modules = config.middlewares;
@@ -92,7 +92,7 @@ export default class Middlewares {
 			}));
 		}
 
-		modules
+		const resolvers = modules
 			.map(({ name, value }) => {
 				const returnValue = { isEnabled: true, name };
 
@@ -120,21 +120,26 @@ export default class Middlewares {
 				}
 				return isEnabled;
 			})
-			.forEach(({ options, name }) => {
-				const module = `./${normalize(name)}`;
+			.map(({ options, name }) => {
+				const modulePath = `./${normalize(name)}`;
 				try {
-					const use = importFile(module, {
+					const use = importFile(modulePath, {
 						cwd: config.baseDir,
 						resolvers: [resolve(__dirname, '../middlewares')],
 						useLoader: false,
 					});
-					use(this._app, options);
+					return () => use(this._app, options);
 				}
 				catch (err) {
-					err.message += ` in "${module}" middleware`;
+					err.message += ` in "${modulePath}" middleware`;
 					middlewareLogger.error(err);
 				}
-			});
+			})
+			.filter(Boolean);
+
+		for (const resolve of resolvers) {
+			await resolve();
+		}
 
 		const app = this._app;
 		app.use = (...args) => {

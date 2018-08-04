@@ -4,8 +4,8 @@ export default function createMiddlewarePlugin(middleware) {
 			this._options = options;
 		}
 
-		middleware(app) {
-			middleware(app, this._options);
+		async middleware(app) {
+			await middleware(app, this._options);
 		}
 	};
 }

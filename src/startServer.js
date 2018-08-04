@@ -57,9 +57,9 @@ export default async function startServer(config) {
 	await Plugins.sequence('initServer', app);
 	await Plugins.sequence('willStartServer', app);
 
-	middlewares.resolve();
+	await middlewares.resolve();
 	Plugins.sync('proxy', app, httpProxy, config);
-	Plugins.sync('middleware', app, config);
+	await Plugins.sequence('middleware', app, config);
 	await Plugins.sequence('willApplyMiddlewares', middlewares.list(), app);
 	middlewares.apply();
 	Plugins.sync('didApplyMiddlewares', app);
