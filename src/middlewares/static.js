@@ -1,28 +1,98 @@
 import koaStatic from 'koa-static';
 import config, { isProd } from '../config';
-import { isString } from 'lodash';
+import { isString, isObject } from 'lodash';
 import { resolve } from 'path';
 import { getLogger } from 'pot-logger';
+import ms from 'ms';
+import send from 'koa-send';
 
-const maxAge = 31536000000; // 365 * 24 * 60 * 60 * 1000
+const defaultMaxAge = ms('1 year');
+
+const parseMaxAge = function parseMaxAge(maxAge) {
+	const ensureMaxAgeValue = function ensureMaxAgeValue(maxAge) {
+		if (!maxAge && maxAge !== 0) return isProd ? defaultMaxAge : 0;
+		else if (isString(maxAge)) return ms(maxAge);
+		return maxAge;
+	};
+
+	if (isObject(maxAge)) {
+		const files = Object.keys(maxAge).reduce(
+			(acc, key) => {
+				acc[key] = ensureMaxAgeValue(maxAge[key]);
+				return acc;
+			},
+			{ '*': ensureMaxAgeValue() },
+		);
+		const rest = files['*'];
+		Reflect.deleteProperty(files, '*');
+		return { rest, files };
+	}
+	return { files: {}, rest: ensureMaxAgeValue(maxAge) };
+};
 
 export default function serveStatic(app, options) {
 	const logger = getLogger('server');
+	const middlewares = [];
 
-	if (isString(options)) {
-		options = { dir: options };
+	middlewares.keyName = 'static';
+
+	const push = (staticConfig) => {
+		const { dir, maxAge, gzip, ...other } = staticConfig;
+		const staticRoot = resolve(config.baseDir, dir);
+		const { files, rest } = parseMaxAge(maxAge);
+
+		logger.debug('static directory', staticRoot);
+
+		const filePaths = Object.keys(files);
+
+		if (filePaths.length) {
+			middlewares.push(async function sendFiles(ctx, next) {
+				let done = false;
+				const { path } = ctx;
+				if (
+					(ctx.method === 'HEAD' || ctx.method === 'GET') &&
+					filePaths.includes(path)
+				) {
+					try {
+						done = await send(ctx, path, {
+							root: staticRoot,
+							...other,
+							gzip: false, // use `compress` middleware instead
+							maxage: files[path],
+						});
+					}
+					catch (err) {
+						if (err.status !== 404) {
+							throw err;
+						}
+					}
+				}
+
+				if (!done) await next();
+			});
+		}
+
+		middlewares.push(
+			koaStatic(staticRoot, {
+				maxAge: rest,
+				...other,
+				gzip: false, // use `compress` middleware instead
+			}),
+		);
+	};
+
+	if (Array.isArray(options)) {
+		options.forEach(push);
+	}
+	else if (isString(options)) {
+		push({ dir: options });
+	}
+	else if (isObject(options)) {
+		push(options);
+	}
+	else {
+		logger.error(`type "${typeof options}" in static option is INVALID.`);
 	}
 
-	const { dir, ...other } = options;
-	const staticDir = resolve(config.baseDir, dir);
-
-	logger.debug('static directory', staticDir);
-
-	return app.use(
-		koaStatic(staticDir, {
-			maxAge: isProd ? maxAge : 0,
-			gzip: isProd,
-			...other,
-		}),
-	);
+	app.use(middlewares);
 }

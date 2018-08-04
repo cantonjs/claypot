@@ -41,6 +41,23 @@ describe('built-in middlewares', () => {
 		expect(res.ok).toBe(true);
 	});
 
+	test('should `static` with maxAge object work', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: {
+				dir: 'fixtures/static',
+				maxAge: {
+					'/hello.html': '1d',
+					'*': '2d',
+				},
+			},
+		});
+		const hello = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
+		expect(hello.headers.get('cache-control')).toBe('max-age=86400');
+		const world = await fetch(`http://localhost:${baseConfig.port}/world.html`);
+		expect(world.headers.get('cache-control')).toBe('max-age=172800');
+	});
+
 	test('should `compress` work', async () => {
 		server = await startPure({
 			...baseConfig,
