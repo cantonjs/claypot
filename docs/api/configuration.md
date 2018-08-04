@@ -61,10 +61,10 @@ _Note: all properties are optional._
 - `static` (Boolean|String|Object): Defining static directory. Defaults to `"static"`.
   - Setting `false` to disable this feature
   - Setting a `<dir>` string to define directory path
-  - Setting an `object` to forward the options to [koa-static](https://github.com/koajs/static). But Please note:
+  - Setting an `object` to forward the options to [koa-static](https://github.com/koajs/static). But please note:
     - You must define an extra `dir` prop for static directory
-    - `gzip` options will always NOT work, please use `compress` option in `claypot` configuration instead
-    - You could use a `maxAge` key/value object to customize max age, i.e. `maxAge: { '/sw.js': 0, '*': 172800 }`. `"*"` means match all files in static directory.
+    - `gzip` option will always NOT work, please use `compress` option in `claypot` configuration instead
+    - You could use a `maxAge` key/value object to customize max age, i.e. `maxAge: { '/sw.js': 0, '*': 172800 }`. `"*"` means match all files in the static directory.
 - `watch` (Boolean|Object): Enable watch mode. Defaults to `false`. Not available in `startPure` method. Here are available props for object config:
   - `enable` (Boolean): Enable `watch`. Defaults to `true`.
   - `dirs` (String|[String]): Defining watching directories.
