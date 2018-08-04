@@ -42,7 +42,7 @@
     "http-proxy": "^1.12.0",
     "import-file": "^1.2.4",
     "koa": "^2.2.0",
-    "koa-compress": "^2.0.0",
+    "koa-compress": "^3.0.0",
     "koa-connect-history-api-fallback": "^0.3.1",
     "koa-error": "^3.0.0",
     "koa-etag": "^2.0.0",

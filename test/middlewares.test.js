@@ -71,6 +71,18 @@ describe('built-in middlewares', () => {
 		expect(headers.get('Transfer-Encoding')).toBe('chunked');
 	});
 
+	test('should not `compress` images', async () => {
+		server = await startPure({
+			...baseConfig,
+			compress: true,
+			static: 'fixtures/static',
+		});
+		const { headers } = await fetch(
+			`http://localhost:${baseConfig.port}/img.jpg`,
+		);
+		expect(headers.get('Content-Encoding')).not.toBe('gzip');
+	});
+
 	test('should `httpError` work', async () => {
 		server = await startPure({
 			...baseConfig,
