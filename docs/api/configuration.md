@@ -49,7 +49,7 @@ _Note: all properties are optional._
 - `overrideConsole` (Boolean): Enable overriding native `console`. Defaults to `false`.
 - `plugins` ([Object]): Defining plugins.
 - `port` (Number): Defining the port of server. Defaults to an available port.
-- `production` (Boolean): Enable `production` mode. Defaults to `false`.
+- `production` (Boolean): Enable `production` mode. Defaults to `true`.
 - `proxy` (Object): Defining HTTP proxies. e.g. `{ '/my/path/': 'http://anti.proxy.com/' }`. See [HTTP Proxy](/guides/http_proxy.md) for detail.
 - `responseTime` (Boolean): Enable `x-response-time` to HTTP response header. Defaults to `true`.
 - `schemas` (String): Defining schemas files directory. Defaults to `"schemas"`.
