@@ -11,6 +11,11 @@ const startClaypotMonitor = async (config) => {
 		workspace,
 		configToEnv: 'CLAYPOT_CONFIG',
 		entry: resolve(__dirname, 'server.js'),
+		env: {
+			NODE_ENV:
+				(config.env && config.env.NODE_ENV) ||
+				(config.production ? 'production' : 'development'),
+		},
 	});
 
 	if (config.outputHost && config.outputHost.enable) {
