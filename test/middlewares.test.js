@@ -44,7 +44,7 @@ describe('built-in middlewares', () => {
 	test('should `static` with array work', async () => {
 		server = await startPure({
 			...baseConfig,
-			static: [{ dir: 'fixtures/static' }, { dir: 'fixtures/history' }],
+			static: [{ dir: 'fixtures/history' }, 'fixtures/static'],
 		});
 		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
 		expect(res.ok).toBe(true);

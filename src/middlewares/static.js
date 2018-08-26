@@ -37,6 +37,7 @@ export default function serveStatic(app, options) {
 	middlewares.keyName = 'static';
 
 	const push = (staticConfig) => {
+		if (isString(staticConfig)) staticConfig = { dir: staticConfig };
 		const { dir, maxAge, gzip, ...other } = staticConfig;
 		const staticRoot = resolve(config.baseDir, dir);
 		const { files, rest } = parseMaxAge(maxAge);
@@ -84,15 +85,7 @@ export default function serveStatic(app, options) {
 	if (Array.isArray(options)) {
 		options.forEach(push);
 	}
-	else if (isString(options)) {
-		push({ dir: options });
-	}
-	else if (isObject(options)) {
-		push(options);
-	}
-	else {
-		logger.error(`type "${typeof options}" in static option is INVALID.`);
-	}
+	else push(options);
 
 	app.use(middlewares);
 }

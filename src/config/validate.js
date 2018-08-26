@@ -77,7 +77,12 @@ const propTypes = {
 			port: number,
 		}),
 	]),
-	static: oneOfType([bool, string, object, arrayOf(object)]),
+	static: oneOfType([
+		bool,
+		string,
+		object,
+		arrayOf(oneOfType([object, string])),
+	]),
 	watch: oneOfType([
 		bool,
 		shape({
