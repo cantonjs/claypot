@@ -41,6 +41,15 @@ describe('built-in middlewares', () => {
 		expect(res.ok).toBe(true);
 	});
 
+	test('should `static` with array work', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: [{ dir: 'fixtures/static' }, { dir: 'fixtures/history' }],
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
+		expect(res.ok).toBe(true);
+	});
+
 	test('should `static` with maxAge object work', async () => {
 		server = await startPure({
 			...baseConfig,
