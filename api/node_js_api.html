@@ -377,34 +377,34 @@
 <p>Claypot provides a Node.js API which can be used directly in Node.js runtime.</p>
 <p>The Node.js API is useful in scenarios in which you need to write models or plugins.</p>
 <h2 id="example">Example</h2>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cache, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cache, logger } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyModel</span> </span>{
-    <span class="hljs-keyword">async</span> hello() {
-        <span class="hljs-keyword">const</span> message = <span class="hljs-keyword">await</span> cache.get(<span class="hljs-string">&apos;myMessage&apos;</span>);
-        logger.debug(message);
-        <span class="hljs-comment">// do sth...</span>
-    }
+  <span class="hljs-keyword">async</span> hello() {
+    <span class="hljs-keyword">const</span> message = <span class="hljs-keyword">await</span> cache.get(<span class="hljs-string">&quot;myMessage&quot;</span>);
+    logger.debug(message);
+    <span class="hljs-comment">// do sth...</span>
+  }
 }
 </code></pre>
 <h2 id="api-reference">API Reference</h2>
 <h4 id="startopitons">start([opitons])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { start } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { start } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Starting a Claypot server under process monitor.</p>
 <h6 id="arguments">Arguments</h6>
 <ul>
-<li><code>options</code> (Object): Please checkout <a href="configuration.html">congiguration</a></li>
+<li><code>options</code> (Object): Please checkout <a href="configuration.html">configuration</a></li>
 </ul>
 <h4 id="startpureopitons">startPure([opitons])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { start } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { start } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Starting a Claypot server without process monitor.</p>
 <h6 id="arguments">Arguments</h6>
 <ul>
-<li><code>options</code> (Object): Please checkout <a href="configuration.html">congiguration</a></li>
+<li><code>options</code> (Object): Please checkout <a href="configuration.html">configuration</a></li>
 </ul>
 <h4 id="stopoptions">stop([options])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { stop } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { stop } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Stopping a Claypot server.</p>
 <h6 id="arguments">Arguments</h6>
@@ -416,13 +416,13 @@
 </li>
 </ul>
 <h4 id="config-object">config Object</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { config } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { config } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get the configuration object. (READ ONLY)</p>
 <h6 id="tips">Tips</h6>
 <p>It useful to use <code>config.production</code> to detect current environment.</p>
 <h4 id="cache-object">cache Object</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cache } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get the default cache store.</p>
 <p>A cache store is powered by <a href="https://github.com/BryanDonovan/node-cache-manager" target="_blank">cache-manager</a> which provides the following methods:</p>
@@ -434,44 +434,44 @@
 <p>All of these methods returns a promise.</p>
 <p>Please checkout <a href="https://github.com/BryanDonovan/node-cache-manager" target="_blank">cache-manager</a> for detail.</p>
 <h4 id="cachestores-object">cacheStores Object</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cacheStores } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { cacheStores } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get all cache stores. Claypot support multi cache stores by defining <code>dbs</code> configuration.</p>
 <h4 id="models-object">models Object</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { models } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { models } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get models.</p>
 <h4 id="logger-object">logger Object</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { logger } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { logger } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get the default logger.</p>
 <p>Claypot provides a powerful log system powered by <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a>. A logger provides a set of log levels, such as <code>logger.debug()</code>, <code>logger.info()</code>, <code>logger.error()</code>, etc. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="createloggercategory-description">createLogger(category[, description])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Create a custom logger. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="getloggercategory">getLogger(category)</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { getLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { getLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get logger by category. If not found, it would return the default logger. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="ensureloggercategory-description">ensureLogger(category[, description])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { getLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { getLogger } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Get logger by category. If not found, create one. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="setloggerskeystringorconfigobject-value">setLoggers(keyStringOrConfigObject[, value])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { setLoggers } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { setLoggers } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Set loggers. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="overrideconsolelogger">overrideConsole([logger])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { overrideConsole } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { overrideConsole } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Override native console. Notice that console.log() will be equal with logger.info(). Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="resetconsole">resetConsole()</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { resetConsole } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { resetConsole } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Reset console to the native one. Only work after overrideConsole() run. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 <h4 id="overrideconsoleinruntimestartrun-logger">overrideConsoleInRuntime(startRun[, logger])</h4>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> { overrideConsoleInRuntime } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;claypot&apos;</span>;
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { overrideConsoleInRuntime } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;claypot&quot;</span>;
 </code></pre>
 <p>Override native console in startRun function runtime. Please checkout <a href="https://github.com/cantonjs/pot-logger" target="_blank">pot-logger</a> for detail.</p>
 
@@ -517,7 +517,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Node.js API","level":"1.3.2","depth":2,"next":{"title":"Configuration","level":"1.3.3","depth":2,"path":"api/configuration.md","ref":"api/configuration.md","articles":[]},"previous":{"title":"Command Line Interface","level":"1.3.1","depth":2,"path":"api/cli.md","ref":"api/cli.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/node_js_api.md","mtime":"2018-01-27T10:14:50.041Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-20T15:58:59.917Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Node.js API","level":"1.3.2","depth":2,"next":{"title":"Configuration","level":"1.3.3","depth":2,"path":"api/configuration.md","ref":"api/configuration.md","articles":[]},"previous":{"title":"Command Line Interface","level":"1.3.1","depth":2,"path":"api/cli.md","ref":"api/cli.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/node_js_api.md","mtime":"2018-09-25T15:52:18.118Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-25T15:52:59.304Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
