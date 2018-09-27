@@ -45,7 +45,6 @@
     "koa-compress": "^3.0.0",
     "koa-connect-history-api-fallback": "^0.3.1",
     "koa-error": "^3.0.0",
-    "koa-etag": "^2.0.0",
     "koa-favicon": "^2.0.0",
     "koa-helmet": "^3.1.0",
     "koa-mount": "^3.0.0",
@@ -60,7 +59,6 @@
     "prop-types": "^15.5.10",
     "qiniu": "^6.1.13",
     "raw-body": "^2.2.0",
-    "redis": "^2.6.3",
     "skeeler": "^0.1.0",
     "yargs": "^6.5.0"
   },
