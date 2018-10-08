@@ -15,6 +15,7 @@ const startClaypotMonitor = async (config) => {
 			NODE_ENV:
 				(config.env && config.env.NODE_ENV) ||
 				(config.production ? 'production' : 'development'),
+			...config.env,
 		},
 	});
 

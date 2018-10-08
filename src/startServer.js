@@ -42,14 +42,14 @@ export default async function startServer(config) {
 	const { cacheStores, cache } = createCacheStores(cacheStoresMap);
 	app.cache = cache;
 	app.cacheStores = cacheStores;
-	Plugins.sync('didCreateCacheStores', cacheStoresMap, app);
+	Plugins.sync('didCreateCacheStores', cacheStores, app);
 	cacheStoresMap.clear();
 
 	const modelsMap = resolveModels(config.models);
 	await Plugins.sequence('willCreateModels', modelsMap, schemas);
 	const models = createModels(modelsMap, app);
 	app.models = models;
-	Plugins.sync('didCreateModels', modelsMap, schemas, app);
+	Plugins.sync('didCreateModels', models, schemas, app);
 	modelsMap.clear();
 
 	const middlewares = new Middlewares(app);
