@@ -3764,6 +3764,15 @@ import-file@^1.2.4:
     rechoir "^0.6.2"
     require-reload "^0.2.2"
 
+import-file@^1.4.0:
+  version "1.4.0"
+  resolved "http://registry.npm.taobao.org/import-file/download/import-file-1.4.0.tgz#d82ae06462ee90f6c1ee4b2bb9563c6153196b5b"
+  dependencies:
+    find-up "^2.1.0"
+    interpret "^1.1.0"
+    rechoir "^0.6.2"
+    require-reload "^0.2.2"
+
 import-lazy@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/import-lazy/download/import-lazy-2.1.0.tgz#05698e3d45c88e8d7e9d92cb0584e77f096f3e43"
@@ -3888,6 +3897,10 @@ inquirer@^3.0.6:
 interpret@^1.0.1:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/interpret/download/interpret-1.0.3.tgz#cbc35c62eeee73f19ab7b10a801511401afc0f90"
+
+interpret@^1.1.0:
+  version "1.1.0"
+  resolved "http://registry.npm.taobao.org/interpret/download/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
 into-stream@^2.0.0:
   version "2.0.1"
