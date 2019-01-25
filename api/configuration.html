@@ -413,13 +413,14 @@
 <li><code>models</code> (String): Defining models files directory. Defaults to <code>&quot;models&quot;</code>.</li>
 <li><code>name</code> (String): Defining server name. Defaults to the basename of <code>process.cwd()</code>.</li>
 <li><code>notFound</code> (Boolean): Enable 404 handling. Defaults to <code>true</code>.</li>
-<li><code>outputHost</code> (Boolean|Object): Output host info for development. Checkout <a href="https://github.com/die-welle/output-host" target="_blank">output-host</a> for detail. Defaults to <code>true</code> in <code>development</code> mode. Not available in <code>startPure</code> method.</li>
+<li><code>outputHost</code> (Boolean|Object): Output host info for development. Please checkout <a href="https://github.com/die-welle/output-host" target="_blank">output-host</a> for detail. Defaults to <code>true</code> in <code>development</code> mode. Not available in <code>startPure</code> method.</li>
 <li><code>overrideConsole</code> (Boolean): Enable overriding native <code>console</code>. Defaults to <code>false</code>.</li>
 <li><code>plugins</code> ([Object]): Defining plugins.</li>
 <li><code>port</code> (Number): Defining the port of server. Defaults to an available port.</li>
 <li><code>production</code> (Boolean): Enable <code>production</code> mode. Defaults to <code>true</code>.</li>
 <li><code>proxy</code> (Object): Defining HTTP proxies. e.g. <code>{ &apos;/my/path/&apos;: &apos;http://anti.proxy.com/&apos; }</code>. See <a href="../guides/http_proxy.html">HTTP Proxy</a> for detail.</li>
 <li><code>responseTime</code> (Boolean): Enable <code>x-response-time</code> to HTTP response header. Defaults to <code>true</code>.</li>
+<li><code>rewrites</code> (Object): URL Rewrite by setting a key/value object. e.g <code>{ &apos;/assets/(.*)&apos;: &apos;/js/$1&apos; }</code>. Please checkout <a href="https://github.com/koajs/rewrite" target="_blank">koa-rewrite</a> for detail.</li>
 <li><code>schemas</code> (String): Defining schemas files directory. Defaults to <code>&quot;schemas&quot;</code>.</li>
 <li><code>ssl</code> (Boolean|Object): Enable SSL. Defaults to <code>false</code>. Here are available props for object config:<ul>
 <li><code>enable</code> (Boolean): Enable <code>ssl</code>. Defaults to <code>true</code>.</li>
@@ -431,10 +432,12 @@
 <li><code>static</code> (Boolean|String|Object): Defining static directory. Defaults to <code>&quot;static&quot;</code>.<ul>
 <li>Setting <code>false</code> to disable this feature</li>
 <li>Setting a <code>&lt;dir&gt;</code> string to define directory path</li>
-<li>Setting an <code>object</code> to forward the options to <a href="https://github.com/koajs/static" target="_blank">koa-static</a>. But please note:<ul>
+<li>Setting an <code>object</code> to forward the options to <a href="https://github.com/koajs/send" target="_blank">koa-send</a>. But please note:<ul>
 <li>You must define an extra <code>dir</code> prop for static directory</li>
 <li><code>gzip</code> option will always NOT work, please use <code>compress</code> option in <code>claypot</code> configuration instead</li>
-<li>You could use a <code>maxAge</code> key/value object to customize max age, i.e. <code>maxAge: { &apos;/sw.js&apos;: 0, &apos;*&apos;: 172800 }</code>. <code>&quot;*&quot;</code> means match all files in the static directory.</li>
+<li>New <code>match</code> option (using <a href="https://github.com/sindresorhus/multimatch" target="_blank">multimatch</a>) for filtering paths</li>
+<li><code>maxAge</code> option will be <code>0</code> on <code>.html</code> file by default. That means it will NOT cache HTML file by default</li>
+<li>If you want to make <code>maxAge</code> work on <code>.html</code> file, please set <code>cacheHtmlFile: true</code></li>
 </ul>
 </li>
 </ul>
@@ -486,7 +489,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Configuration","level":"1.3.3","depth":2,"next":{"title":"Advanced (TODO)","level":"1.4","depth":1,"ref":"","articles":[{"title":"Plugin (TODO)","level":"1.4.1","depth":2,"ref":"","articles":[]},{"title":"Clay Injection (TODO)","level":"1.4.2","depth":2,"ref":"","articles":[]},{"title":"Models (TODO)","level":"1.4.3","depth":2,"ref":"","articles":[]},{"title":"Cache (TODO)","level":"1.4.4","depth":2,"ref":"","articles":[]}]},"previous":{"title":"Node.js API","level":"1.3.2","depth":2,"path":"api/node_js_api.md","ref":"api/node_js_api.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/configuration.md","mtime":"2018-08-20T15:56:50.890Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-09-25T15:52:59.304Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Configuration","level":"1.3.3","depth":2,"next":{"title":"Advanced (TODO)","level":"1.4","depth":1,"ref":"","articles":[{"title":"Plugin (TODO)","level":"1.4.1","depth":2,"ref":"","articles":[]},{"title":"Clay Injection (TODO)","level":"1.4.2","depth":2,"ref":"","articles":[]},{"title":"Models (TODO)","level":"1.4.3","depth":2,"ref":"","articles":[]},{"title":"Cache (TODO)","level":"1.4.4","depth":2,"ref":"","articles":[]}]},"previous":{"title":"Node.js API","level":"1.3.2","depth":2,"path":"api/node_js_api.md","ref":"api/node_js_api.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"api/configuration.md","mtime":"2019-01-25T12:19:56.366Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-25T12:20:57.374Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
