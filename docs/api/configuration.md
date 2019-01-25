@@ -45,13 +45,14 @@ _Note: all properties are optional._
 - `models` (String): Defining models files directory. Defaults to `"models"`.
 - `name` (String): Defining server name. Defaults to the basename of `process.cwd()`.
 - `notFound` (Boolean): Enable 404 handling. Defaults to `true`.
-- `outputHost` (Boolean|Object): Output host info for development. Checkout [output-host](https://github.com/die-welle/output-host) for detail. Defaults to `true` in `development` mode. Not available in `startPure` method.
+- `outputHost` (Boolean|Object): Output host info for development. Please checkout [output-host](https://github.com/die-welle/output-host) for detail. Defaults to `true` in `development` mode. Not available in `startPure` method.
 - `overrideConsole` (Boolean): Enable overriding native `console`. Defaults to `false`.
 - `plugins` ([Object]): Defining plugins.
 - `port` (Number): Defining the port of server. Defaults to an available port.
 - `production` (Boolean): Enable `production` mode. Defaults to `true`.
 - `proxy` (Object): Defining HTTP proxies. e.g. `{ '/my/path/': 'http://anti.proxy.com/' }`. See [HTTP Proxy](/guides/http_proxy.md) for detail.
 - `responseTime` (Boolean): Enable `x-response-time` to HTTP response header. Defaults to `true`.
+- `rewrites` (Object): URL Rewrite by setting a key/value object. e.g `{ '/assets/(.*)': '/js/$1' }`. Please checkout [koa-rewrite](https://github.com/koajs/rewrite) for detail.
 - `schemas` (String): Defining schemas files directory. Defaults to `"schemas"`.
 - `ssl` (Boolean|Object): Enable SSL. Defaults to `false`. Here are available props for object config:
   - `enable` (Boolean): Enable `ssl`. Defaults to `true`.
@@ -61,10 +62,12 @@ _Note: all properties are optional._
 - `static` (Boolean|String|Object): Defining static directory. Defaults to `"static"`.
   - Setting `false` to disable this feature
   - Setting a `<dir>` string to define directory path
-  - Setting an `object` to forward the options to [koa-static](https://github.com/koajs/static). But please note:
+  - Setting an `object` to forward the options to [koa-send](https://github.com/koajs/send). But please note:
     - You must define an extra `dir` prop for static directory
     - `gzip` option will always NOT work, please use `compress` option in `claypot` configuration instead
-    - You could use a `maxAge` key/value object to customize max age, i.e. `maxAge: { '/sw.js': 0, '*': 172800 }`. `"*"` means match all files in the static directory.
+    - New `match` option (using [multimatch](https://github.com/sindresorhus/multimatch)) for filtering paths
+    - `maxAge` option will be `0` on `.html` file by default. That means it will NOT cache HTML file by default
+    - If you want to make `maxAge` work on `.html` file, please set `cacheHtmlFile: true`
 - `watch` (Boolean|Object): Enable watch mode. Defaults to `false`. Not available in `startPure` method. Here are available props for object config:
   - `enable` (Boolean): Enable `watch`. Defaults to `true`.
   - `dirs` (String|[String]): Defining watching directories.
