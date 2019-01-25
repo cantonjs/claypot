@@ -17,7 +17,7 @@ export const start = (args = [], options) => {
 
 export const stop = async () => {
 	try {
-		execSync('pot stopall -f --workspace claypot');
+		execSync(`cross-env CLAYPOT_DEV=true ${command} stop -f`);
 		await Kapok.killAll();
 	}
 	catch (err) {
