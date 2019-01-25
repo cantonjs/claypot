@@ -17,6 +17,7 @@ const middlewaresWhiteList = [
 	'favicon',
 	'clayInjection',
 	'plugins',
+	'rewrites',
 	'proxy',
 	'historyAPIFallback',
 	'static',

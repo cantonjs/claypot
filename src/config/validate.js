@@ -67,6 +67,7 @@ const propTypes = {
 	production: bool,
 	proxy: object,
 	responseTime: bool,
+	rewrites: oneOfType([arrayOf(oneOfType([string, bool])), object]),
 	root: deprecated(string, 'please use "cwd" and "baseDir" instead'),
 	schemas: string,
 	ssl: oneOfType([

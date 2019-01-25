@@ -126,4 +126,24 @@ describe('built-in middlewares', () => {
 		const res = await fetch(`http://localhost:${baseConfig.port}/world`);
 		expect(res.ok).toBe(true);
 	});
+
+	test('should `rewrites` work', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: 'fixtures/history',
+			rewrites: { '/baz/(.*)': '/$1.html' },
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/baz/foo/bar`);
+		expect(res.ok).toBe(true);
+	});
+
+	test('should `rewrites` work with array', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: 'fixtures/history',
+			rewrites: ['/baz/(.*)', '/$1.html'],
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/baz/foo/bar`);
+		expect(res.ok).toBe(true);
+	});
 });
