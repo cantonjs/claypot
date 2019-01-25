@@ -6,14 +6,20 @@ import serveStatic from './serveStatic';
 
 export function createClay(ctx) {
 	const logger = getLogger('server');
-	logger.debug('create clay');
 	const clay = {};
 
-	clay.cache = getCache(); // inject cache
-	clay.cacheStores = getCacheStores(); // inject cacheStores
-	clay.models = getModels(); // inject models
-	clay.send = (...args) => send(ctx, ...args); // should deprecated
+	logger.trace('inject clay.cache');
+	clay.cache = getCache();
 
+	logger.trace('inject clay.cacheStores');
+	clay.cacheStores = getCacheStores();
+
+	logger.trace('inject clay.models');
+	clay.models = getModels();
+
+	clay.send = (...args) => send(ctx, ...args);
+
+	logger.trace('inject clay.serveStatic');
 	serveStatic(ctx);
 
 	ctx.clay = clay;
