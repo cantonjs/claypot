@@ -36,6 +36,7 @@
   "dependencies": {
     "cache-manager": "^2.4.0",
     "chalk": "^2.1.0",
+    "connect-history-api-fallback": "^1.6.0",
     "find-port-sync": "^1.1.0",
     "gradient-string": "^0.1.1",
     "http-ask": "^0.0.0-rc1",
@@ -43,7 +44,6 @@
     "import-file": "^1.4.0",
     "koa": "^2.2.0",
     "koa-compress": "^3.0.0",
-    "koa-connect-history-api-fallback": "^0.3.1",
     "koa-error": "^3.0.0",
     "koa-favicon": "^2.0.0",
     "koa-helmet": "^4.0.0",

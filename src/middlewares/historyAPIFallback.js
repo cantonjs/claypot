@@ -1,7 +1,17 @@
-import history from 'koa-connect-history-api-fallback';
+import connectHistoryAPIFallback from 'connect-history-api-fallback';
+
+function createHistoryAPIFallbackMiddleware(options) {
+	const connect = connectHistoryAPIFallback(options);
+	const noop = function () {};
+
+	const historyAPIFallbackMiddleware = async (ctx, next) => {
+		connect(ctx, null, noop);
+		return next();
+	};
+	historyAPIFallbackMiddleware.keyName = 'historyAPIFallback';
+	return historyAPIFallbackMiddleware;
+}
 
 export default (app, options) => {
-	const middleware = history(options);
-	middleware.keyName = 'historyAPIFallback';
-	return app.use(middleware);
+	return app.use(createHistoryAPIFallbackMiddleware(options));
 };
