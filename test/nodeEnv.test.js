@@ -35,8 +35,6 @@ describe('start server', () => {
 				.assertUntil(new RegExp(version))
 				.assert(/0 schema resolved/)
 				.assert(/0 model created/)
-				.assert(/static directory/)
-
 				// .assert(/Local URL/)
 				// .assert(/External URL/)
 				.assertUntil(/ready/, {
