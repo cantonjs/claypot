@@ -39,6 +39,8 @@ export default function applyDefaults(config, userConfig, isProd) {
 		overrideConsole: daemon,
 		plugins: [],
 		port,
+		postproxy: {},
+		preproxy: {},
 		production: isProd,
 		proxy: {},
 		responseTime: true,
