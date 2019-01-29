@@ -64,6 +64,8 @@ const propTypes = {
 		]),
 	),
 	port: number,
+	postproxy: object,
+	preproxy: object,
 	production: bool,
 	proxy: object,
 	responseTime: bool,

@@ -14,13 +14,15 @@ const middlewaresWhiteList = [
 	'compress',
 	'httpError',
 	'helmet',
+	'rewrites',
 	'favicon',
 	'clayInjection',
+	'preproxy',
 	'plugins',
-	'rewrites',
 	'proxy',
 	'historyAPIFallback',
 	'static',
+	'postproxy',
 	'notFound',
 ];
 

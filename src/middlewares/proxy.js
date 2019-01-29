@@ -1,10 +1,6 @@
-import httpProxy from '../utils/httpProxy';
-import { forEach, isObject } from 'lodash';
+import createProxyMiddleware from '../utils/createProxyMiddleware';
 
-export default function proxy(app, options) {
-	forEach(options, (config, pathname) => {
-		const proxyConfig = isObject(config) ? { pathname, ...config } : config;
-		const proxyMiddleware = httpProxy(proxyConfig);
-		proxyMiddleware && app.mount(pathname, proxyMiddleware);
-	});
+// The `proxy` middleware hook will be apply after `plugin` middleware, before `static` middleware
+export default function proxy(...args) {
+	createProxyMiddleware(...args);
 }
