@@ -50,40 +50,52 @@ describe('built-in middlewares', () => {
 		expect(res.ok).toBe(true);
 	});
 
+	test('should `static.isEnabled = false` option work', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: {
+				dir: 'fixtures/static',
+				isEnabled: false,
+			},
+		});
+		const res = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
+		expect(res.ok).toBe(false);
+	});
+
 	test('should `static.maxAge` option work', async () => {
 		server = await startPure({
 			...baseConfig,
 			static: {
 				dir: 'fixtures/static',
-				maxAge: '2d',
+				maxAge: '3d',
 			},
 		});
 		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
-		expect(img.headers.get('cache-control')).toBe('max-age=172800');
+		expect(img.headers.get('cache-control')).toBe('max-age=259200');
 	});
 
-	test('should not cache html file', async () => {
+	test('should `static.test` option work', async () => {
+		server = await startPure({
+			...baseConfig,
+			static: { dir: 'fixtures/static', test: '**/*.js' },
+		});
+		const js = await fetch(`http://localhost:${baseConfig.port}/script.js`);
+		expect(js.ok).toBe(true);
+		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
+		expect(img.ok).toBe(false);
+	});
+
+	test('should `static.rules` option work', async () => {
 		server = await startPure({
 			...baseConfig,
 			static: {
 				dir: 'fixtures/static',
-				maxAge: '2d',
+				maxAge: '1d',
+				rules: [{ test: '**/*.js', maxAge: 0 }],
 			},
 		});
-		const hello = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
-		expect(hello.headers.get('cache-control')).toBe('max-age=0');
-	});
-
-	test('should `static.match` option work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: [
-				{ dir: 'fixtures/static', match: '**/*.js', maxAge: '2d' },
-				{ dir: 'fixtures/static', maxAge: '1d' },
-			],
-		});
 		const js = await fetch(`http://localhost:${baseConfig.port}/script.js`);
-		expect(js.headers.get('cache-control')).toBe('max-age=172800');
+		expect(js.headers.get('cache-control')).toBe('max-age=0');
 		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
 		expect(img.headers.get('cache-control')).toBe('max-age=86400');
 	});

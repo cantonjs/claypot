@@ -6,40 +6,43 @@ import ms from 'ms';
 import send from 'koa-send';
 import multimatch from 'multimatch';
 
-const defaultMaxAge = ms('1 year');
+const defaultMaxAge = ms('2 days');
 
 const { baseDir } = claypotConfig;
 
-const getMaxAge = (maxAge, cacheHtmlFile, path) => {
-	if (!cacheHtmlFile && path.endsWith('.html')) return 0;
+const getMaxAge = (maxAge) => {
 	if (!maxAge && maxAge !== 0) return isProd ? defaultMaxAge : 0;
 	return isString(maxAge) ? ms(maxAge) : maxAge;
 };
 
 export default (ctx) => {
 	ctx.serveStatic = async function serveStatic(config) {
+		const { path, method } = ctx;
+		if (method !== 'HEAD' && method !== 'GET') return false;
+
 		const logger = getLogger('server');
-		logger.debug('serve static', config);
 
 		if (isString(config)) config = { dir: config };
-		const { dir, match, maxAge, gzip, cacheHtmlFile, ...restOpts } = config;
-		const root = resolve(baseDir, dir);
+		const { dir, root: absoluteDir, rules, gzip, ...restOpts } = config;
+		logger.trace('serve static', config);
+		const root = absoluteDir || resolve(baseDir, dir);
 
-		dir && logger.debug('static directory', root);
+		const validate = (rule) => {
+			if (!rule || rule.isEnabled === false) return false;
+			const pattern = rule.test || rule.match;
+			return !pattern || multimatch(path, pattern).length;
+		};
 
-		if (restOpts.index !== false) {
-			restOpts.index = restOpts.index || 'index.html';
-		}
-
-		const { path, method } = ctx;
-		if (
-			(method === 'HEAD' || method === 'GET') &&
-			(!match || multimatch(path, match).length)
-		) {
+		const handleSend = async (option) => {
 			try {
-				const maxage = getMaxAge(maxAge, cacheHtmlFile, path);
+				const maxage = getMaxAge(option.maxAge);
+
+				if (option.index !== false) {
+					option.index = option.index || 'index.html';
+				}
+
 				return await send(ctx, path, {
-					...restOpts,
+					...option,
 					root,
 					gzip: false, // use `compress` middleware instead
 					maxage,
@@ -50,6 +53,23 @@ export default (ctx) => {
 					throw err;
 				}
 			}
+		};
+
+		if (rules) {
+			if (!Array.isArray(rules)) {
+				logger.warn(
+					'expected servieStatic option "rules" to be an array,',
+					`but received "${typeof rules}"`,
+				);
+			}
+			else {
+				for (const rule of rules.filter(validate)) {
+					const done = await handleSend({ ...restOpts, ...rule });
+					if (done) return true;
+				}
+			}
 		}
+
+		return validate(restOpts) && handleSend(restOpts);
 	};
 };
