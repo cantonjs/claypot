@@ -4,7 +4,7 @@ import { getModels } from '../dbs/models';
 import { getCache, getCacheStores } from '../dbs/cache';
 import serveStatic from './serveStatic';
 
-export function createClay(ctx) {
+export async function createClay(ctx, next) {
 	const logger = getLogger('server');
 	const clay = {};
 
@@ -23,4 +23,6 @@ export function createClay(ctx) {
 	serveStatic(ctx);
 
 	ctx.clay = clay;
+
+	await next();
 }
