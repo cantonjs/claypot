@@ -5,9 +5,8 @@ import { lowerFirst, upperFirst } from 'lodash';
 
 const logger = createLogger('model', 'blueBright');
 const models = {};
-const modelsMap = new Map();
 
-export function resolveModels(modelsDir) {
+export function resolveModels(modelsMap, modelsDir) {
 	const vanillaModules = importModules(modelsDir);
 
 	Object.keys(vanillaModules).forEach((key) => {
@@ -50,7 +49,7 @@ export function createModels(modelsMap) {
 }
 
 export function getModelKeys() {
-	return [...modelsMap.keys()];
+	return Object.keys(models);
 }
 
 export function getModels() {

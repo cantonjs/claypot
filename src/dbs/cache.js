@@ -9,9 +9,8 @@ let stores = {};
 let cache;
 let defaultCacheKey;
 
-export function resolveCacheStore(appConfig) {
+export function resolveCacheStore(cacheStoresMap, appConfig) {
 	const { dbs } = appConfig;
-	const cacheStoresMap = new Map();
 
 	stores = {};
 	cache = null;

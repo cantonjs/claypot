@@ -2,6 +2,7 @@ import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
 import { createLogger } from 'pot-logger';
+import CorePlugin from './corePlugin';
 
 let plugins = [];
 const logger = createLogger('plugin', 'cyan');
@@ -60,6 +61,8 @@ function init(config) {
 			}
 		})
 		.filter(Boolean);
+
+	plugins.unshift(new CorePlugin(config));
 }
 
 const findCurrentPlugins = (phase) => plugins.filter((plugin) => plugin[phase]);
@@ -77,10 +80,10 @@ const traceApplied = (plugin, phase) => {
 export default {
 	init,
 	sync(phase, ...args) {
-		findCurrentPlugins(phase).forEach((plugin) => {
+		for (const plugin of findCurrentPlugins(phase)) {
 			plugin[phase](...args);
 			traceApplied(plugin, phase);
-		});
+		}
 	},
 	async sequence(phase, ...args) {
 		for (const plugin of findCurrentPlugins(phase)) {

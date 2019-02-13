@@ -1,9 +1,9 @@
 // start without monitor
 
-import startServer from './startServer';
+import boot from './boot';
 import { initConfig, resetConfig } from './config';
 
 export default async function startPure(config) {
 	resetConfig();
-	return startServer(initConfig(config));
+	return boot(initConfig(config));
 }

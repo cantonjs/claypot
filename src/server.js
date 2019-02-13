@@ -3,7 +3,7 @@
 import { initProcessConfig } from './config';
 import { createLogger } from 'pot-logger';
 import chalk from 'chalk';
-import startServer from './startServer';
+import boot from './boot';
 
 const serverLogger = createLogger('server', 'yellow');
 
@@ -15,7 +15,7 @@ const serverLogger = createLogger('server', 'yellow');
 		host && serverLogger.trace('HTTP host', chalk.magenta(host));
 		serverLogger.trace('HTTP port', chalk.magenta(port));
 
-		await startServer(config);
+		await boot(config);
 
 		serverLogger.info(chalk.green('ready'));
 	}

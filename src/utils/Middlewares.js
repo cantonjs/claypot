@@ -53,28 +53,9 @@ export default class Middlewares {
 		};
 	}
 
-	toResolvePlugins() {
-		const app = this._app;
-		app.use = (...args) => {
-			args.forEach((arg) => {
-				if (arg) {
-					if (!arg.keyName) {
-						arg.keyName = arg.name || 'anonymous';
-					}
-					middlewareLogger.trace(`"${arg.keyName}" plugin middleware added`);
-				}
-			});
-			this._plugins.push(...args);
-			return app;
-		};
-	}
-
 	apply() {
 		this._list.forEach(this._applyMiddleware);
 		this._list = [];
-		Reflect.deleteProperty(this, 'registerPlugins');
-		Reflect.deleteProperty(this, 'mount');
-		Reflect.deleteProperty(this, 'use');
 	}
 
 	list() {
