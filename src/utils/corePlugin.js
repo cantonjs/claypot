@@ -4,10 +4,6 @@ import { resolveSchemas } from '../dbs/schemas';
 import { resolveCacheStore, createCacheStores } from '../dbs/cache';
 import { resolveModels, createModels } from '../dbs/models';
 import { name, version } from '../../package.json';
-import http from 'http';
-import https from 'https';
-import getCertOption from '../utils/getCertOption';
-import { listenToServer, closeServer } from '../utils/listenToServer';
 
 export default class Boot {
 	constructor(config) {
@@ -57,22 +53,7 @@ export default class Boot {
 	}
 
 	async listenToServer(app) {
-		const { host, port, baseDir, ssl } = this._config;
-
-		const servers = [http.createServer(app.callback())];
-		const listens = [listenToServer(servers[0], port, host)];
-
-		if (ssl && ssl.enable !== false) {
-			const { port: httpsPort, key, cert } = ssl;
-			const options = getCertOption(baseDir, key, cert);
-			const httpsServer = https.createServer(options, app.callback());
-			servers.push(httpsServer);
-			listens.push(listenToServer(httpsServer, httpsPort, host));
-		}
-
-		app.close = () => Promise.all(servers.map(closeServer));
-
-		await Promise.all(listens);
+		return app.listen();
 	}
 
 	didStartServer(app, databases, cacheStoresMap, modelsMap) {

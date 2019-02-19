@@ -8,7 +8,7 @@ export default async function startServer(config) {
 	setLoggers(config);
 	Plugins.init(config);
 
-	const app = createApplication();
+	const app = createApplication(config);
 	const middlewares = new Middlewares(app);
 	const databases = new Map();
 	const cacheStoresMap = new Map();

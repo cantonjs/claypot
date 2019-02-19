@@ -1,6 +1,8 @@
 import Koa from 'koa';
+import listenAndClose from './listenAndClose';
 
-export function createApplication() {
+export function createApplication(config) {
 	const app = new Koa();
-	return app;
+	app.__config = config;
+	return listenAndClose(app);
 }
