@@ -1,9 +1,10 @@
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import logger from 'pot-logger';
+import config from '../config';
 
-const makeTryReadFile = (baseDir) => (file) => {
-	const filename = resolve(baseDir, file);
+const tryReadFile = (file) => {
+	const filename = resolve(config.baseDir, file);
 	try {
 		return readFileSync(filename);
 	}
@@ -13,8 +14,7 @@ const makeTryReadFile = (baseDir) => (file) => {
 	}
 };
 
-export default function getCertOption(baseDir, sslKey, sslCert) {
-	const tryReadFile = makeTryReadFile(baseDir);
+export default function getCertOption(sslKey, sslCert) {
 	const key = tryReadFile(sslKey);
 	const cert = tryReadFile(sslCert);
 	if (!key || !cert) {

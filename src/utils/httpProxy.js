@@ -4,7 +4,6 @@ import { isFunction, isString, isNumber, isObject } from 'lodash';
 import url from 'url';
 import qs from 'querystring';
 import getBody from 'raw-body';
-import config from '../config';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
 import { createLogger } from 'pot-logger';
@@ -14,10 +13,9 @@ const logger = createLogger('proxy', 'greenBright');
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
-		const { baseDir } = config;
 		return {
 			...ssl,
-			...getCertOption(baseDir, ssl.key, ssl.cert),
+			...getCertOption(ssl.key, ssl.cert),
 		};
 	}
 	return ssl;
