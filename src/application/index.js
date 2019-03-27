@@ -3,9 +3,12 @@ import http from 'http';
 import https from 'https';
 import getCertOption from '../utils/getCertOption';
 
-const registerServe = function registerServe(app) {
+const init = function init(app, config) {
+	app.__config = config;
 	app.__servers = [];
+};
 
+const registerServe = function registerServe(app) {
 	app.serve = async function serve(...options) {
 		const newServers = options.map((option) => {
 			const { port, host, tls } = option;
@@ -54,8 +57,9 @@ const registerClose = function registerClose(app) {
 	};
 };
 
-export function createApplication() {
+export function createApplication(config) {
 	const app = new Koa();
+	init(app, config);
 	registerServe(app);
 	registerClose(app);
 	return app;
