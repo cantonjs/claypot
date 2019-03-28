@@ -4,7 +4,6 @@ import importFile from 'import-file';
 import { resolve, normalize } from 'path';
 import { isUndefined, flatten } from 'lodash';
 import chalk from 'chalk';
-import mount from 'koa-mount';
 
 const middlewareLogger = createLogger('middleware', 'green');
 
@@ -34,11 +33,6 @@ export default class Middlewares {
 		this._applyMiddleware = app.use.bind(app);
 
 		app.registerPlugins = () => this._list.push(this._plugins);
-		app.mount = (path, ...args) => {
-			const middleware = mount(path, ...args);
-			middleware.keyName = `mount("${path}")`;
-			return app.use(middleware);
-		};
 		app.use = (...args) => {
 			args.forEach((arg) => {
 				if (arg) {

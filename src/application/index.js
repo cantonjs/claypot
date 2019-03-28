@@ -2,6 +2,7 @@ import Koa from 'koa';
 import http from 'http';
 import https from 'https';
 import getCertOption from '../utils/getCertOption';
+import koaMount from 'koa-mount';
 
 const init = function init(app, config) {
 	app.__config = config;
@@ -57,10 +58,19 @@ const registerClose = function registerClose(app) {
 	};
 };
 
+const registerMount = function registerMount(app) {
+	app.mount = function mount(path, ...args) {
+		const middleware = koaMount(path, ...args);
+		middleware.keyName = `mount("${path}")`;
+		return app.use(middleware);
+	};
+};
+
 export function createApplication(config) {
 	const app = new Koa();
 	init(app, config);
 	registerServe(app);
 	registerClose(app);
+	registerMount(app);
 	return app;
 }
