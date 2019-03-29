@@ -7,13 +7,15 @@ import supertest from 'supertest';
 
 const serversWeakMap = new WeakMap();
 
-const init = function init(app, config) {
-	app.__config = config;
-	app.__servers = [];
-};
+export class App extends Koa {
+	constructor(config) {
+		super();
 
-const registerServe = function registerServe(app) {
-	app.serve = async function serve(...options) {
+		this.__config = config;
+		this.__servers = [];
+	}
+
+	async serve(...options) {
 		const newServers = options.map((option) => {
 			const { port, host, tls } = option;
 			let server;
@@ -21,16 +23,16 @@ const registerServe = function registerServe(app) {
 				const { key, cert } = tls;
 				if (key && cert) {
 					const certOptions = getCertOption(key, cert);
-					server = https.createServer(certOptions, app.callback());
+					server = https.createServer(certOptions, super.callback());
 				}
 			}
 			if (!server) {
-				server = http.createServer(app.callback());
+				server = http.createServer(super.callback());
 			}
 			serversWeakMap.set(server, { port, host });
 			return server;
 		});
-		app.__servers.push(...newServers);
+		this.__servers.push(...newServers);
 		return Promise.all(
 			newServers.map(
 				(server) =>
@@ -44,13 +46,11 @@ const registerServe = function registerServe(app) {
 					}),
 			),
 		);
-	};
-};
+	}
 
-const registerClose = function registerClose(app) {
-	app.close = async () => {
+	async close() {
 		const res = await Promise.all(
-			app.__servers.map(
+			this.__servers.map(
 				(server) =>
 					new Promise((resolve, reject) => {
 						server.close((err) => {
@@ -60,26 +60,22 @@ const registerClose = function registerClose(app) {
 					}),
 			),
 		);
-		app.__servers = [];
+		this.__servers = [];
 		return res;
-	};
-};
+	}
 
-const registerMount = function registerMount(app) {
-	app.mount = function mount(path, ...args) {
+	mount(path, ...args) {
 		const middleware = koaMount(path, ...args);
 		middleware.keyName = `mount("${path}")`;
-		return app.use(middleware);
-	};
-};
+		return this.use(middleware);
+	}
 
-const registerTest = function registerTest(app) {
-	app.test = function test(options = {}) {
-		const servers = app.__servers;
+	test(options = {}) {
+		const servers = this.__servers;
 		let server;
 		if (servers.length) server = servers[0];
 		else {
-			server = app.listen();
+			server = super.listen();
 			servers.push(server);
 		}
 		if (!options.keepAlive) {
@@ -90,15 +86,7 @@ const registerTest = function registerTest(app) {
 			};
 		}
 		return supertest(server);
-	};
-};
-
-export function createApp(config) {
-	const app = new Koa();
-	init(app, config);
-	registerServe(app);
-	registerClose(app);
-	registerMount(app);
-	registerTest(app);
-	return app;
+	}
 }
+
+export const createApp = (config) => new App(config);
