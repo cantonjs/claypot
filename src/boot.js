@@ -2,13 +2,13 @@ import { setLoggers } from 'pot-logger';
 import Plugins from './utils/plugins';
 import Middlewares from './utils/Middlewares';
 import httpProxy from './utils/httpProxy';
-import { createApplication } from './application';
+import { createApp } from './application';
 
 export default async function startServer(config) {
 	setLoggers(config);
 	Plugins.init(config);
 
-	const app = createApplication(config);
+	const app = createApp(config);
 	const middlewares = new Middlewares(app);
 	const databases = new Map();
 	const cacheStoresMap = new Map();

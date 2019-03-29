@@ -16,7 +16,7 @@
   "scripts": {
     "start": "yarn test --watchAll",
     "prebuild": "rimraf lib",
-    "build": "babel src -d lib",
+    "build": "babel src -d lib --ignore '**/*.test.js'",
     "cli": "cross-env CLAYPOT_DEV=true babel-node src/cli",
     "format": "prettier-eslint --write \"+(src|test)/**/*.js\"",
     "docs": "run-s docs:*",
@@ -61,6 +61,7 @@
     "qiniu": "^6.1.13",
     "raw-body": "^2.2.0",
     "skeeler": "^0.1.0",
+    "supertest": "^4.0.2",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
