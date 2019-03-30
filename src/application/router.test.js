@@ -17,6 +17,14 @@ describe('router', () => {
 			.expect(200, 'awesome');
 	});
 
+	test('all', async () => {
+		return createApp()
+			.all('/', (ctx) => (ctx.body = 'awesome'))
+			.test()
+			.put('/')
+			.expect(200, 'awesome');
+	});
+
 	test('multiple handlers', async () => {
 		return createApp()
 			.get(
@@ -89,5 +97,27 @@ describe('router', () => {
 			.test()
 			.get('/api/bar')
 			.expect(200, 'bar');
+	});
+
+	test('path', async () => {
+		return createApp()
+			.path('/foo', {
+				post: (ctx) => (ctx.body = 'awesome'),
+			})
+			.test()
+			.post('/foo')
+			.expect(200, 'awesome');
+	});
+
+	test('method not allowed', async () => {
+		return (
+			createApp()
+				.get('/foo', (ctx) => (ctx.body = 'awesome'))
+				.put('/foo', (ctx) => (ctx.body = 'awesome'))
+				.test()
+				.post('/foo')
+				// .expect('Allow', 'GET, PUT')
+				.expect(405)
+		);
 	});
 });
