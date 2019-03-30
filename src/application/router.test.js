@@ -110,14 +110,12 @@ describe('router', () => {
 	});
 
 	test('method not allowed', async () => {
-		return (
-			createApp()
-				.get('/foo', (ctx) => (ctx.body = 'awesome'))
-				.put('/foo', (ctx) => (ctx.body = 'awesome'))
-				.test()
-				.post('/foo')
-				// .expect('Allow', 'GET, PUT')
-				.expect(405)
-		);
+		return createApp()
+			.get('/foo')
+			.put('/foo')
+			.test()
+			.post('/foo')
+			.expect('Allow', 'GET, PUT')
+			.expect(405);
 	});
 });

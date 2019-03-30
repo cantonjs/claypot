@@ -17,9 +17,11 @@ export default function withRouter(App) {
 				for (const [key, val] of Object.entries(headers)) {
 					ctx.set(key, val);
 				}
-				ctx.throw(route.code);
+				ctx.status = route.code;
+				return;
 			}
 			const { keys, pathRegexp, middleware } = route;
+			if (!pathRegexp) return next();
 			const matches = pathRegexp.exec(ctx.path);
 			if (!matches) return next();
 			const params = {};
