@@ -4,10 +4,12 @@ import https from 'https';
 import getCertOption from '../utils/getCertOption';
 import koaMount from 'koa-mount';
 import supertest from 'supertest';
+import withRouter from './withRouter';
 
 const serversWeakMap = new WeakMap();
 
-export class App extends Koa {
+@withRouter
+export default class App extends Koa {
 	constructor(config) {
 		super();
 
@@ -88,5 +90,3 @@ export class App extends Koa {
 		return supertest(server);
 	}
 }
-
-export const createApp = (config) => new App(config);
