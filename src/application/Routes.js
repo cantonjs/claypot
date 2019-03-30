@@ -14,12 +14,16 @@ const ensurePathRegexp = function ensurePathRegexp(path) {
 
 export default class Routes {
 	constructor() {
-		this._routes = {};
+		this._routes = new Map();
 	}
 
 	set(path, method, fns) {
 		const routes = this._routes;
-		const methodsMap = routes[path] || (routes[path] = new Map());
+		let methodsMap = routes.get(path);
+		if (!methodsMap) {
+			methodsMap = new Map();
+			routes.set(path, methodsMap);
+		}
 		const { keys, pathRegexp } = ensurePathRegexp(path);
 		const route = {
 			keys,
@@ -32,7 +36,7 @@ export default class Routes {
 	get(path, method) {
 		const routes = this._routes;
 		if (!routes) return null;
-		const methodsMap = routes[path];
+		const methodsMap = routes.get(path);
 		if (!methodsMap) return null;
 		const route = methodsMap.get(method.toUpperCase());
 		if (route) return route;
