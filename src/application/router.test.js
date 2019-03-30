@@ -34,18 +34,18 @@ describe('router', () => {
 			.expect(200, 'awesome');
 	});
 
-	test('will handle next middleware if not matched', async () => {
-		const middleware = jest.fn((ctx) => (ctx.body = 'oops'));
+	test('fallback', async () => {
+		const middleware = jest.fn();
 		await createApp()
 			.post('/', (ctx) => (ctx.body = 'awesome'))
 			.use(middleware)
 			.test()
 			.post('/oops')
-			.expect(200, 'oops');
+			.expect(404);
 		expect(middleware).toHaveBeenCalledTimes(1);
 	});
 
-	test('will not handle next middleware if matched', async () => {
+	test('not fallback', async () => {
 		const middleware = jest.fn();
 		await createApp()
 			.post('/', (ctx) => (ctx.body = 'awesome'))
@@ -70,5 +70,24 @@ describe('router', () => {
 			.test()
 			.get('/hello')
 			.expect(200, JSON.stringify({ foo: 'hello' }));
+	});
+
+	test('nested', async () => {
+		const api = createApp().get('/foo', (ctx) => (ctx.body = 'foo'));
+		return createApp()
+			.mount('/api', api)
+			.test()
+			.get('/api/foo')
+			.expect(200, 'foo');
+	});
+
+	test('nested and fallback', async () => {
+		const api = createApp().get('/foo', (ctx) => (ctx.body = 'foo'));
+		return createApp()
+			.mount('/api', api)
+			.use((ctx) => (ctx.body = 'bar'))
+			.test()
+			.get('/api/bar')
+			.expect(200, 'bar');
 	});
 });
