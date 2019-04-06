@@ -80,13 +80,23 @@ export default class App extends Koa {
 			server = super.listen();
 			servers.push(server);
 		}
-		if (!options.keepAlive) {
-			// hack to close server after tested
-			const getAddress = server.address.bind(server);
-			server.address = () => {
-				server.address = getAddress;
-			};
-		}
-		return supertest(server);
+		const testServer = supertest(server);
+		if (options.keepAlive) return testServer;
+
+		// hack to close server after tested
+		return new Proxy(testServer, {
+			...Reflect,
+			get(target, prop) {
+				const createTest = target[prop];
+				return (...args) => {
+					const test = createTest(...args);
+					if (!test._server) {
+						if (!server._handle) server._handle = true;
+						test._server = server;
+					}
+					return test;
+				};
+			},
+		});
 	}
 }
