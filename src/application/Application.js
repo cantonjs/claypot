@@ -10,10 +10,8 @@ const serversWeakMap = new WeakMap();
 
 @withRouter
 export default class App extends Koa {
-	constructor(config) {
+	constructor() {
 		super();
-
-		this.__config = config;
 		this.__servers = [];
 	}
 
