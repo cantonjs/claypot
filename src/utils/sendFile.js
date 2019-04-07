@@ -23,7 +23,7 @@ export const send = async function send(ctx, path, options = {}) {
 		...options,
 		root: ensureStaticRoot(ctx.app, options),
 		gzip: false, // use `compress` middleware instead
-		maxage: isString(maxAge) ? ms(maxAge) : maxAge,
+		maxage: isString(maxAge) ? ms(maxAge) : maxAge * 1000,
 	}).catch((err) => {
 		if (err.status !== 404) {
 			throw err;

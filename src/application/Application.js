@@ -108,7 +108,7 @@ export default class App extends Koa {
 		});
 	}
 
-	static(config, logger) {
+	static(config = {}, logger) {
 		if (isString(config)) config = { root: config };
 		const { rules = [], ...restOpts } = config;
 
