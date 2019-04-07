@@ -5,6 +5,7 @@ import getCertOption from '../utils/getCertOption';
 import koaMount from 'koa-mount';
 import supertest from 'supertest';
 import withRouter from './withRouter';
+import extendContext from './extendContext';
 
 const serversWeakMap = new WeakMap();
 
@@ -13,6 +14,13 @@ export default class App extends Koa {
 	constructor() {
 		super();
 		this.__servers = [];
+		this.__staticRoot = process.cwd();
+		this.use(extendContext);
+	}
+
+	setStaticRoot(staticRoot) {
+		this.__staticRoot = staticRoot;
+		return this;
 	}
 
 	async serve(...options) {
