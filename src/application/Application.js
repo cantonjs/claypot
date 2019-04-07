@@ -6,6 +6,7 @@ import koaMount from 'koa-mount';
 import supertest from 'supertest';
 import withRouter from './withRouter';
 import extendContext from './extendContext';
+import { isString } from 'lodash';
 
 const serversWeakMap = new WeakMap();
 
@@ -103,6 +104,45 @@ export default class App extends Koa {
 					return test;
 				};
 			},
+		});
+	}
+
+	static(config) {
+		if (isString(config)) config = { root: config };
+		const { rules = [], gzip, ...restOpts } = config;
+		const { logger, ...options } = config;
+
+		logger && logger.trace('static', options);
+
+		const list = [];
+
+		const validate = (options) => {
+			if (!options || options.isEnabled === false) return false;
+		};
+
+		if (!Array.isArray(rules)) {
+			logger &&
+				logger.warn(
+					'expected servieStatic option "rules" to be an array,',
+					`but received "${typeof rules}"`,
+				);
+		}
+
+		for (const rule of rules) {
+			if (validate(rule)) list.push(rule);
+		}
+
+		list.push(restOpts);
+
+		return this.use(async (ctx, next) => {
+			const { path, method } = ctx;
+			if (method !== 'HEAD' && method !== 'GET') return next();
+
+			for (const options of list) {
+				const done = await ctx.send(path, options);
+				if (done) return;
+			}
+			return next();
 		});
 	}
 }
