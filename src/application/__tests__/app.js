@@ -1,4 +1,4 @@
-import { createApp } from './';
+import { createApp } from '../';
 
 describe('application', () => {
 	test('GET /', async () => {
