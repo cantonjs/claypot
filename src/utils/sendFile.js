@@ -1,9 +1,13 @@
-import send from 'koa-send';
+import koaSend from 'koa-send';
 import ms from 'ms';
 import { isString } from 'lodash';
 import multimatch from 'multimatch';
 
-export default async function sendFile(ctx, path, options = {}) {
+export const ensureStaticRoot = function ensureStaticRoot(app, options) {
+	return options.root || app.__staticRoot;
+};
+
+export const send = async function send(ctx, path, options = {}) {
 	if (options.index !== false) {
 		options.index = options.index || 'index.html';
 	}
@@ -14,14 +18,16 @@ export default async function sendFile(ctx, path, options = {}) {
 		return false;
 	}
 
-	return send(ctx, path, {
+	const { maxAge = 0 } = options;
+	return koaSend(ctx, path, {
 		...options,
+		root: ensureStaticRoot(ctx.app, options),
 		gzip: false, // use `compress` middleware instead
-		maxage: (maxAge) => (isString(maxAge) ? ms(maxAge) : maxAge || 0),
+		maxage: isString(maxAge) ? ms(maxAge) : maxAge,
 	}).catch((err) => {
 		if (err.status !== 404) {
 			throw err;
 		}
 		return false;
 	});
-}
+};

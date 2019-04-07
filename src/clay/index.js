@@ -2,7 +2,6 @@ import send from 'koa-send';
 import { getLogger } from 'pot-logger';
 import { getModels } from '../dbs/models';
 import { getCache, getCacheStores } from '../dbs/cache';
-import serveStatic from './serveStatic';
 
 export async function createClay(ctx, next) {
 	const logger = getLogger('server');
@@ -18,9 +17,6 @@ export async function createClay(ctx, next) {
 	clay.models = getModels();
 
 	clay.send = (...args) => send(ctx, ...args);
-
-	logger.trace('inject clay.serveStatic');
-	serveStatic(ctx);
 
 	ctx.clay = clay;
 

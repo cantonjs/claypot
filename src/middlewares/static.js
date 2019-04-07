@@ -1,6 +1,8 @@
 import { getLogger } from 'pot-logger';
-import claypotConfig from '../config';
+import claypotConfig, { isProd } from '../config';
 import { resolve } from 'path';
+import { isString } from 'lodash';
+import ms from 'ms';
 
 export default function serve(app, options) {
 	const { baseDir } = claypotConfig;
@@ -9,19 +11,15 @@ export default function serve(app, options) {
 	if (!Array.isArray(options)) options = [options];
 
 	options.forEach((option = {}) => {
-		const { dir, root } = option;
+		if (isString(option)) option = { dir: option };
+		const { dir, root, maxAge } = option;
 		if (root || dir) {
 			const staticDir = root || resolve(baseDir, dir);
-			logger.debug('static directory', staticDir);
 			if (!root) option.root = staticDir;
 		}
-	});
-
-	app.use(async function serveStatic(ctx, next) {
-		for (const option of options) {
-			const done = await ctx.serveStatic(option);
-			if (done) return;
+		if (!maxAge && maxAge !== 0) {
+			option.maxAge = isProd ? ms('1d') : 0;
 		}
-		await next();
+		app.static(option, logger);
 	});
 }

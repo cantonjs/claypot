@@ -2,6 +2,7 @@ import Koa from 'koa';
 import http from 'http';
 import https from 'https';
 import getCertOption from '../utils/getCertOption';
+import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
 import supertest from 'supertest';
 import withRouter from './withRouter';
@@ -107,39 +108,43 @@ export default class App extends Koa {
 		});
 	}
 
-	static(config) {
+	static(config, logger) {
 		if (isString(config)) config = { root: config };
-		const { rules = [], gzip, ...restOpts } = config;
-		const { logger, ...options } = config;
+		const { rules = [], ...restOpts } = config;
 
-		logger && logger.trace('static', options);
-
-		const list = [];
-
-		const validate = (options) => {
-			if (!options || options.isEnabled === false) return false;
-		};
+		logger && logger.trace('static', restOpts);
 
 		if (!Array.isArray(rules)) {
 			logger &&
-				logger.warn(
+				logger.error(
 					'expected servieStatic option "rules" to be an array,',
 					`but received "${typeof rules}"`,
 				);
 		}
 
-		for (const rule of rules) {
-			if (validate(rule)) list.push(rule);
-		}
+		const rulesOpts = rules.map((opt) => ({
+			...restOpts,
+			isEnabled: true,
+			...opt,
+		}));
 
-		list.push(restOpts);
+		const list = [...rulesOpts, restOpts].filter((options) => {
+			const isEnabled = options && options.isEnabled !== false;
+			if (isEnabled && logger) {
+				const staticRoot = ensureStaticRoot(this, options);
+				logger.debug('static directory', staticRoot);
+			}
+			return isEnabled;
+		});
+
+		if (!list.length) return this;
 
 		return this.use(async (ctx, next) => {
 			const { path, method } = ctx;
 			if (method !== 'HEAD' && method !== 'GET') return next();
 
 			for (const options of list) {
-				const done = await ctx.send(path, options);
+				const done = await ctx.sendFile(path, options);
 				if (done) return;
 			}
 			return next();
