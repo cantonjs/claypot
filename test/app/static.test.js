@@ -1,4 +1,4 @@
-import { createApp } from '../';
+import { createApp } from '../../src/application';
 import { resolve } from 'path';
 
 describe('static', () => {

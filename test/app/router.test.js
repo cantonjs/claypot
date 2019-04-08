@@ -1,4 +1,4 @@
-import { createApp } from '../';
+import { createApp } from '../../src/application';
 
 describe('router', () => {
 	test('get', async () => {

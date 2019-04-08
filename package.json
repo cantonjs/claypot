@@ -105,11 +105,13 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.js"
+      "<rootDir>/src/**/*.js"
     ],
     "modulePathIgnorePatterns": [
       "node_modules",
-      "lib"
+      "<rootDir>/lib/",
+      "<rootDir>/es/",
+      "<rootDir>/dist/"
     ]
   }
 }
