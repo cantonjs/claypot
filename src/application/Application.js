@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import http from 'http';
 import https from 'https';
+import methods from 'methods';
 import getCertOption from '../utils/getCertOption';
 import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
@@ -95,15 +96,18 @@ export default class App extends Koa {
 		return new Proxy(testServer, {
 			...Reflect,
 			get(target, prop) {
-				const createTest = target[prop];
-				return (...args) => {
-					const test = createTest(...args);
-					if (!test._server) {
-						if (!server._handle) server._handle = true;
-						test._server = server;
-					}
-					return test;
-				};
+				const val = target[prop];
+				if (methods.includes(prop)) {
+					return (...args) => {
+						const test = val(...args);
+						if (!test._server) {
+							if (!server._handle) server._handle = true;
+							test._server = server;
+						}
+						return test;
+					};
+				}
+				return val;
 			},
 		});
 	}

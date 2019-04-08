@@ -1,182 +1,173 @@
-import { startPure } from '../src';
+import { startPure, utils } from '../src';
 import { resolve } from 'path';
-import getPort from 'get-port';
-import fetch from 'node-fetch';
 
 describe('built-in middlewares', () => {
-	let server;
-	let baseConfig = {};
+	const config = { cwd: resolve('test'), logLevel: 'ERROR' };
 
-	beforeEach(async () => {
-		baseConfig = {
-			port: await getPort(),
-			cwd: resolve('test'),
-		};
-	});
+	test('should `notFound` work', async () =>
+		utils
+			.test(await startPure(config))
+			.get('/')
+			.expect(404));
 
-	afterEach(async () => {
-		if (server) {
-			await server.close();
-		}
-		server = null;
-	});
+	test('should `responseTime` work', async () =>
+		utils
+			.test(await startPure(config))
+			.get('/')
+			.expect('X-Response-Time', /^\d+ms/));
 
-	test('should `notFound` work', async () => {
-		server = await startPure(baseConfig);
-		const res = await fetch(`http://localhost:${baseConfig.port}`);
-		expect(res.ok).toBe(false);
-		expect(res.status).toBe(404);
-	});
+	test('should `static` work', async () =>
+		utils
+			.test(await startPure({ ...config, static: 'fixtures/static' }))
+			.get('/hello.html')
+			.expect(200));
 
-	test('should `responseTime` work', async () => {
-		server = await startPure(baseConfig);
-		const res = await fetch(`http://localhost:${baseConfig.port}`);
-		const responseTime = res.headers.get('X-Response-Time');
-		expect(/^\d+ms/.test(responseTime)).toBe(true);
-	});
+	test('should `static` with array work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: [{ dir: 'fixtures/history' }, 'fixtures/static'],
+				}),
+			)
+			.get('/hello.html')
+			.expect(200));
 
-	test('should `static` work', async () => {
-		server = await startPure({ ...baseConfig, static: 'fixtures/static' });
-		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
-		expect(res.ok).toBe(true);
-	});
+	test('should `static.isEnabled = false` option work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: { dir: 'fixtures/static', isEnabled: false },
+				}),
+			)
+			.get('/img.jpg')
+			.expect(404));
 
-	test('should `static` with array work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: [{ dir: 'fixtures/history' }, 'fixtures/static'],
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/hello.html`);
-		expect(res.ok).toBe(true);
-	});
-
-	test('should `static.isEnabled = false` option work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: {
-				dir: 'fixtures/static',
-				isEnabled: false,
-			},
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
-		expect(res.ok).toBe(false);
-	});
-
-	test('should `static.maxAge` option work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: {
-				dir: 'fixtures/static',
-				maxAge: '3d',
-			},
-		});
-		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
-		expect(img.headers.get('cache-control')).toBe('max-age=259200');
-	});
+	test('should `static.maxAge` option work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: { dir: 'fixtures/static', maxAge: '3d' },
+				}),
+			)
+			.get('/img.jpg')
+			.expect('cache-control', 'max-age=259200'));
 
 	test('should `static.test` option work', async () => {
-		server = await startPure({
-			...baseConfig,
+		const app = await startPure({
+			...config,
 			static: { dir: 'fixtures/static', test: '**/*.js' },
 		});
-		const js = await fetch(`http://localhost:${baseConfig.port}/script.js`);
-		expect(js.ok).toBe(true);
-		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
-		expect(img.ok).toBe(false);
+		const testServer = utils.createTestServer(app);
+		await testServer.get('/script.js').expect(200);
+		await testServer.get('/img.jpg').expect(404);
+		return app.close();
 	});
 
 	test('should `static.rules` option work', async () => {
-		server = await startPure({
-			...baseConfig,
+		const app = await startPure({
+			...config,
 			static: {
 				dir: 'fixtures/static',
 				maxAge: '1d',
 				rules: [{ test: '**/*.js', maxAge: 0 }],
 			},
 		});
-		const js = await fetch(`http://localhost:${baseConfig.port}/script.js`);
-		expect(js.headers.get('cache-control')).toBe('max-age=0');
-		const img = await fetch(`http://localhost:${baseConfig.port}/img.jpg`);
-		expect(img.headers.get('cache-control')).toBe('max-age=86400');
+		const testServer = utils.createTestServer(app);
+		await testServer.get('/script.js').expect('cache-control', 'max-age=0');
+		await testServer.get('/img.jpg').expect('cache-control', 'max-age=86400');
+		return app.close();
 	});
 
-	test('should `compress` work', async () => {
-		server = await startPure({
-			...baseConfig,
-			compress: true,
-			static: 'fixtures/static',
-		});
-		const { headers } = await fetch(
-			`http://localhost:${baseConfig.port}/hello.html`,
-		);
-		expect(headers.get('Content-Encoding')).toBe('gzip');
-		expect(headers.get('Transfer-Encoding')).toBe('chunked');
-	});
+	test('should `compress` work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					compress: true,
+					static: 'fixtures/static',
+				}),
+			)
+			.get('/hello.html')
+			.expect('Content-Encoding', 'gzip')
+			.expect('Transfer-Encoding', 'chunked'));
 
-	test('should not `compress` images', async () => {
-		server = await startPure({
-			...baseConfig,
-			compress: true,
-			static: 'fixtures/static',
-		});
-		const { headers } = await fetch(
-			`http://localhost:${baseConfig.port}/img.jpg`,
-		);
-		expect(headers.get('Content-Encoding')).not.toBe('gzip');
-	});
+	test('should not `compress` images', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					compress: true,
+					static: 'fixtures/static',
+				}),
+			)
+			.get('/img.jpg')
+			.expect((res) => {
+				expect(res.headers['Content-Encoding']).not.toBe('gzip');
+			}));
 
-	test('should `httpError` work', async () => {
-		server = await startPure({
-			...baseConfig,
-			plugins: ['./fixtures/plugins/HttpError'],
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/test`);
-		const contentType = res.headers.get('Content-Type');
-		expect(contentType).toBe('text/html; charset=utf-8');
-		expect(res.status).toBe(500);
-	});
+	test('should `httpError` work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					plugins: ['./fixtures/plugins/HttpError'],
+				}),
+			)
+			.get('/test')
+			.expect('Content-Type', 'text/html; charset=utf-8')
+			.expect(500));
 
-	test('should `helmet` work', async () => {
-		server = await startPure({ ...baseConfig, helmet: true });
-		const { headers } = await fetch(`http://localhost:${baseConfig.port}`);
-		expect(headers.get('X-Frame-Options')).toBe('SAMEORIGIN');
-		expect(headers.get('X-Powered-By')).toBe('PHP 5.4.0');
-		expect(headers.get('X-XSS-Protection')).toBe('1; mode=block');
-	});
+	test('should `helmet` work', async () =>
+		utils
+			.test(await startPure({ ...config, helmet: true }))
+			.get('/')
+			.expect('X-Frame-Options', 'SAMEORIGIN')
+			.expect('X-Powered-By', 'PHP 5.4.0')
+			.expect('X-XSS-Protection', '1; mode=block'));
 
-	test('should `favicon` work', async () => {
-		server = await startPure(baseConfig);
-		const res = await fetch(`http://localhost:${baseConfig.port}/favicon.ico`);
-		expect(res.ok).toBe(true);
-	});
+	test('should `favicon` work', async () =>
+		utils
+			.test(await startPure(config))
+			.get('/favicon.ico')
+			.expect(200));
 
-	test('should `historyAPIFallback` work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: 'fixtures/history',
-			historyAPIFallback: true,
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/world`);
-		expect(res.ok).toBe(true);
-	});
+	// FIXME:
+	test.skip('should `historyAPIFallback` work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: 'fixtures/history',
+					historyAPIFallback: true,
+				}),
+			)
+			.get('/world')
+			.expect(200));
 
-	test('should `rewrites` work', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: 'fixtures/history',
-			rewrites: { '/baz/(.*)': '/$1.html' },
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/baz/foo/bar`);
-		expect(res.ok).toBe(true);
-	});
+	test('should `rewrites` work', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: 'fixtures/history',
+					rewrites: { '/baz/(.*)': '/$1.html' },
+				}),
+			)
+			.get('/baz/foo/bar')
+			.expect(200));
 
-	test('should `rewrites` work with array', async () => {
-		server = await startPure({
-			...baseConfig,
-			static: 'fixtures/history',
-			rewrites: ['/baz/(.*)', '/$1.html'],
-		});
-		const res = await fetch(`http://localhost:${baseConfig.port}/baz/foo/bar`);
-		expect(res.ok).toBe(true);
-	});
+	test('should `rewrites` work with array', async () =>
+		utils
+			.test(
+				await startPure({
+					...config,
+					static: 'fixtures/history',
+					rewrites: ['/baz/(.*)', '/$1.html'],
+				}),
+			)
+			.get('/baz/foo/bar')
+			.expect(200));
 });
