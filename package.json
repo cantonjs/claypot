@@ -95,7 +95,6 @@
     "gitbook-cli": "^2.3.2",
     "is-reachable": "^2.3.2",
     "jest": "^21.2.1",
-    "kapok-js": "^0.10.1",
     "mkdirp": "^0.5.1",
     "node-fetch": "^1.7.1",
     "npm-run-all": "^4.0.2",

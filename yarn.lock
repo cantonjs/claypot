@@ -1533,10 +1533,6 @@ call-limit@~1.1.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/call-limit/download/call-limit-1.1.0.tgz#6fd61b03f3da42a2cd0ec2b60f02bd0e71991fea"
 
-call-me-maybe@^1.0.1:
-  version "1.0.1"
-  resolved "http://registry.npm.taobao.org/call-me-maybe/download/call-me-maybe-1.0.1.tgz#26d208ea89e37b5cbde60250a15f031c16a4d66b"
-
 caller-path@^0.1.0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/caller-path/download/caller-path-0.1.0.tgz#94085ef63581ecd3daa92444a8fe94e82577751f"
@@ -1796,7 +1792,6 @@ co-body:
 co-body@^6.0.0:
   version "6.0.0"
   resolved "http://registry.npm.taobao.org/co-body/download/co-body-6.0.0.tgz#965b9337d7f5655480787471f4237664820827e3"
-  integrity sha1-lluTN9f1ZVSAeHRx9CN2ZIIIJ+M=
   dependencies:
     inflation "^2.0.0"
     qs "^6.5.2"
@@ -1992,7 +1987,6 @@ copy-descriptor@^0.1.0:
 copy-to@^2.0.1:
   version "2.0.1"
   resolved "http://registry.npm.taobao.org/copy-to/download/copy-to-2.0.1.tgz#2680fbb8068a48d08656b6098092bdafc906f4a5"
-  integrity sha1-JoD7uAaKSNCGVrYJgJK9r8kG9KU=
 
 core-js@^1.0.0:
   version "1.2.7"
@@ -3764,7 +3758,6 @@ iconv-lite@0.4.15, iconv-lite@~0.4.13:
 iconv-lite@0.4.23:
   version "0.4.23"
   resolved "http://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.4.23.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Ficonv-lite%2Fdownload%2Ficonv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
-  integrity sha1-KXhx9jvlB63Pv8pxXQzQ7thOmmM=
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
@@ -4726,18 +4719,6 @@ jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
-kapok-js@^0.10.1:
-  version "0.10.1"
-  resolved "http://registry.npm.taobao.org/kapok-js/download/kapok-js-0.10.1.tgz#1debb318f7ed0f04352bda850d83f240b432e0f8"
-  dependencies:
-    call-me-maybe "^1.0.1"
-    chalk "^2.1.0"
-    figures "^2.0.0"
-    fkill "^5.1.0"
-    lodash "^4.17.4"
-    signal-exit "^3.0.2"
-    strip-ansi "^3.0.1"
-
 keygrip@~1.0.3:
   version "1.0.3"
   resolved "http://registry.npm.taobao.org/keygrip/download/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
@@ -4771,7 +4752,6 @@ kind-of@^6.0.0, kind-of@^6.0.2:
 koa-bodyparser@^4.2.1:
   version "4.2.1"
   resolved "http://registry.npm.taobao.org/koa-bodyparser/download/koa-bodyparser-4.2.1.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fkoa-bodyparser%2Fdownload%2Fkoa-bodyparser-4.2.1.tgz#4d7dacb5e6db1106649b595d9e5ccb158b6f3b29"
-  integrity sha1-TX2stebbEQZkm1ldnlzLFYtvOyk=
   dependencies:
     co-body "^6.0.0"
     copy-to "^2.0.1"
@@ -6726,7 +6706,6 @@ raw-body@2, raw-body@^2.2.0:
 raw-body@^2.3.3:
   version "2.3.3"
   resolved "http://registry.npm.taobao.org/raw-body/download/raw-body-2.3.3.tgz#1b324ece6b5706e153855bc1148c65bb7f6ea0c3"
-  integrity sha1-GzJOzmtXBuFThVvBFIxlu39uoMM=
   dependencies:
     bytes "3.0.0"
     http-errors "1.6.3"
