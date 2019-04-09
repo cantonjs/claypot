@@ -134,8 +134,7 @@ describe('built-in middlewares', () => {
 			.get('/favicon.ico')
 			.expect(200));
 
-	// FIXME:
-	test.skip('should `historyAPIFallback` work', async () =>
+	test('should `historyAPIFallback` work', async () =>
 		utils
 			.test(
 				await startPure({
@@ -145,6 +144,7 @@ describe('built-in middlewares', () => {
 				}),
 			)
 			.get('/world')
+			.set('Accept', 'text/html')
 			.expect(200));
 
 	test('should `rewrites` work', async () =>
