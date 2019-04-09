@@ -5,6 +5,7 @@ import methods from 'methods';
 import getCertOption from '../utils/getCertOption';
 import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
+import bodyParser from 'koa-bodyparser';
 import supertest from 'supertest';
 import withRouter from './withRouter';
 import extendContext from './extendContext';
@@ -153,5 +154,9 @@ export default class App extends Koa {
 			}
 			return next();
 		});
+	}
+
+	bodyParser(options) {
+		return this.use(bodyParser(options));
 	}
 }
