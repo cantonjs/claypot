@@ -7,9 +7,10 @@ import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
 import bodyParser from 'koa-bodyparser';
 import supertest from 'supertest';
+import { isString } from 'lodash';
 import withRouter from './withRouter';
 import extendContext from './extendContext';
-import { isString } from 'lodash';
+import Rewriter from './Rewriter';
 
 const serversWeakMap = new WeakMap();
 
@@ -158,5 +159,20 @@ export default class App extends Koa {
 
 	bodyParser(options) {
 		return this.use(bodyParser(options));
+	}
+
+	rewrite(src, dist, logger) {
+		const rewriter = new Rewriter(src, dist);
+		return this.use(async (ctx, next) => {
+			const { url } = ctx;
+			const rewritedURL = rewriter.rewrite(url);
+			if (rewritedURL) {
+				ctx.url = rewritedURL;
+				logger && logger.debug(`${url} -> ${ctx.url}`);
+				ctx.rewriteOriginalURL = url;
+			}
+			await next();
+			if (ctx.rewriteOriginalURL) ctx.url = url;
+		});
 	}
 }
