@@ -126,6 +126,7 @@ export default class App extends Koa {
 					'expected servieStatic option "rules" to be an array,',
 					`but received "${typeof rules}"`,
 				);
+			return this;
 		}
 
 		const rulesOpts = rules.map((opt) => ({
