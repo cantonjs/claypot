@@ -78,6 +78,13 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@koa/cors@^3.0.0":
+  version "3.0.0"
+  resolved "http://registry.npm.taobao.org/@koa/cors/download/@koa/cors-3.0.0.tgz#df021b4df2dadf1e2b04d7c8ddf93ba2d42519cb"
+  integrity sha1-3wIbTfLa3x4rBNfI3fk7otQlGcs=
+  dependencies:
+    vary "^1.1.2"
+
 "@types/core-js@^0.9.41":
   version "0.9.42"
   resolved "http://registry.npm.taobao.org/@types/core-js/download/@types/core-js-0.9.42.tgz#dd6da92cd7d5ab5ca0b4477524537c3e633b6bce"

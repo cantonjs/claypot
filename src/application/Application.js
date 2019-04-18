@@ -6,6 +6,7 @@ import getCertOption from '../utils/getCertOption';
 import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
 import bodyParser from 'koa-bodyparser';
+import cors from '@koa/cors';
 import supertest from 'supertest';
 import { isString } from 'lodash';
 import withRouter from './withRouter';
@@ -158,10 +159,6 @@ export default class App extends Koa {
 		});
 	}
 
-	bodyParser(options) {
-		return this.use(bodyParser(options));
-	}
-
 	rewrite(src, dist, logger) {
 		const rewriter = new Rewriter(src, dist);
 		return this.use(async (ctx, next) => {
@@ -175,5 +172,13 @@ export default class App extends Koa {
 			await next();
 			if (ctx.rewriteOriginalURL) ctx.url = url;
 		});
+	}
+
+	bodyParser(options) {
+		return this.use(bodyParser(options));
+	}
+
+	cors(options) {
+		return this.use(cors(options));
 	}
 }
