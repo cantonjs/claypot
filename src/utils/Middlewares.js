@@ -1,11 +1,11 @@
 import config from '../config';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import importFile from 'import-file';
 import { resolve, normalize } from 'path';
 import { isUndefined, flatten } from 'lodash';
 import chalk from 'chalk';
 
-const middlewareLogger = createLogger('middleware', 'green');
+const middlewareLogger = ensureLogger('middleware', 'green');
 
 const middlewaresWhiteList = [
 	'responseTime',

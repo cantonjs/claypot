@@ -1,9 +1,9 @@
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
 import { lowerFirst, upperFirst } from 'lodash';
 
-const logger = createLogger('model', 'blueBright');
+const logger = ensureLogger('model', 'blueBright');
 const models = {};
 
 export function resolveModels(modelsMap, modelsDir) {

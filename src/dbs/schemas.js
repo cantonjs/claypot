@@ -1,9 +1,9 @@
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import importModules from '../utils/importModules';
 import createProxyObject from '../utils/createProxyObject';
 import { lowerFirst, upperFirst } from 'lodash';
 
-const logger = createLogger('schemas', 'cyanBright');
+const logger = ensureLogger('schemas', 'cyanBright');
 const schemas = {};
 
 export function resolveSchemas(schemasDir) {

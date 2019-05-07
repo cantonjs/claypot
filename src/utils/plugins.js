@@ -1,11 +1,11 @@
 import importFile from 'import-file';
 import { resolve } from 'path';
 import { isObject, isFunction } from 'lodash';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import CorePlugin from './corePlugin';
 
 let plugins = [];
-const logger = createLogger('plugin', 'cyan');
+const logger = ensureLogger('plugin', 'cyan');
 
 function init(config) {
 	const traceNewPlugin = (PluginModule) => {

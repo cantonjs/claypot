@@ -1,7 +1,7 @@
 import { isDev } from '../config';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 
-const logger = createLogger('http', (ref) => {
+const logger = ensureLogger('http', (ref) => {
 	return !ref.daemon ?
 		ref.defaultConsoleAppender :
 		{

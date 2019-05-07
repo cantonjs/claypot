@@ -1,10 +1,10 @@
 import cacheManager from 'cache-manager';
 import { noop, isString } from 'lodash';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import createProxyObject from '../utils/createProxyObject';
 import ms from 'ms';
 
-const logger = createLogger('cache', 'magentaBright');
+const logger = ensureLogger('cache', 'magentaBright');
 let stores = {};
 let cache;
 let defaultCacheKey;

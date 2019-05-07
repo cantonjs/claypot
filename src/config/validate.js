@@ -1,4 +1,4 @@
-import { createLogger, overrideConsoleInRuntime } from 'pot-logger';
+import { ensureLogger, overrideConsoleInRuntime } from 'pot-logger';
 import { isString } from 'lodash';
 import { deprecatedProp as deprecated } from '../utils/deprecated';
 import {
@@ -15,7 +15,7 @@ import {
 	checkPropTypes,
 } from 'prop-types';
 
-const logger = createLogger('config');
+const logger = ensureLogger('config');
 
 const propTypes = {
 	baseDir: string,

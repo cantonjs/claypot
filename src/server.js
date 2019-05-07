@@ -1,11 +1,11 @@
 // server process
 
 import { initProcessConfig } from './config';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import chalk from 'chalk';
 import boot from './boot';
 
-const serverLogger = createLogger('server', 'yellow');
+const serverLogger = ensureLogger('server', 'yellow');
 
 (async function server() {
 	try {

@@ -6,10 +6,10 @@ import qs from 'querystring';
 import getBody from 'raw-body';
 import getCertOption from './getCertOption';
 import koaContextCallbackify from '../utils/koaContextCallbackify';
-import { createLogger } from 'pot-logger';
+import { ensureLogger } from 'pot-logger';
 import chalk from 'chalk';
 
-const logger = createLogger('proxy', 'greenBright');
+const logger = ensureLogger('proxy', 'greenBright');
 
 const ensureSSL = (ssl) => {
 	if (ssl && ssl.cert && ssl.key) {
