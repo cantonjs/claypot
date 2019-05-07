@@ -1,12 +1,14 @@
 import Koa from 'koa';
 import http from 'http';
 import https from 'https';
+import { resolve } from 'path';
 import methods from 'methods';
 import getCertOption from '../utils/getCertOption';
 import { ensureStaticRoot } from '../utils/sendFile';
 import koaMount from 'koa-mount';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
+import koaViews from 'koa-views';
 import supertest from 'supertest';
 import { isString } from 'lodash';
 import withRouter from './withRouter';
@@ -180,5 +182,10 @@ export default class App extends Koa {
 
 	cors(options) {
 		return this.use(cors(options));
+	}
+
+	views(path, options) {
+		const viewPath = resolve(this.__baseDir, path);
+		return this.use(koaViews(viewPath, options));
 	}
 }
