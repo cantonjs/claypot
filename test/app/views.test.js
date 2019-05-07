@@ -1,23 +1,28 @@
 import { createApp } from '../../src/application';
 import { resolve } from 'path';
 
+const options = {
+	extension: 'html',
+	map: { html: 'lodash' },
+};
+
 describe('view', () => {
 	test('views full path', async () => {
 		return createApp()
-			.view(resolve(__dirname, '/views'), { extension: 'ejs' })
+			.views(resolve(__dirname, 'fixtures/views'), options)
 			.get('/', async (ctx) => ctx.render('hello', { title: 'hi' }))
 			.test()
 			.get('/')
-			.expect(200, '<h1>hi</h1>\n');
+			.expect(200, '<h1>hi</h1>');
 	});
 
 	test('views in basePath', async () => {
 		return createApp()
 			.setBaseDir(__dirname)
-			.view('/views', { extension: 'ejs' })
+			.views('fixtures/views', options)
 			.get('/', async (ctx) => ctx.render('hello', { title: 'hi' }))
 			.test()
 			.get('/')
-			.expect(200, '<h1>hi</h1>\n');
+			.expect(200, '<h1>hi</h1>');
 	});
 });
