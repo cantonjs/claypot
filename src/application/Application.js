@@ -9,6 +9,7 @@ import koaMount from 'koa-mount';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import koaViews from 'koa-views';
+import koaFavicon from 'koa-favicon';
 import supertest from 'supertest';
 import { isString } from 'lodash';
 import withRouter from './withRouter';
@@ -187,5 +188,12 @@ export default class App extends Koa {
 	views(path, options) {
 		const viewPath = resolve(this.__baseDir, path);
 		return this.use(koaViews(viewPath, options));
+	}
+
+	favicon(path, options) {
+		const icon = path ?
+			resolve(this.__baseDir, path) :
+			resolve(__dirname, '../../assets/favicon.ico');
+		return this.use(koaFavicon(icon, options));
 	}
 }
