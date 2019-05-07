@@ -4,7 +4,7 @@ import { resolve } from 'path';
 describe('static', () => {
 	test('static()', async () => {
 		return createApp()
-			.setStaticRoot(resolve(__dirname, './fixtures'))
+			.setBaseDir(resolve(__dirname, './fixtures'))
 			.static()
 			.test()
 			.get('/')

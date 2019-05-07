@@ -20,12 +20,12 @@ export default class App extends Koa {
 	constructor() {
 		super();
 		this.__servers = [];
-		this.__staticRoot = process.cwd();
+		this.__baseDir = process.cwd();
 		this.use(extendContext);
 	}
 
-	setStaticRoot(staticRoot) {
-		this.__staticRoot = staticRoot;
+	setBaseDir(baseDir) {
+		this.__baseDir = baseDir;
 		return this;
 	}
 

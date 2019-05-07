@@ -4,7 +4,7 @@ import { isString } from 'lodash';
 import multimatch from 'multimatch';
 
 export const ensureStaticRoot = function ensureStaticRoot(app, options) {
-	return options.root || app.__staticRoot;
+	return options.root || app.__baseDir;
 };
 
 export const send = async function send(ctx, path, options = {}) {

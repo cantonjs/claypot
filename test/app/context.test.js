@@ -4,7 +4,7 @@ import { resolve } from 'path';
 describe('context', () => {
 	test('sendFile', async () => {
 		return createApp()
-			.setStaticRoot(resolve(__dirname, './fixtures'))
+			.setBaseDir(resolve(__dirname, './fixtures'))
 			.use(async (ctx) => ctx.sendFile('index.html'))
 			.test()
 			.get('/')
