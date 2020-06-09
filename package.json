@@ -51,7 +51,7 @@
     "koa-rewrite": "^3.0.1",
     "koa-send": "^5.0.0",
     "koa-weixin-jssdk": "^2.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "ms": "^2.0.0",
     "multimatch": "^3.0.0",
     "output-host": "^3.1.1",
