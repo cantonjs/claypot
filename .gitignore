@@ -8,6 +8,7 @@ Thumbs.db
 .log
 .logs
 *.log
+.vscode
 node_modules/
 lib/
 _book/
