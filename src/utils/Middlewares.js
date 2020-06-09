@@ -135,7 +135,8 @@ export default class Middlewares {
 				}
 				catch (err) {
 					err.message += ` in "${modulePath}" middleware`;
-					middlewareLogger.error(err);
+					middlewareLogger.error(err.message);
+					middlewareLogger.error(err.stack);
 				}
 			})
 			.filter(Boolean);

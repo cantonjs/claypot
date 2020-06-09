@@ -10,7 +10,7 @@ beforeEach(() => {
 afterEach(stop);
 
 describe('start server', () => {
-	test('server start', async () => {
+	test.skip('server start', async () => {
 		const port = await getPort();
 		return start(['start', '--port', port])
 			.assertUntil(/started/)

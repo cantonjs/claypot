@@ -30,7 +30,10 @@ export async function initCliConfig(argv) {
 		);
 	}
 	catch (err) {
-		configFile && logger.error(err);
+		if (configFile) {
+			logger.error(err.message);
+			logger.error(err.stack);
+		}
 	}
 
 	stripArgs(restArgs);
