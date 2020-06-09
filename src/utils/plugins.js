@@ -49,14 +49,13 @@ function init(config) {
 					resolvers: [resolve(__dirname, '../plugins')],
 					useLoader: false,
 				});
-
 				traceNewPlugin(PluginModule);
-
 				return new PluginModule(options, config);
 			}
 			catch (err) {
 				err.message += ` in "${module}" plugin`;
-				logger.error(err);
+				logger.error(err.message);
+				logger.error(err.stack);
 			}
 		})
 		.filter(Boolean);
